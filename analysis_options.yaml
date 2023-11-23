@@ -5,3 +5,4 @@ analyzer:
 linter:
   rules:
     file_names: false
+    prefer_single_quotes: false
