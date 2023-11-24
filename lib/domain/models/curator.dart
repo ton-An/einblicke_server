@@ -11,7 +11,7 @@ import 'package:json_annotation/json_annotation.dart';
 /// {@endtemplate}
 class Curator extends User {
   /// {@macro curator}
-  Curator({
+  const Curator({
     required this.curatorId,
     required super.username,
     required super.passwordHash,

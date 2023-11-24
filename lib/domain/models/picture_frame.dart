@@ -11,7 +11,7 @@ import 'package:json_annotation/json_annotation.dart';
 /// {@endtemplate}
 class PictureFrame extends User {
   /// {@macro pictureFrame}
-  PictureFrame({
+  const PictureFrame({
     required this.pictureFrameId,
     required super.username,
     required super.passwordHash,
