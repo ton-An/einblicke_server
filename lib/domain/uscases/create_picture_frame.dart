@@ -5,19 +5,19 @@ import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_password_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_username_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/username_taken_failure.dart';
-import 'package:dispatch_pi_dart/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/domain/repositories/curator_authentication_repository.dart';
+import 'package:dispatch_pi_dart/domain/models/picture_frame.dart';
+import 'package:dispatch_pi_dart/domain/repositories/frame_authentication_repository.dart';
 import 'package:dispatch_pi_dart/domain/uscases/create_user_wrapper.dart';
 
-/// {@template create_curator}
-/// Creates a [Curator] user with a given username and password
+/// {@template create_picture_frame}
+/// Creates a [PictureFrame] user with a given username and password
 ///
 /// Parameters:
 /// - [String] username
 /// - [String] password
 ///
 /// Returns:
-/// - [Curator] if the user was created successfully
+/// - [PictureFrame] if the user was created successfully
 ///
 /// Failures:
 /// - [InvalidUsernameFailure]
@@ -26,21 +26,21 @@ import 'package:dispatch_pi_dart/domain/uscases/create_user_wrapper.dart';
 /// - [DatabaseReadFailure]
 /// - [DatabaseWriteFailure]
 /// {@endtemplate}
-class CreateCurator {
-  /// {@macro create_curator}
-  const CreateCurator({
-    required this.createCurator,
+class CreatePictureFrame {
+  /// {@macro create_picture_frame}
+  CreatePictureFrame({
+    required this.creaPictureFrame,
   });
 
-  /// Used to create the record of the curator
-  final CreateUserWrapper<Curator, CuratorAuthenticationRepository>
-      createCurator;
+  /// Used to create the record of the picture frame
+  CreateUserWrapper<PictureFrame, FrameAuthenticationRepository>
+      creaPictureFrame;
 
-  /// {@macro create_curator}
-  Future<Either<Failure, Curator>> call(
+  /// {@macro create_picture_frame}
+  Future<Either<Failure, PictureFrame>> call(
     String username,
     String password,
   ) async {
-    return createCurator(username, password);
+    return creaPictureFrame(username, password);
   }
 }
