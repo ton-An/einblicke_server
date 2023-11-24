@@ -7,4 +7,5 @@ import 'package:dispatch_pi_dart/core/failures/failure.dart';
 /// {@endtemplate}
 class FailureStrings {
   static const String authenticationCategoryCode = "authentication";
+  static const String databaseCategoryCode = "database";
 }
