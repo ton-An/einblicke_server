@@ -7,7 +7,6 @@
 /// - must contain at least one lowercase letter
 /// - must contain at least one number
 /// - must contain at least one special character (!@#$%^&*()-_+)
-/// - must not contain spaces
 ///
 /// Returns:
 /// - a [bool] indicating if the password is valid
