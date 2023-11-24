@@ -5,6 +5,9 @@
 /// - must be between 3 and 20 characters
 /// - must only contain letters, numbers, underscores, and hyphens
 ///
+/// Parameters:
+/// - [String] username
+///
 /// Returns:
 /// - a [bool] indicating if the username is valid
 /// {@endtemplate}

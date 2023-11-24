@@ -8,6 +8,9 @@
 /// - must contain at least one number
 /// - must contain at least one special character (!@#$%^&*()-_+)
 ///
+/// Parameters:
+/// - [String] password
+///
 /// Returns:
 /// - a [bool] indicating if the password is valid
 /// {@endtemplate}
