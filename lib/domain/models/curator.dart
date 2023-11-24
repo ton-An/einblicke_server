@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/domain/models/pictureFrame.dart';
+import 'package:dispatch_pi_dart/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
