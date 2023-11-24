@@ -2,7 +2,7 @@ import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure_strings.dart';
 
 /// {@template invalid_password_failure}
-/// Failure thrown when the given password is invalid
+/// Failure for when the given password is invalid
 /// {@endtemplate}
 class InvalidPasswordFailure extends Failure {
   /// {@macro invalid_password_failure}

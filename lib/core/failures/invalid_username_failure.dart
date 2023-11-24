@@ -2,7 +2,7 @@ import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure_strings.dart';
 
 /// {@template invalid_username_failure}
-/// Failure thrown when the given username is invalid
+/// Failure for when the given username is invalid
 /// {@endtemplate}
 class InvalidUsernameFailure extends Failure {
   /// {@macro invalid_username_failure}
