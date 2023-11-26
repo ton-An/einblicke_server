@@ -22,4 +22,22 @@ abstract class BasicAuthenticationRepository {
   /// Returns:
   /// - a [String] containing the unique user id
   String generateUserId();
+
+  /// Generates a signed token with the given payload
+  ///
+  /// Parameters:
+  /// - [String] payload
+  ///
+  /// Returns:
+  /// - a [String] containing the signed token
+  String generateSignedToken(String payload);
+
+  /// Encrypts the given token
+  ///
+  /// Parameters:
+  /// - [String] token
+  ///
+  /// Returns:
+  /// - a [String] containing the encrypted token
+  String encryptToken(String token);
 }
