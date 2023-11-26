@@ -7,4 +7,7 @@
 abstract class Secrets {
   /// The secret used to authenticate the client
   String get clientSecret;
+
+  /// The client id used to authenticate the client
+  String get clientId;
 }
