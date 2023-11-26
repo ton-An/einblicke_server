@@ -1,9 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 /// {@template user}
 /// Base class for all users
 ///
 /// It includes an [username] and [passwordHash]
 /// {@endtemplate}
-abstract class User {
+abstract class User extends Equatable {
   /// {@macro user}
   const User({
     required this.username,

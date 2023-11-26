@@ -19,4 +19,11 @@ class PictureFrame extends User {
 
   /// [pictureFrameId] is the unique identifier for the picture frame
   final String pictureFrameId;
+
+  @override
+  List<Object?> get props => [
+        pictureFrameId,
+        username,
+        passwordHash,
+      ];
 }

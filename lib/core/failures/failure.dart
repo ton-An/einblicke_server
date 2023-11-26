@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 /// {@template failure}
 /// Base class for all [Failure]s
 ///
@@ -8,7 +10,7 @@
 /// This means, any errors which were not caught and translated to [Failure]s
 /// before entering the business logic, will not be handled.
 /// {@endtemplate}
-abstract class Failure {
+abstract class Failure extends Equatable {
   /// {@macro failure}
   const Failure({
     required this.name,
@@ -28,4 +30,12 @@ abstract class Failure {
 
   /// Identifies the specific error using a code.
   final String code;
+
+  @override
+  List<Object?> get props => [
+        name,
+        message,
+        categoryCode,
+        code,
+      ];
 }

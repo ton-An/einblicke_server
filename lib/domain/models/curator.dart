@@ -19,4 +19,11 @@ class Curator extends User {
 
   /// [curatorId] is the unique identifier for the curator
   final String curatorId;
+
+  @override
+  List<Object?> get props => [
+        curatorId,
+        username,
+        passwordHash,
+      ];
 }
