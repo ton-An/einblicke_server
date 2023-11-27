@@ -1,3 +1,8 @@
+import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/failures/expired_token_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
+
 /// {@template basic_auth_repository}
 /// Repository for basic authentication related operations
 /// {@endtemplate}
@@ -40,4 +45,29 @@ abstract class BasicAuthenticationRepository {
   /// Returns:
   /// - a [String] containing the encrypted token
   String encryptToken(String token);
+
+  /// Decrypts the given token
+  ///
+  /// Parameters:
+  /// - [String] encrypted token
+  ///
+  /// Returns:
+  /// - [String] containing the decrypted token
+  ///
+  /// Failures:
+  /// - [DecryptionFailure]
+  Either<Failure, String> decryptToken(String encryptedToken);
+
+  /// Checks if the given token is valid
+  ///
+  /// Parameters:
+  /// - [String] token
+  ///
+  /// Returns:
+  /// - [String] containing the userId if the token is valid
+  ///
+  /// Failures:
+  /// - [InvalidTokenFailure]
+  /// - [ExpiredTokenFailure]
+  Either<Failure, String> isTokenValid(String token);
 }
