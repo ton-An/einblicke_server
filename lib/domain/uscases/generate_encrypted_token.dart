@@ -23,7 +23,7 @@ class GenerateEncryptedToken {
 
   /// {@macro generate_encrypted_token}
   EncryptedToken call({
-    required String payload,
+    required Map payload,
     required int expiresIn,
   }) {
     final String tokenString = basicAuthRepository.generateSignedToken(payload);

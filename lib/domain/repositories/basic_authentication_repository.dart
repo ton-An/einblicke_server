@@ -30,7 +30,7 @@ abstract class BasicAuthenticationRepository {
   ///
   /// Returns:
   /// - a [String] containing the signed token
-  String generateSignedToken(String payload);
+  String generateSignedToken(Map payload);
 
   /// Encrypts the given token
   ///

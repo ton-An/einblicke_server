@@ -1,8 +1,4 @@
-// should generate a token and sign it
-// should encrypt the token
-// should return the encrypted token
-
-import 'package:dispatch_pi_dart/domain/uscases/generate_token.dart';
+import 'package:dispatch_pi_dart/domain/uscases/generate_encrypted_token.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
@@ -20,7 +16,7 @@ void main() {
     );
 
     when(() => mockBasicAuthRepository.generateSignedToken(any()))
-        .thenReturn(tToken);
+        .thenReturn(tTokenString);
     when(() => mockBasicAuthRepository.encryptToken(any()))
         .thenReturn(tEncryptedTokenString);
   });
@@ -38,7 +34,7 @@ void main() {
     generateEncryptedToken(payload: tPayload, expiresIn: tExpiresIn);
 
     // assert
-    verify(() => mockBasicAuthRepository.encryptToken(tToken));
+    verify(() => mockBasicAuthRepository.encryptToken(tTokenString));
   });
 
   test("should return the encrypted token", () async {

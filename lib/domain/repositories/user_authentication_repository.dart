@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 
 /// {@template user_auth_repository}
 /// Repository for user authentication
@@ -41,10 +42,30 @@ abstract class UserAuthenticationRepository<T> {
   /// - [String] username
   /// - [String] passwordHash
   ///
+  /// Returns:
+  /// - a [T] object representing the created user
+  ///
   /// Failures:
   /// - [DatabaseWriteFailure]
   Future<Either<Failure, T>> createUser(
     String userId,
+    String username,
+    String passwordHash,
+  );
+
+  /// Gets the user with the given username and password hash
+  ///
+  /// Parameters:
+  /// - [String] username
+  /// - [String] passwordHash
+  ///
+  /// Returns:
+  /// - a [T] object representing the user
+  ///
+  /// Failures:
+  /// - [DatabaseReadFailure]
+  /// - [UserNotFoundFailure]
+  Future<Either<Failure, T>> getUser(
     String username,
     String passwordHash,
   );

@@ -7,22 +7,19 @@ import 'package:json_annotation/json_annotation.dart';
 /// {@template pictureFrame}
 /// A [PictureFrame] is a frame that displays images sent by [Curator]s
 ///
-/// It includes a [pictureFrameId], [username], and [passwordHash]
+/// It includes a [userId], [username], and [passwordHash]
 /// {@endtemplate}
 class PictureFrame extends User {
   /// {@macro pictureFrame}
   const PictureFrame({
-    required this.pictureFrameId,
+    required super.userId,
     required super.username,
     required super.passwordHash,
   });
 
-  /// [pictureFrameId] is the unique identifier for the picture frame
-  final String pictureFrameId;
-
   @override
   List<Object?> get props => [
-        pictureFrameId,
+        userId,
         username,
         passwordHash,
       ];
