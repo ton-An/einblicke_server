@@ -11,6 +11,6 @@ class DatabaseWriteFailure extends Failure {
           name: "Database Write Failure",
           message: "An error occurred while writing to the database.",
           categoryCode: FailureStrings.databaseCategoryCode,
-          code: "database_write_failure",
+          code: "database_write",
         );
 }

@@ -12,6 +12,6 @@ class UserIdGenerationFailure extends Failure {
           message:
               "An error occurred while generating the user ID. Please try again.",
           categoryCode: FailureStrings.authenticationCategoryCode,
-          code: "user_id_generation_failure",
+          code: "user_id_generation",
         );
 }

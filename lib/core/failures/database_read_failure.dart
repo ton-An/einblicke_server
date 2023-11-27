@@ -11,6 +11,6 @@ class DatabaseReadFailure extends Failure {
           name: "Database Read Failure",
           message: "An error occurred while reading from the database.",
           categoryCode: FailureStrings.databaseCategoryCode,
-          code: "database_read_failure",
+          code: "database_read",
         );
 }
