@@ -7,6 +7,7 @@ import 'package:dispatch_pi_dart/domain/uscases/generate_encrypted_token.dart';
 import 'package:dispatch_pi_dart/domain/uscases/generate_refresh_token.dart';
 import 'package:dispatch_pi_dart/domain/uscases/is_password_valid.dart';
 import 'package:dispatch_pi_dart/domain/uscases/is_username_valid.dart';
+import 'package:dispatch_pi_dart/domain/uscases/sign_in_wrapper.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}
@@ -31,3 +32,7 @@ class MockGenerateEncryptedToken extends Mock
 class MockGenerateAccessToken extends Mock implements GenerateAccessToken {}
 
 class MockGenerateRefreshToken extends Mock implements GenerateRefreshToken {}
+
+class MockSignInWrapper<U extends User,
+        R extends UserAuthenticationRepository<U>> extends Mock
+    implements SignInWrapper<U, R> {}
