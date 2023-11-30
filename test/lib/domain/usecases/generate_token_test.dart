@@ -15,10 +15,8 @@ void main() {
       basicAuthRepository: mockBasicAuthRepository,
     );
 
-    when(() => mockBasicAuthRepository.generateSignedToken(any()))
+    when(() => mockBasicAuthRepository.generateJWEToken(any(), any()))
         .thenReturn(tTokenString);
-    when(() => mockBasicAuthRepository.encryptToken(any()))
-        .thenReturn(tEncryptedTokenString);
   });
 
   test("should generate a signed token", () async {
@@ -26,15 +24,9 @@ void main() {
     generateEncryptedToken(payload: tPayload, expiresIn: tExpiresIn);
 
     // assert
-    verify(() => mockBasicAuthRepository.generateSignedToken(tPayload));
-  });
-
-  test("should encrypt the token", () async {
-    // act
-    generateEncryptedToken(payload: tPayload, expiresIn: tExpiresIn);
-
-    // assert
-    verify(() => mockBasicAuthRepository.encryptToken(tTokenString));
+    verify(
+      () => mockBasicAuthRepository.generateJWEToken(tPayload, tExpiresIn),
+    );
   });
 
   test("should return the encrypted token", () async {

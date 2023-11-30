@@ -31,32 +31,12 @@ abstract class BasicAuthenticationRepository {
   /// Generates a signed token with the given payload
   ///
   /// Parameters:
-  /// - [String] payload
+  /// - [Map] payload
+  /// - [int] expiresIn in seconds
   ///
   /// Returns:
   /// - a [String] containing the signed token
-  String generateSignedToken(Map payload);
-
-  /// Encrypts the given token
-  ///
-  /// Parameters:
-  /// - [String] token
-  ///
-  /// Returns:
-  /// - a [String] containing the encrypted token
-  String encryptToken(String token);
-
-  /// Decrypts the given token
-  ///
-  /// Parameters:
-  /// - [String] encrypted token
-  ///
-  /// Returns:
-  /// - [String] containing the decrypted token
-  ///
-  /// Failures:
-  /// - [DecryptionFailure]
-  Either<Failure, String> decryptToken(String encryptedToken);
+  String generateJWEToken(Map payload, int expiresIn);
 
   /// Checks if the given token is valid
   ///
@@ -64,10 +44,10 @@ abstract class BasicAuthenticationRepository {
   /// - [String] token
   ///
   /// Returns:
-  /// - [String] containing the userId if the token is valid
+  /// - [bool] containing the userId if the token is valid
   ///
   /// Failures:
   /// - [InvalidTokenFailure]
   /// - [ExpiredTokenFailure]
-  Either<Failure, String> isTokenValid(String token);
+  Either<Failure, bool> isTokenValid(String token);
 }

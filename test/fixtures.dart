@@ -29,14 +29,13 @@ const AuthenticationCredentials tAuthenticationCredentials =
 
 const int tExpiresIn = 123456;
 const String tTokenString = "testTokenString";
-const String tEncryptedTokenString = "testEncryptedTokenString";
 final Map tPayload = {
   'id': tUserId,
   'type': MockUser,
 };
 
 const EncryptedToken tEncryptedToken = EncryptedToken(
-  token: tEncryptedTokenString,
+  token: tTokenString,
   expiresIn: tExpiresIn,
 );
 const EncryptedToken tEncryptedAccessToken = EncryptedToken(

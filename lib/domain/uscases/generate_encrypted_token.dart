@@ -26,12 +26,11 @@ class GenerateEncryptedToken {
     required Map payload,
     required int expiresIn,
   }) {
-    final String tokenString = basicAuthRepository.generateSignedToken(payload);
-    final String encryptedTokenString =
-        basicAuthRepository.encryptToken(tokenString);
+    final String tokenString =
+        basicAuthRepository.generateJWEToken(payload, expiresIn);
 
     final EncryptedToken encryptedToken = EncryptedToken(
-      token: encryptedTokenString,
+      token: tokenString,
       expiresIn: expiresIn,
     );
 
