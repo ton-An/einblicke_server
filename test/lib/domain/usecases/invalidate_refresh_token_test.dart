@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/domain/uscases/save_refresh_token.dart';
+import 'package:dispatch_pi_dart/domain/uscases/invalidate_refresh_token.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
@@ -8,26 +8,23 @@ import '../../../fixtures.dart';
 import '../../../mocks.dart';
 
 void main() {
-  late SaveRefreshToken saveRefreshToken;
+  late InvalidateRefreshToken removeRefreshToken;
   late MockUserAuthRepository mockUserAuthRepository;
 
   setUp(() {
     mockUserAuthRepository = MockUserAuthRepository();
-    saveRefreshToken = SaveRefreshToken(
+    removeRefreshToken = InvalidateRefreshToken(
       userAuthenticationRepository: mockUserAuthRepository,
     );
 
-    when(() => mockUserAuthRepository.saveRefreshTokenToDb(any(), any()))
+    when(() => mockUserAuthRepository.removeRefreshTokenFromDb(any(), any()))
         .thenAnswer((_) async => const Right(None()));
   });
 
-  // should save the token in the database and return None
-  // should relay [Failure]s
-
-  test("should save the refresh token in the database and return [None]",
+  test("should remove the refresh token from the database and return [None]",
       () async {
     // act
-    final result = await saveRefreshToken(
+    final result = await removeRefreshToken(
       userId: tUserId,
       refreshToken: tEncryptedRefreshToken,
     );
@@ -35,7 +32,7 @@ void main() {
     // assert
     expect(result, const Right(None()));
     verify(
-      () => mockUserAuthRepository.saveRefreshTokenToDb(
+      () => mockUserAuthRepository.removeRefreshTokenFromDb(
         tUserId,
         tRefreshToken,
       ),
@@ -44,16 +41,16 @@ void main() {
 
   test("should relay [Failure]s", () async {
     // arrange
-    when(() => mockUserAuthRepository.saveRefreshTokenToDb(any(), any()))
+    when(() => mockUserAuthRepository.removeRefreshTokenFromDb(any(), any()))
         .thenAnswer((_) async => const Left(DatabaseWriteFailure()));
 
     // act
-    final result = await saveRefreshToken(
+    final result = await removeRefreshToken(
       userId: tUserId,
       refreshToken: tEncryptedRefreshToken,
     );
 
     // assert
-    expect(result, Left(DatabaseWriteFailure()));
+    expect(result, const Left(DatabaseWriteFailure()));
   });
 }

@@ -78,7 +78,20 @@ abstract class UserAuthenticationRepository<T> {
   ///
   /// Failures:
   /// - [DatabaseWriteFailure]
-  Future<Either<Failure, None>> saveRefreshToken(
+  Future<Either<Failure, None>> saveRefreshTokenToDb(
+    String userId,
+    String refreshToken,
+  );
+
+  /// Removes the refresh token from the database
+  ///
+  /// Parameters:
+  /// - [String] userId
+  /// - [String] refreshToken
+  ///
+  /// Failures:
+  /// - [DatabaseWriteFailure]
+  Future<Either<Failure, None>> removeRefreshTokenFromDb(
     String userId,
     String refreshToken,
   );

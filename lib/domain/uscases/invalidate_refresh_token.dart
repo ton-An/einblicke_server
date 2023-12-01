@@ -5,8 +5,8 @@ import 'package:dispatch_pi_dart/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
 import 'package:dispatch_pi_dart/domain/repositories/user_authentication_repository.dart';
 
-/// {@template save_refresh_token}
-/// Saves the given refresh token for the given user id
+/// {@template invalidate_refresh_token}
+/// Invalidates the given refresh token for the given user id
 ///
 /// Parameters:
 /// - [String] userId
@@ -15,22 +15,22 @@ import 'package:dispatch_pi_dart/domain/repositories/user_authentication_reposit
 /// Failures:
 /// - [DatabaseWriteFailure]
 /// {@endtemplate}
-class SaveRefreshToken<U extends User,
+class InvalidateRefreshToken<U extends User,
     R extends UserAuthenticationRepository<U>> {
-  /// {@macro save_refresh_token}
-  const SaveRefreshToken({required this.userAuthenticationRepository});
+  /// {@macro invalidate_refresh_token}
+  const InvalidateRefreshToken({required this.userAuthenticationRepository});
 
-  /// Used to save the refresh token
+  /// Used to invalidate the refresh token
   final R userAuthenticationRepository;
 
-  /// {@macro save_refresh_token}
+  /// {@macro invalidate_refresh_token}
   Future<Either<Failure, None>> call({
     required String userId,
     required EncryptedToken refreshToken,
   }) {
     final String refreshTokenString = refreshToken.token;
 
-    return userAuthenticationRepository.saveRefreshTokenToDb(
+    return userAuthenticationRepository.removeRefreshTokenFromDb(
       userId,
       refreshTokenString,
     );
