@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/expired_token_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
+import 'package:dispatch_pi_dart/domain/models/token_payload.dart';
 
 /// {@template basic_auth_repository}
 /// Repository for basic authentication related operations
@@ -32,7 +32,7 @@ abstract class BasicAuthenticationRepository {
   ///
   /// Parameters:
   /// - [Map] payload
-  /// - [int] expiresIn in seconds
+  /// - [int] expiresIn (in seconds)
   ///
   /// Returns:
   /// - a [String] containing the signed token
@@ -41,13 +41,14 @@ abstract class BasicAuthenticationRepository {
   /// Checks if the given token is valid
   ///
   /// Parameters:
-  /// - [String] token
+  /// - [String] refreshToken
   ///
   /// Returns:
-  /// - [bool] containing the userId if the token is valid
+  /// - a [TokenPayload] containing the payload of the token
   ///
   /// Failures:
   /// - [InvalidTokenFailure]
-  /// - [ExpiredTokenFailure]
-  Either<Failure, bool> isTokenValid(String token);
+  Either<Failure, TokenPayload> checkTokenSignatureValidity(
+    String refreshToken,
+  );
 }

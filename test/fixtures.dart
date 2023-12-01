@@ -2,6 +2,7 @@ import 'package:dispatch_pi_dart/domain/models/authentication_credentials.dart';
 import 'package:dispatch_pi_dart/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/domain/models/picture_frame.dart';
+import 'package:dispatch_pi_dart/domain/models/token_payload.dart';
 
 import 'mocks.dart';
 
@@ -27,24 +28,44 @@ const AuthenticationCredentials tAuthenticationCredentials =
   refreshToken: tEncryptedRefreshToken,
 );
 
-const int tExpiresIn = 123456;
+const int tIssuedAt = 1701460426;
+const int tExpiresAt = 1701464026;
+DateTime tIssuedAtDatetime = DateTime(2013, 5, 25, 17, 0);
+DateTime tValidExpiresAt = DateTime(2013, 5, 25, 17, 45);
+DateTime tInvalidExpiresAt = DateTime(2013, 5, 25, 18, 15);
+DateTime tCurrentTime = DateTime(2013, 5, 25, 18, 0);
+
+final TokenPayload tTokenPayload = TokenPayload(
+  userId: tUserId,
+  issuedAt: tIssuedAtDatetime,
+  expiresAt: tValidExpiresAt,
+);
+
+final TokenPayload tExpiredTokenPayload = TokenPayload(
+  userId: tUserId,
+  issuedAt: tIssuedAtDatetime,
+  expiresAt: tInvalidExpiresAt,
+);
+
 const String tTokenString = "testTokenString";
 final Map tPayload = {
   'id': tUserId,
+  'iat': tIssuedAt,
+  'exp': tExpiresAt,
   'type': MockUser,
 };
 
 const EncryptedToken tEncryptedToken = EncryptedToken(
   token: tTokenString,
-  expiresIn: tExpiresIn,
+  expiresIn: tExpiresAt,
 );
 const EncryptedToken tEncryptedAccessToken = EncryptedToken(
   token: tAccessToken,
-  expiresIn: tExpiresIn,
+  expiresIn: tExpiresAt,
 );
 const EncryptedToken tEncryptedRefreshToken = EncryptedToken(
   token: tRefreshToken,
-  expiresIn: tExpiresIn,
+  expiresIn: tExpiresAt,
 );
 
 // Curator

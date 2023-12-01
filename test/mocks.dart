@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
 import 'package:dispatch_pi_dart/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/domain/repositories/user_authentication_repository.dart';
@@ -6,6 +7,7 @@ import 'package:dispatch_pi_dart/domain/uscases/generate_access_token.dart';
 import 'package:dispatch_pi_dart/domain/uscases/generate_encrypted_token.dart';
 import 'package:dispatch_pi_dart/domain/uscases/generate_refresh_token.dart';
 import 'package:dispatch_pi_dart/domain/uscases/is_password_valid.dart';
+import 'package:dispatch_pi_dart/domain/uscases/is_token_expired.dart';
 import 'package:dispatch_pi_dart/domain/uscases/is_username_valid.dart';
 import 'package:dispatch_pi_dart/domain/uscases/sign_in_wrapper.dart';
 import 'package:mocktail/mocktail.dart';
@@ -18,7 +20,7 @@ class MockBasicAuthRepository extends Mock
     implements BasicAuthenticationRepository {}
 
 class MockUserAuthRepository extends Mock
-    implements UserAuthenticationRepository<User> {}
+    implements UserAuthenticationRepository<MockUser> {}
 
 class MockUser extends Mock implements User {}
 
@@ -36,3 +38,7 @@ class MockGenerateRefreshToken extends Mock implements GenerateRefreshToken {}
 class MockSignInWrapper<U extends User,
         R extends UserAuthenticationRepository<U>> extends Mock
     implements SignInWrapper<U, R> {}
+
+class MockIsTokenExpired extends Mock implements IsTokenExpired {}
+
+class MockClock extends Mock implements Clock {}

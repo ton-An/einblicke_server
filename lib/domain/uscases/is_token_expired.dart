@@ -13,7 +13,7 @@ class IsTokenExpired {
   const IsTokenExpired();
 
   /// {@macro is_token_expired}
-  bool call(int issuedAt, int expiresIn) {
+  bool call({required DateTime expiresAt}) {
     // TODO: implement check for expired token
     throw UnimplementedError();
   }

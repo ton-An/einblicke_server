@@ -21,18 +21,18 @@ void main() {
 
   test("should generate a signed token", () async {
     // act
-    generateEncryptedToken(payload: tPayload, expiresIn: tExpiresIn);
+    generateEncryptedToken(payload: tPayload, expiresIn: tExpiresAt);
 
     // assert
     verify(
-      () => mockBasicAuthRepository.generateJWEToken(tPayload, tExpiresIn),
+      () => mockBasicAuthRepository.generateJWEToken(tPayload, tExpiresAt),
     );
   });
 
   test("should return the encrypted token", () async {
     // act
     final result =
-        generateEncryptedToken(payload: tPayload, expiresIn: tExpiresIn);
+        generateEncryptedToken(payload: tPayload, expiresIn: tExpiresAt);
 
     // assert
     expect(result, tEncryptedToken);

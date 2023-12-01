@@ -106,4 +106,20 @@ abstract class UserAuthenticationRepository<T> {
   Future<Either<Failure, None>> removeAllRefreshTokensFromDb(
     String userId,
   );
+
+  /// Checks if the given refresh token is in the database for the given user id
+  ///
+  /// Parameters:
+  /// - [String] userId
+  /// - [String] refreshToken
+  ///
+  /// Returns:
+  /// - a [bool] indicating if the token is in the database
+  ///
+  /// Failures:
+  /// - [DatabaseReadFailure]
+  Future<Either<Failure, bool>> isRefreshTokenInUserDb(
+    String userId,
+    String refreshToken,
+  );
 }
