@@ -70,7 +70,7 @@ abstract class UserAuthenticationRepository<T> {
     String passwordHash,
   );
 
-  /// Saves the refresh token in the database
+  /// Saves the refresh token in the database for a given user id
   ///
   /// Parameters:
   /// - [String] userId
@@ -83,7 +83,7 @@ abstract class UserAuthenticationRepository<T> {
     String refreshToken,
   );
 
-  /// Removes the refresh token from the database
+  /// Removes the refresh token from the database for a given user id
   ///
   /// Parameters:
   /// - [String] userId
@@ -94,5 +94,16 @@ abstract class UserAuthenticationRepository<T> {
   Future<Either<Failure, None>> removeRefreshTokenFromDb(
     String userId,
     String refreshToken,
+  );
+
+  /// Removes all refresh tokens from the database for a given user id
+  ///
+  /// Parameters:
+  /// - [String] userId
+  ///
+  /// Failures:
+  /// - [DatabaseWriteFailure]
+  Future<Either<Failure, None>> removeAllRefreshTokensFromDb(
+    String userId,
   );
 }
