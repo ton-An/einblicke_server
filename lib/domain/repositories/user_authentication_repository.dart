@@ -69,4 +69,17 @@ abstract class UserAuthenticationRepository<T> {
     String username,
     String passwordHash,
   );
+
+  /// Saves the refresh token in the database
+  ///
+  /// Parameters:
+  /// - [String] userId
+  /// - [String] refreshToken
+  ///
+  /// Failures:
+  /// - [DatabaseWriteFailure]
+  Future<Either<Failure, None>> saveRefreshToken(
+    String userId,
+    String refreshToken,
+  );
 }
