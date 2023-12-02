@@ -172,12 +172,12 @@ void main() {
     });
   });
 
-  test("should return [None] if the token is valid", () async {
+  test("should return the userId if the token is valid", () async {
     // act
     final result =
         await checkRefreshTokenValidityWrapper(refreshToken: tRefreshToken);
 
     // assert
-    expect(result, const Right(None()));
+    expect(result, const Right(tUserId));
   });
 }

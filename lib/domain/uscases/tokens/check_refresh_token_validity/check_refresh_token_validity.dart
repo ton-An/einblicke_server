@@ -19,7 +19,7 @@ import 'package:dispatch_pi_dart/domain/uscases/tokens/is_token_expired.dart';
 /// - [String] refreshToken
 ///
 /// Returns:
-/// - [None] if the token is valid
+/// - [String] the user id
 ///
 /// Failures:
 /// - [ExpiredTokenFailure]
@@ -46,13 +46,13 @@ class CheckRefreshTokenValidityWrapper<U extends User,
   final IsTokenExpired isTokenExpiredUseCase;
 
   /// {@macro check_refresh_token_validity}
-  Future<Either<Failure, None>> call({
+  Future<Either<Failure, String>> call({
     required String refreshToken,
   }) async {
     return _checkTokenSignatureValidity(refreshToken: refreshToken);
   }
 
-  Future<Either<Failure, None>> _checkTokenSignatureValidity({
+  Future<Either<Failure, String>> _checkTokenSignatureValidity({
     required String refreshToken,
   }) async {
     final Either<Failure, TokenPayload> signatureCheckEither =
@@ -69,7 +69,7 @@ class CheckRefreshTokenValidityWrapper<U extends User,
     );
   }
 
-  Future<Either<Failure, None>> _checkTokenExpiration({
+  Future<Either<Failure, String>> _checkTokenExpiration({
     required String refreshToken,
     required TokenPayload payload,
   }) async {
@@ -87,7 +87,7 @@ class CheckRefreshTokenValidityWrapper<U extends User,
     );
   }
 
-  Future<Either<Failure, None>> _checkTokenReuse({
+  Future<Either<Failure, String>> _checkTokenReuse({
     required String refreshToken,
     required TokenPayload payload,
   }) async {
@@ -104,7 +104,7 @@ class CheckRefreshTokenValidityWrapper<U extends User,
           return const Left(RefreshTokenReuseFailure());
         }
 
-        return const Right(None());
+        return Right(payload.userId);
       },
     );
   }
