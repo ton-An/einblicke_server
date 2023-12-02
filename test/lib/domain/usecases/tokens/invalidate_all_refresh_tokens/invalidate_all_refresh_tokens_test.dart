@@ -2,54 +2,54 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/domain/uscases/tokens/invalidate_refresh_tokens/invalidate_refresh_token.dart';
+import 'package:dispatch_pi_dart/domain/uscases/tokens/invalidate_all_refresh_tokens/invalidate_all_refresh_tokens.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../fixtures.dart';
-import '../../../mocks.dart';
+import '../../../../../fixtures.dart';
+import '../../../../../mocks.dart';
 
 void main() {
-  late InvalidateRefreshToken removeRefreshToken;
+  // should delete all refresh tokens from the database and return None
+  // should relay [Failure]s
+
+  late InvalidateAllRefreshTokens invalidateAllRefreshTokens;
   late MockUserAuthRepository mockUserAuthRepository;
 
   setUp(() {
     mockUserAuthRepository = MockUserAuthRepository();
-    removeRefreshToken = InvalidateRefreshToken(
+    invalidateAllRefreshTokens = InvalidateAllRefreshTokens(
       userAuthenticationRepository: mockUserAuthRepository,
     );
 
-    when(() => mockUserAuthRepository.removeRefreshTokenFromDb(any(), any()))
+    when(() => mockUserAuthRepository.removeAllRefreshTokensFromDb(any()))
         .thenAnswer((_) async => const Right(None()));
   });
 
-  test("should remove the refresh token from the database and return [None]",
+  test("should delete all refresh tokens from the database and return [None]",
       () async {
     // act
-    final result = await removeRefreshToken(
+    final result = await invalidateAllRefreshTokens(
       userId: tUserId,
-      refreshToken: tEncryptedRefreshToken,
     );
 
     // assert
     expect(result, const Right(None()));
     verify(
-      () => mockUserAuthRepository.removeRefreshTokenFromDb(
+      () => mockUserAuthRepository.removeAllRefreshTokensFromDb(
         tUserId,
-        tRefreshToken,
       ),
     );
   });
 
   test("should relay [Failure]s", () async {
     // arrange
-    when(() => mockUserAuthRepository.removeRefreshTokenFromDb(any(), any()))
+    when(() => mockUserAuthRepository.removeAllRefreshTokensFromDb(any()))
         .thenAnswer((_) async => const Left(DatabaseWriteFailure()));
 
     // act
-    final result = await removeRefreshToken(
+    final result = await invalidateAllRefreshTokens(
       userId: tUserId,
-      refreshToken: tEncryptedRefreshToken,
     );
 
     // assert

@@ -6,8 +6,8 @@ import 'package:dispatch_pi_dart/domain/uscases/tokens/save_refresh_token/save_r
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../fixtures.dart';
-import '../../../mocks.dart';
+import '../../../../../fixtures.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   late SaveRefreshToken saveRefreshToken;

@@ -2,26 +2,28 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
-import 'package:dispatch_pi_dart/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/domain/repositories/curator_authentication_repository.dart';
-import 'package:dispatch_pi_dart/domain/uscases/sign_in/sign_in_curator.dart';
+import 'package:dispatch_pi_dart/domain/models/picture_frame.dart';
+import 'package:dispatch_pi_dart/domain/repositories/frame_authentication_repository.dart';
+import 'package:dispatch_pi_dart/domain/uscases/sign_in/sign_in_picture_frame.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../fixtures.dart';
-import '../../../mocks.dart';
+import '../../../../fixtures.dart';
+import '../../../../mocks.dart';
 
 void main() {
-  late SignInCurator signInCurator;
-  late MockSignInWrapper<Curator, CuratorAuthenticationRepository>
-      mockSignInCurator;
+  late SignInPictureFrame signInPictureFrame;
+  late MockSignInWrapper<PictureFrame, FrameAuthenticationRepository>
+      mockSignInPictureFrame;
 
   setUp(() {
-    mockSignInCurator = MockSignInWrapper();
-    signInCurator = SignInCurator(signInCurator: mockSignInCurator);
+    mockSignInPictureFrame = MockSignInWrapper();
+    signInPictureFrame = SignInPictureFrame(
+      signInPictureFrame: mockSignInPictureFrame,
+    );
 
     when(
-      () => mockSignInCurator(
+      () => mockSignInPictureFrame(
         username: any(named: "username"),
         password: any(named: "password"),
       ),
@@ -34,24 +36,25 @@ void main() {
     // arrange
 
     // act
-    final result = await signInCurator(tUsername, tPassword);
+    final result = await signInPictureFrame(tUsername, tPassword);
 
     // assert
     expect(result, const Right(tAuthenticationCredentials));
-    verify(() => mockSignInCurator(username: tUsername, password: tPassword));
+    verify(
+        () => mockSignInPictureFrame(username: tUsername, password: tPassword));
   });
 
   test("should relay [Failure]s", () async {
     // arrange
     when(
-      () => mockSignInCurator(
+      () => mockSignInPictureFrame(
         username: any(named: "username"),
         password: any(named: "password"),
       ),
     ).thenAnswer((_) async => const Left(UserNotFoundFailure()));
 
     // act
-    final result = await signInCurator(tUsername, tPassword);
+    final result = await signInPictureFrame(tUsername, tPassword);
 
     // assert
     expect(result, const Left(UserNotFoundFailure()));

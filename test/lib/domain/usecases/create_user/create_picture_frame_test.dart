@@ -8,8 +8,8 @@ import 'package:dispatch_pi_dart/domain/uscases/create_user/create_picture_frame
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../fixtures.dart';
-import '../../../mocks.dart';
+import '../../../../fixtures.dart';
+import '../../../../mocks.dart';
 
 void main() {
   late CreatePictureFrame createPictureFrame;

@@ -2,9 +2,9 @@ import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_encrypted_token/
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../fixtures.dart';
-import '../../../mocks.dart';
-import '../../../secrets_fixture.dart';
+import '../../../../../fixtures.dart';
+import '../../../../../mocks.dart';
+import '../../../../../secrets_fixture.dart';
 
 void main() {
   late GenerateAccessToken generateAccessToken;

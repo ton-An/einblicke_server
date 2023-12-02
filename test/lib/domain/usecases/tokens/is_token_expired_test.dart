@@ -2,8 +2,8 @@ import 'package:dispatch_pi_dart/domain/uscases/tokens/is_token_expired.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../fixtures.dart';
-import '../../../mocks.dart';
+import '../../../../fixtures.dart';
+import '../../../../mocks.dart';
 
 void main() {
   late IsTokenExpired isTokenExpired;

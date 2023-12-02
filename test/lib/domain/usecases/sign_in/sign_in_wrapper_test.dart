@@ -8,8 +8,8 @@ import 'package:dispatch_pi_dart/domain/uscases/sign_in/sign_in_wrapper.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../fixtures.dart';
-import '../../../mocks.dart';
+import '../../../../fixtures.dart';
+import '../../../../mocks.dart';
 
 void main() {
   late SignInWrapper<User, UserAuthenticationRepository<User>> signInWrapper;
