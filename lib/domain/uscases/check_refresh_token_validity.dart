@@ -18,6 +18,9 @@ import 'package:dispatch_pi_dart/domain/uscases/is_token_expired.dart';
 /// Parameters:
 /// - [String] refreshToken
 ///
+/// Returns:
+/// - [None] if the token is valid
+///
 /// Failures:
 /// - [ExpiredTokenFailure]
 /// - [InvalidTokenFailure]
