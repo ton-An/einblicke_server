@@ -1,3 +1,5 @@
+import 'package:clock/clock.dart';
+
 /// {@template is_token_expired}
 /// A wrapper for checking if a token is expired
 ///
@@ -10,11 +12,15 @@
 /// {@endtemplate}
 class IsTokenExpired {
   /// {@macro is_token_expired}
-  const IsTokenExpired();
+  const IsTokenExpired({required this.clock});
+
+  final Clock clock;
 
   /// {@macro is_token_expired}
   bool call({required DateTime expiresAt}) {
-    // TODO: implement check for expired token
-    throw UnimplementedError();
+    final DateTime now = clock.now();
+    final bool isTokenExpired = expiresAt.isAfter(now);
+
+    return isTokenExpired;
   }
 }
