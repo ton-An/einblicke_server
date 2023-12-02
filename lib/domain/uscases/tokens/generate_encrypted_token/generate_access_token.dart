@@ -1,7 +1,7 @@
 import 'package:dispatch_pi_dart/core/secrets.dart';
 import 'package:dispatch_pi_dart/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
-import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_encrypted_token.dart';
+import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_encrypted_token/generate_encrypted_token.dart';
 
 /// {@template generate_access_token}
 /// Generates an access token for a given user

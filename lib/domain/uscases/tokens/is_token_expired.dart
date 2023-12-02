@@ -14,6 +14,7 @@ class IsTokenExpired {
   /// {@macro is_token_expired}
   const IsTokenExpired({required this.clock});
 
+  /// Used to get the current time.
   final Clock clock;
 
   /// {@macro is_token_expired}

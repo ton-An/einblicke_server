@@ -5,7 +5,7 @@ import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/expired_token_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/refresh_token_reuse_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/token_verification_failure.dart';
-import 'package:dispatch_pi_dart/domain/uscases/tokens/check_refresh_token_validity.dart';
+import 'package:dispatch_pi_dart/domain/uscases/tokens/check_refresh_token_validity/check_refresh_token_validity.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

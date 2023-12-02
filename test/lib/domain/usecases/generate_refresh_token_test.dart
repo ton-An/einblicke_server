@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_refresh_token.dart';
+import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_encrypted_token/generate_refresh_token.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
