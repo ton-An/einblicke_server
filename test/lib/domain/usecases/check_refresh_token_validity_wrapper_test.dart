@@ -1,8 +1,3 @@
-// Check Refresh Token Validity
-// should check if the signatue is valid if the token is valid
-// (meaning signature and expiration wise)
-// should check if the token is being reused / if it is in the database
-
 // ignore_for_file: inference_failure_on_instance_creation, inference_failure_on_function_invocation
 
 import 'package:dartz/dartz.dart';
