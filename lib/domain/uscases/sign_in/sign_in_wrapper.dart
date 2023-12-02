@@ -7,8 +7,8 @@ import 'package:dispatch_pi_dart/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
 import 'package:dispatch_pi_dart/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/domain/repositories/user_authentication_repository.dart';
-import 'package:dispatch_pi_dart/domain/uscases/generate_access_token.dart';
-import 'package:dispatch_pi_dart/domain/uscases/generate_refresh_token.dart';
+import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_access_token.dart';
+import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_refresh_token.dart';
 
 /// {@template sign_in_wrapper}
 /// A wrapper for signing in a [U] user with a given username and password

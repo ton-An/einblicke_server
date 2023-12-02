@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
 import 'package:dispatch_pi_dart/domain/repositories/user_authentication_repository.dart';
-import 'package:dispatch_pi_dart/domain/uscases/sign_in_wrapper.dart';
+import 'package:dispatch_pi_dart/domain/uscases/sign_in/sign_in_wrapper.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

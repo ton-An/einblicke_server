@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_password_failure.dart';
 import 'package:dispatch_pi_dart/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/domain/repositories/frame_authentication_repository.dart';
-import 'package:dispatch_pi_dart/domain/uscases/create_picture_frame.dart';
+import 'package:dispatch_pi_dart/domain/uscases/create_user/create_picture_frame.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

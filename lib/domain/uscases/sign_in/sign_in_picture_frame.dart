@@ -5,7 +5,7 @@ import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/domain/models/authentication_credentials.dart';
 import 'package:dispatch_pi_dart/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/domain/repositories/frame_authentication_repository.dart';
-import 'package:dispatch_pi_dart/domain/uscases/sign_in_wrapper.dart';
+import 'package:dispatch_pi_dart/domain/uscases/sign_in/sign_in_wrapper.dart';
 
 /// {@template sign_in_picture_frame}
 /// Use case for signing in a [PictureFrame].

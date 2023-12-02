@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_password_failure.dart';
 import 'package:dispatch_pi_dart/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/domain/repositories/curator_authentication_repository.dart';
-import 'package:dispatch_pi_dart/domain/uscases/create_curator.dart';
+import 'package:dispatch_pi_dart/domain/uscases/create_user/create_curator.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

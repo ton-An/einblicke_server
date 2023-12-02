@@ -8,7 +8,7 @@ import 'package:dispatch_pi_dart/domain/models/token_payload.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
 import 'package:dispatch_pi_dart/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/domain/repositories/user_authentication_repository.dart';
-import 'package:dispatch_pi_dart/domain/uscases/is_token_expired.dart';
+import 'package:dispatch_pi_dart/domain/uscases/tokens/is_token_expired.dart';
 
 /// {@template check_refresh_token_validity}
 /// A wrapper for checking if a refresh token is valid

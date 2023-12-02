@@ -2,7 +2,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/domain/uscases/save_refresh_token.dart';
+import 'package:dispatch_pi_dart/domain/uscases/tokens/save_refresh_token.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
