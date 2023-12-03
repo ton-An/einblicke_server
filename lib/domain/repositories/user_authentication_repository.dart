@@ -3,6 +3,7 @@ import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
+import 'package:dispatch_pi_dart/domain/models/user.dart';
 
 /// {@template user_auth_repository}
 /// Repository for user authentication
@@ -122,4 +123,17 @@ abstract class UserAuthenticationRepository<T> {
     String userId,
     String refreshToken,
   );
+
+  /// Gets the user from the database for the given user id
+  ///
+  /// Parameters:
+  /// - [String] userId
+  ///
+  /// Returns:
+  /// - a [User]
+  ///
+  /// Failures:
+  /// - [DatabaseReadFailure]
+  /// - [UserNotFoundFailure]
+  Future<Either<Failure, T>> getUserFromId(String userId);
 }
