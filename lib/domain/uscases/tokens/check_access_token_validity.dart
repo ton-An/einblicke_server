@@ -3,7 +3,7 @@ import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/expired_token_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
-import 'package:dispatch_pi_dart/domain/models/token_payload.dart';
+import 'package:dispatch_pi_dart/domain/models/token_claims.dart';
 import 'package:dispatch_pi_dart/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/domain/uscases/tokens/is_token_expired.dart';
 
@@ -43,7 +43,7 @@ class CheckAccessTokenValidity {
 
   Future<Either<Failure, String>> _checkTokenSignatureValidity(
       {required String accessToken}) async {
-    final Either<Failure, TokenPayload> signatureCheckEither =
+    final Either<Failure, TokenClaims> signatureCheckEither =
         basicAuthRepository.checkTokenSignatureValidity(
       accessToken,
     );
@@ -57,7 +57,7 @@ class CheckAccessTokenValidity {
   }
 
   Future<Either<Failure, String>> _checkTokenExpiration({
-    required TokenPayload tokenPayload,
+    required TokenClaims tokenPayload,
   }) async {
     final bool isTokenExpired = isTokenExpiredUseCase(
       expiresAt: tokenPayload.expiresAt,

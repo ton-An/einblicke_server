@@ -8,43 +8,45 @@ import '../../../../../secrets_fixture.dart';
 
 void main() {
   late GenerateAccessToken generateAccessToken;
-  late MockGenerateEncryptedToken mockGenerateEncryptedToken;
+  late MockBasicAuthRepository mockBasicAuthRepository;
+  late MockClock mockClock;
 
   late MockUser tMockUser;
 
   setUp(() {
-    mockGenerateEncryptedToken = MockGenerateEncryptedToken();
+    mockBasicAuthRepository = MockBasicAuthRepository();
+    mockClock = MockClock();
     generateAccessToken = GenerateAccessToken(
-      generateEncryptedToken: mockGenerateEncryptedToken,
+      basicAuthRepository: mockBasicAuthRepository,
+      clock: mockClock,
       secrets: tSecrets,
     );
 
     tMockUser = MockUser();
 
+    registerFallbackValue(MockTokenClaims());
+
+    when(() => mockClock.now()).thenReturn(tIssuedAt);
+    when(() => mockBasicAuthRepository.generateJWEToken(any()))
+        .thenReturn(tEncryptedToken.token);
     when(() => tMockUser.userId).thenReturn(tUserId);
-    when(
-      () => mockGenerateEncryptedToken(
-        payload: any(named: 'payload'),
-        expiresIn: any(named: 'expiresIn'),
-      ),
-    ).thenReturn(tEncryptedToken);
   });
 
-  // should generate an encrypted token with the user id and user type
-  test('should generate an encrypted token with the user id and user type', () {
+  // should get the current time
+  test("should get the current time", () {
     // act
     generateAccessToken(user: tMockUser);
 
     // assert
-    verify(
-      () => mockGenerateEncryptedToken(
-        payload: {
-          'userId': tUserId,
-          'userType': tMockUser.runtimeType,
-        },
-        expiresIn: tSecrets.accessTokenLifetime,
-      ),
-    );
+    verify(() => mockClock.now());
+  });
+
+  test("should generate a jwe token", () {
+    // act
+    generateAccessToken(user: tMockUser);
+
+    // assert
+    verify(() => mockBasicAuthRepository.generateJWEToken(tAccessTokenClaims));
   });
 
   test("should return an [EncryptedToken]", () {

@@ -27,19 +27,17 @@ void main() {
         username: any(named: "username"),
         password: any(named: "password"),
       ),
-    ).thenAnswer((_) async => const Right(tAuthenticationCredentials));
+    ).thenAnswer((_) async => Right(tAuthenticationCredentials));
   });
 
   test(
       "should call [MockSignInWrapper] and return the [AuthenticationCredentials]",
       () async {
-    // arrange
-
     // act
     final result = await signInPictureFrame(tUsername, tPassword);
 
     // assert
-    expect(result, const Right(tAuthenticationCredentials));
+    expect(result, Right(tAuthenticationCredentials));
     verify(
         () => mockSignInPictureFrame(username: tUsername, password: tPassword));
   });

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
-import 'package:dispatch_pi_dart/domain/models/token_payload.dart';
+import 'package:dispatch_pi_dart/domain/models/token_claims.dart';
 
 /// {@template basic_auth_repository}
 /// Repository for basic authentication related operations
@@ -32,11 +32,10 @@ abstract class BasicAuthenticationRepository {
   ///
   /// Parameters:
   /// - [Map] payload
-  /// - [int] expiresIn (in seconds)
   ///
   /// Returns:
   /// - a [String] containing the signed token
-  String generateJWEToken(Map payload, int expiresIn);
+  String generateJWEToken(TokenClaims claims);
 
   /// Checks if the given token is valid
   ///
@@ -44,11 +43,20 @@ abstract class BasicAuthenticationRepository {
   /// - [String] refreshToken
   ///
   /// Returns:
-  /// - a [TokenPayload] containing the payload of the token
+  /// - a [TokenClaims] containing the payload of the token
   ///
   /// Failures:
   /// - [InvalidTokenFailure]
-  Either<Failure, TokenPayload> checkTokenSignatureValidity(
+  Either<Failure, TokenClaims> checkTokenSignatureValidity(
     String refreshToken,
   );
+
+  /// Generates a unique id for a token
+  ///
+  /// Returns:
+  /// - a [String] containing the unique token id
+  ///
+  /// Failures:
+  /// - ... TBD ...
+  String generateTokenId();
 }

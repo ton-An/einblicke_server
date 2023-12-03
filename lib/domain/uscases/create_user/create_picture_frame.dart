@@ -7,7 +7,7 @@ import 'package:dispatch_pi_dart/core/failures/invalid_username_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/username_taken_failure.dart';
 import 'package:dispatch_pi_dart/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/domain/repositories/frame_authentication_repository.dart';
-import 'package:dispatch_pi_dart/domain/uscases/create_user_wrapper.dart';
+import 'package:dispatch_pi_dart/domain/uscases/create_user/create_user_wrapper.dart';
 
 /// {@template create_picture_frame}
 /// Creates a [PictureFrame] user with a given username and password

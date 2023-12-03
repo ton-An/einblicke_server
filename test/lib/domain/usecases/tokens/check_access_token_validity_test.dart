@@ -28,7 +28,7 @@ void main() {
         any(),
       ),
     ).thenAnswer(
-      (_) => Right(tTokenPayload),
+      (_) => Right(tAccessTokenClaims),
     );
 
     when(
@@ -77,7 +77,7 @@ void main() {
       // assert
       verify(
         () => mockIsTokenExpired(
-          expiresAt: tTokenPayload.expiresAt,
+          expiresAt: tAccessTokenClaims.expiresAt,
         ),
       );
     });

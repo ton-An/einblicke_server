@@ -11,10 +11,10 @@ class TSecrets extends Secrets {
   String get clientSecret => "testClientSecret";
 
   @override
-  int get accessTokenLifetime => 12345;
+  Duration get accessTokenLifetime => Duration(hours: 1);
 
   @override
-  int get refreshTokenLifetime => 123456;
+  Duration get refreshTokenLifetime => Duration(days: 16);
 }
 
 const TSecrets tSecrets = TSecrets();

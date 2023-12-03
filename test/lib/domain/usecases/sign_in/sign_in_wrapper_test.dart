@@ -136,7 +136,7 @@ void main() {
         );
 
         // assert
-        expect(result, const Right(tAuthenticationCredentials));
+        expect(result, Right(tAuthenticationCredentials));
       });
     });
   });

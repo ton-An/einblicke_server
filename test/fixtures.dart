@@ -1,10 +1,12 @@
+import 'package:dispatch_pi_dart/domain/models/access_token_claims.dart';
 import 'package:dispatch_pi_dart/domain/models/authentication_credentials.dart';
 import 'package:dispatch_pi_dart/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/domain/models/token_payload.dart';
+import 'package:dispatch_pi_dart/domain/models/refresh_token_claims.dart';
 
 import 'mocks.dart';
+import 'secrets_fixture.dart';
 
 // User
 const String tUserId = "testUserId";
@@ -21,51 +23,60 @@ final Type tUserType = tCurator.runtimeType;
 
 const String tAccessToken = "testAccessToken";
 const String tRefreshToken = "testRefreshToken";
+const String tTokenId = "testTokenId";
 
-const AuthenticationCredentials tAuthenticationCredentials =
+AuthenticationCredentials tAuthenticationCredentials =
     AuthenticationCredentials(
   accessToken: tEncryptedAccessToken,
   refreshToken: tEncryptedRefreshToken,
 );
 
-const int tIssuedAt = 1701460426;
-const int tExpiresAt = 1701464026;
-DateTime tIssuedAtDatetime = DateTime(2013, 5, 25, 17, 0);
-DateTime tValidExpiresAt = DateTime(2013, 5, 25, 17, 45);
-DateTime tInvalidExpiresAt = DateTime(2013, 5, 25, 18, 15);
+DateTime tIssuedAt = DateTime(2013, 5, 25, 17, 15);
+DateTime tInvalidExpiresAt = DateTime(2013, 5, 25, 17, 45);
 DateTime tCurrentTime = DateTime(2013, 5, 25, 18, 0);
+DateTime tValidExpiresAt = DateTime(2013, 5, 25, 18, 15);
 
-final TokenPayload tTokenPayload = TokenPayload(
+final AccessTokenClaims tAccessTokenClaims = AccessTokenClaims(
   userId: tUserId,
-  issuedAt: tIssuedAtDatetime,
-  expiresAt: tValidExpiresAt,
+  userType: MockUser().runtimeType,
+  issuedAt: tIssuedAt,
+  expiresAt: tIssuedAt.add(
+    tSecrets.accessTokenLifetime,
+  ),
 );
 
-final TokenPayload tExpiredTokenPayload = TokenPayload(
+final AccessTokenClaims tExpiredAccessTokenClaims = AccessTokenClaims(
   userId: tUserId,
-  issuedAt: tIssuedAtDatetime,
+  userType: MockUser().runtimeType,
+  issuedAt: tIssuedAt,
   expiresAt: tInvalidExpiresAt,
 );
 
-const String tTokenString = "testTokenString";
-final Map tPayload = {
-  'id': tUserId,
-  'iat': tIssuedAt,
-  'exp': tExpiresAt,
-  'type': MockUser,
-};
+final RefreshTokenClaims tRefreshTokenClaims = RefreshTokenClaims(
+  tokenId: tTokenId,
+  userId: tUserId,
+  userType: MockUser().runtimeType,
+  issuedAt: tIssuedAt,
+  expiresAt: tIssuedAt.add(
+    tSecrets.refreshTokenLifetime,
+  ),
+);
 
-const EncryptedToken tEncryptedToken = EncryptedToken(
+const String tTokenString = "testTokenString";
+
+EncryptedToken tEncryptedToken = EncryptedToken(
   token: tTokenString,
-  expiresIn: tExpiresAt,
+  expiresAt: tValidExpiresAt,
 );
-const EncryptedToken tEncryptedAccessToken = EncryptedToken(
+EncryptedToken tEncryptedAccessToken = EncryptedToken(
   token: tAccessToken,
-  expiresIn: tExpiresAt,
+  expiresAt: tValidExpiresAt,
 );
-const EncryptedToken tEncryptedRefreshToken = EncryptedToken(
+EncryptedToken tEncryptedRefreshToken = EncryptedToken(
   token: tRefreshToken,
-  expiresIn: tExpiresAt,
+  expiresAt: tIssuedAt.add(
+    tSecrets.refreshTokenLifetime,
+  ),
 );
 
 // Curator

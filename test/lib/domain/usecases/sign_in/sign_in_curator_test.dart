@@ -25,7 +25,7 @@ void main() {
         username: any(named: "username"),
         password: any(named: "password"),
       ),
-    ).thenAnswer((_) async => const Right(tAuthenticationCredentials));
+    ).thenAnswer((_) async => Right(tAuthenticationCredentials));
   });
 
   test(
@@ -37,7 +37,7 @@ void main() {
     final result = await signInCurator(tUsername, tPassword);
 
     // assert
-    expect(result, const Right(tAuthenticationCredentials));
+    expect(result, Right(tAuthenticationCredentials));
     verify(() => mockSignInCurator(username: tUsername, password: tPassword));
   });
 

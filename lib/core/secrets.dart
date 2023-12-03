@@ -15,8 +15,8 @@ abstract class Secrets {
   String get clientId;
 
   /// The lifetime of the access token
-  int get accessTokenLifetime;
+  Duration get accessTokenLifetime;
 
   /// The lifetime of the refresh token
-  int get refreshTokenLifetime;
+  Duration get refreshTokenLifetime;
 }

@@ -4,7 +4,7 @@ import 'package:dispatch_pi_dart/core/failures/expired_token_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/refresh_token_reuse_failure.dart';
-import 'package:dispatch_pi_dart/domain/models/token_payload.dart';
+import 'package:dispatch_pi_dart/domain/models/token_claims.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
 import 'package:dispatch_pi_dart/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/domain/repositories/user_authentication_repository.dart';
@@ -55,14 +55,14 @@ class CheckRefreshTokenValidityWrapper<U extends User,
   Future<Either<Failure, String>> _checkTokenSignatureValidity({
     required String refreshToken,
   }) async {
-    final Either<Failure, TokenPayload> signatureCheckEither =
+    final Either<Failure, TokenClaims> signatureCheckEither =
         basicAuthRepository.checkTokenSignatureValidity(
       refreshToken,
     );
 
     return signatureCheckEither.fold(
       Left.new,
-      (TokenPayload payload) => _checkTokenExpiration(
+      (TokenClaims payload) => _checkTokenExpiration(
         refreshToken: refreshToken,
         payload: payload,
       ),
@@ -71,7 +71,7 @@ class CheckRefreshTokenValidityWrapper<U extends User,
 
   Future<Either<Failure, String>> _checkTokenExpiration({
     required String refreshToken,
-    required TokenPayload payload,
+    required TokenClaims payload,
   }) async {
     final bool isTokenExpired = isTokenExpiredUseCase(
       expiresAt: payload.expiresAt,
@@ -89,7 +89,7 @@ class CheckRefreshTokenValidityWrapper<U extends User,
 
   Future<Either<Failure, String>> _checkTokenReuse({
     required String refreshToken,
-    required TokenPayload payload,
+    required TokenClaims payload,
   }) async {
     final Either<Failure, bool> isRefreshTokenInDbEither =
         await userAuthRepository.isRefreshTokenInUserDb(

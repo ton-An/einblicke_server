@@ -8,43 +8,55 @@ import '../../../../../secrets_fixture.dart';
 
 void main() {
   late GenerateRefreshToken generateRefreshToken;
-  late MockGenerateEncryptedToken mockGenerateEncryptedToken;
+  late MockBasicAuthRepository mockBasicAuthRepository;
+  late MockClock mockClock;
 
   late MockUser tMockUser;
 
   setUp(() {
-    mockGenerateEncryptedToken = MockGenerateEncryptedToken();
+    mockBasicAuthRepository = MockBasicAuthRepository();
+    mockClock = MockClock();
     generateRefreshToken = GenerateRefreshToken(
-      generateEncryptedToken: mockGenerateEncryptedToken,
+      basicAuthRepository: mockBasicAuthRepository,
       secrets: tSecrets,
+      clock: mockClock,
     );
 
     tMockUser = MockUser();
 
+    registerFallbackValue(MockTokenClaims());
+
+    when(() => mockClock.now()).thenReturn(tIssuedAt);
+    when(() => mockBasicAuthRepository.generateTokenId()).thenReturn(tTokenId);
+    when(() => mockBasicAuthRepository.generateJWEToken(any()))
+        .thenReturn(tEncryptedRefreshToken.token);
     when(() => tMockUser.userId).thenReturn(tUserId);
-    when(
-      () => mockGenerateEncryptedToken(
-        payload: any(named: 'payload'),
-        expiresIn: any(named: 'expiresIn'),
-      ),
-    ).thenReturn(tEncryptedToken);
   });
 
-  // should generate an encrypted token with the user id and user type
-  test('should generate an encrypted token with the user id and user type', () {
+  // should get the current time
+  test("should get the current time", () {
     // act
     generateRefreshToken(user: tMockUser);
 
     // assert
-    verify(
-      () => mockGenerateEncryptedToken(
-        payload: {
-          'userId': tUserId,
-          'userType': tMockUser.runtimeType,
-        },
-        expiresIn: tSecrets.refreshTokenLifetime,
-      ),
-    );
+    verify(() => mockClock.now());
+  });
+
+  // should generate a token id
+  test("should generate a token id", () {
+    // act
+    generateRefreshToken(user: tMockUser);
+
+    // assert
+    verify(() => mockBasicAuthRepository.generateTokenId());
+  });
+
+  test("should generate a jwe token", () {
+    // act
+    generateRefreshToken(user: tMockUser);
+
+    // assert
+    verify(() => mockBasicAuthRepository.generateJWEToken(tRefreshTokenClaims));
   });
 
   test("should return an [EncryptedToken]", () {
@@ -52,6 +64,6 @@ void main() {
     final result = generateRefreshToken(user: tMockUser);
 
     // assert
-    expect(result, tEncryptedToken);
+    expect(result, tEncryptedRefreshToken);
   });
 }

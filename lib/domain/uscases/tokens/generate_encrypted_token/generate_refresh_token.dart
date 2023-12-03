@@ -1,7 +1,9 @@
+import 'package:clock/clock.dart';
 import 'package:dispatch_pi_dart/core/secrets.dart';
 import 'package:dispatch_pi_dart/domain/models/encrypted_token.dart';
+import 'package:dispatch_pi_dart/domain/models/refresh_token_claims.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
-import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_encrypted_token/generate_encrypted_token.dart';
+import 'package:dispatch_pi_dart/domain/repositories/basic_authentication_repository.dart';
 
 /// {@template generate_refresh_token}
 /// Generates an refresh token for a given user
@@ -15,26 +17,40 @@ import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_encrypted_token/
 class GenerateRefreshToken {
   /// {@macro generate_refresh_token}
   const GenerateRefreshToken({
-    required this.generateEncryptedToken,
+    required this.basicAuthRepository,
     required this.secrets,
+    required this.clock,
   });
 
   /// Use case for generating an encrypted token
-  final GenerateEncryptedToken generateEncryptedToken;
+  final BasicAuthenticationRepository basicAuthRepository;
 
   /// Secrets for generating the token
   final Secrets secrets;
 
+  final Clock clock;
+
   /// {@macro generate_refresh_token}
   EncryptedToken call({required User user}) {
-    final EncryptedToken encryptedToken = generateEncryptedToken(
-      payload: {
-        'userId': user.userId,
-        'userType': user.runtimeType,
-      },
-      expiresIn: secrets.refreshTokenLifetime,
+    final DateTime issuedAt = clock.now();
+    final DateTime expiresAt = issuedAt.add(secrets.refreshTokenLifetime);
+    final String tokenId = basicAuthRepository.generateTokenId();
+
+    final RefreshTokenClaims claims = RefreshTokenClaims(
+      tokenId: tokenId,
+      userId: user.userId,
+      userType: user.runtimeType,
+      issuedAt: issuedAt,
+      expiresAt: expiresAt,
     );
 
-    return encryptedToken;
+    final String tokenString = basicAuthRepository.generateJWEToken(claims);
+
+    final EncryptedToken token = EncryptedToken(
+      token: tokenString,
+      expiresAt: expiresAt,
+    );
+
+    return token;
   }
 }

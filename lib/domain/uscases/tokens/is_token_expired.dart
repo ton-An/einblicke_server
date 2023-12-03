@@ -20,7 +20,8 @@ class IsTokenExpired {
   /// {@macro is_token_expired}
   bool call({required DateTime expiresAt}) {
     final DateTime now = clock.now();
-    final bool isTokenExpired = expiresAt.isAfter(now);
+    final bool isExpryInFuture = expiresAt.isAfter(now);
+    final bool isTokenExpired = !isExpryInFuture;
 
     return isTokenExpired;
   }
