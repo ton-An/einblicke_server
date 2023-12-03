@@ -9,6 +9,7 @@ import 'package:dispatch_pi_dart/domain/repositories/basic_authentication_reposi
 import 'package:dispatch_pi_dart/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_encrypted_token/generate_access_token.dart';
 import 'package:dispatch_pi_dart/domain/uscases/tokens/generate_encrypted_token/generate_refresh_token.dart';
+import 'package:dispatch_pi_dart/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
 
 /// {@template sign_in_wrapper}
 /// A wrapper for signing in a [U] user with a given username and password
@@ -31,6 +32,7 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     required this.basicAuthRepository,
     required this.generateAccessToken,
     required this.generateRefreshToken,
+    required this.saveRefreshTokenUsecase,
   });
 
   /// Used to create the record of the [U] user
@@ -44,6 +46,9 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
 
   /// Used to generate a refresh token
   final GenerateRefreshToken generateRefreshToken;
+
+  /// Used to save the refresh token
+  final SaveRefreshToken<U, R> saveRefreshTokenUsecase;
 
   /// {@macro sign_in_wrapper}
   Future<Either<Failure, AuthenticationCredentials>> call({
@@ -87,10 +92,31 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     final EncryptedToken accessToken = generateAccessToken(user: user);
     final EncryptedToken refreshToken = generateRefreshToken(user: user);
 
-    return Right(
-      AuthenticationCredentials(
-        accessToken: accessToken,
-        refreshToken: refreshToken,
+    return _saveRefreshToken(
+      user: user,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    );
+  }
+
+  Future<Either<Failure, AuthenticationCredentials>> _saveRefreshToken({
+    required U user,
+    required EncryptedToken accessToken,
+    required EncryptedToken refreshToken,
+  }) async {
+    final Either<Failure, None> saveRefreshTokenEither =
+        await saveRefreshTokenUsecase(
+      userId: user.userId,
+      refreshToken: refreshToken,
+    );
+
+    return saveRefreshTokenEither.fold(
+      Left.new,
+      (None none) => Right(
+        AuthenticationCredentials(
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        ),
       ),
     );
   }

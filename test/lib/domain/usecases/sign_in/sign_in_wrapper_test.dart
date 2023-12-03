@@ -1,6 +1,7 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
 import 'package:dispatch_pi_dart/domain/repositories/user_authentication_repository.dart';
@@ -17,6 +18,7 @@ void main() {
   late MockBasicAuthRepository mockBasicAuthRepository;
   late MockGenerateAccessToken mockGenerateAccessToken;
   late MockGenerateRefreshToken mockGenerateRefreshToken;
+  late MockSaveRefreshToken mockSaveRefreshToken;
 
   late MockUser tMockUser;
 
@@ -25,15 +27,19 @@ void main() {
     mockBasicAuthRepository = MockBasicAuthRepository();
     mockGenerateAccessToken = MockGenerateAccessToken();
     mockGenerateRefreshToken = MockGenerateRefreshToken();
+    mockSaveRefreshToken = MockSaveRefreshToken();
 
     signInWrapper = SignInWrapper(
       userAuthRepository: mockUserAuthRepository,
       basicAuthRepository: mockBasicAuthRepository,
       generateAccessToken: mockGenerateAccessToken,
       generateRefreshToken: mockGenerateRefreshToken,
+      saveRefreshTokenUsecase: mockSaveRefreshToken,
     );
 
     tMockUser = MockUser();
+
+    registerFallbackValue(MockEncryptedToken());
 
     when(() => mockBasicAuthRepository.generatePasswordHash(any()))
         .thenReturn(tPasswordHash);
@@ -47,6 +53,13 @@ void main() {
         .thenReturn(tEncryptedAccessToken);
     when(() => mockGenerateRefreshToken(user: tMockUser))
         .thenReturn(tEncryptedRefreshToken);
+    when(() => tMockUser.userId).thenReturn(tUserId);
+    when(
+      () => mockSaveRefreshToken(
+        userId: any(named: "userId"),
+        refreshToken: any(named: "refreshToken"),
+      ),
+    ).thenAnswer((_) async => const Right(None()));
   });
 
   group("get hashed version of password", () {
@@ -123,6 +136,43 @@ void main() {
 
         // assert
         verify(() => mockGenerateRefreshToken(user: tMockUser));
+      });
+    });
+
+    group("save the refresh token", () {
+      test("should save the refresh token", () async {
+        // act
+        await signInWrapper(
+          username: tUsername,
+          password: tPassword,
+        );
+
+        // assert
+        verify(
+          () => mockSaveRefreshToken(
+            userId: tUserId,
+            refreshToken: tEncryptedRefreshToken,
+          ),
+        );
+      });
+
+      test("should relay [Failure]s", () async {
+        // arrange
+        when(
+          () => mockSaveRefreshToken(
+            userId: any(named: "userId"),
+            refreshToken: any(named: "refreshToken"),
+          ),
+        ).thenAnswer((_) async => const Left(DatabaseWriteFailure()));
+
+        // act
+        final result = await signInWrapper(
+          username: tUsername,
+          password: tPassword,
+        );
+
+        // assert
+        expect(result, const Left(DatabaseWriteFailure()));
       });
     });
 
