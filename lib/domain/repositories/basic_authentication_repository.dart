@@ -59,4 +59,16 @@ abstract class BasicAuthenticationRepository {
   /// Failures:
   /// - ... TBD ...
   String generateTokenId();
+
+  /// Gets the user id from a given token
+  ///
+  /// Parameters:
+  /// - [String] token
+  ///
+  /// Returns:
+  /// - a [String] containing the user id
+  ///
+  /// Failures:
+  /// - ... TBD ...
+  Either<Failure, String> getUserIdFromToken(String token);
 }
