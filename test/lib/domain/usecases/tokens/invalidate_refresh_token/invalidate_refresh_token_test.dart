@@ -28,7 +28,7 @@ void main() {
     // act
     final result = await removeRefreshToken(
       userId: tUserId,
-      refreshToken: tEncryptedRefreshToken,
+      refreshTokenString: tRefreshToken,
     );
 
     // assert
@@ -49,7 +49,7 @@ void main() {
     // act
     final result = await removeRefreshToken(
       userId: tUserId,
-      refreshToken: tEncryptedRefreshToken,
+      refreshTokenString: tRefreshToken,
     );
 
     // assert

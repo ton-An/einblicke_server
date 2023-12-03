@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/domain/models/user.dart';
 import 'package:dispatch_pi_dart/domain/repositories/user_authentication_repository.dart';
 
@@ -10,7 +9,7 @@ import 'package:dispatch_pi_dart/domain/repositories/user_authentication_reposit
 ///
 /// Parameters:
 /// - [String] userId
-/// - [EncryptedToken] refreshToken
+/// - [String] refreshTokenString
 ///
 /// Failures:
 /// - [DatabaseWriteFailure]
@@ -26,10 +25,8 @@ class InvalidateRefreshToken<U extends User,
   /// {@macro invalidate_refresh_token}
   Future<Either<Failure, None>> call({
     required String userId,
-    required EncryptedToken refreshToken,
+    required String refreshTokenString,
   }) {
-    final String refreshTokenString = refreshToken.token;
-
     return userAuthenticationRepository.removeRefreshTokenFromDb(
       userId,
       refreshTokenString,
