@@ -96,3 +96,10 @@ const PictureFrame tPictureFrame = PictureFrame(
   username: tUsername,
   passwordHash: tPasswordHash,
 );
+
+// Image Exchange
+const List<int> tImageBytes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+final DateTime tCreatedAt = DateTime(2013, 5, 25, 17, 15);
+
+const String tImageId = "testImageId";

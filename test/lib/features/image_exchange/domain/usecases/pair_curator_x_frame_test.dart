@@ -47,7 +47,7 @@ void main() {
     ).thenAnswer((_) async => const Right(true));
 
     when(
-      () => mockImageExchangeRepository.areCuratorAndFramePaired(
+      () => mockImageExchangeRepository.areCuratorXFramePaired(
         curatorId: any(named: "curatorId"),
         frameId: any(named: "frameId"),
       ),
@@ -171,7 +171,7 @@ void main() {
 
       // assert
       verify(
-        () => mockImageExchangeRepository.areCuratorAndFramePaired(
+        () => mockImageExchangeRepository.areCuratorXFramePaired(
           curatorId: tCuratorId,
           frameId: tPictureFrameId,
         ),
@@ -183,7 +183,7 @@ void main() {
         " are already paired", () async {
       // arrange
       when(
-        () => mockImageExchangeRepository.areCuratorAndFramePaired(
+        () => mockImageExchangeRepository.areCuratorXFramePaired(
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
         ),
@@ -202,7 +202,7 @@ void main() {
     test("should relay [Failure]s", () async {
       // arrange
       when(
-        () => mockImageExchangeRepository.areCuratorAndFramePaired(
+        () => mockImageExchangeRepository.areCuratorXFramePaired(
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
         ),

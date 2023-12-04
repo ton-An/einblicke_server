@@ -18,6 +18,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/i
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/send_image_to_frame.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}
@@ -76,3 +77,5 @@ class MockCuratorAuthRepository extends Mock
 
 class MockFrameAuthRepository extends Mock
     implements FrameAuthenticationRepository {}
+
+class MockSendImageToFrame extends Mock implements SendImageToFrame {}

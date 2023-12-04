@@ -96,7 +96,7 @@ class PairCuratorXFrame {
     required String frameId,
   }) async {
     final Either<Failure, bool> areCuratorXFrameAlreadyPairedEither =
-        await imageExchangeRepository.areCuratorAndFramePaired(
+        await imageExchangeRepository.areCuratorXFramePaired(
       curatorId: curatorId,
       frameId: frameId,
     );
