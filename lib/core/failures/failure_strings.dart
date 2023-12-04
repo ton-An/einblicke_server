@@ -8,4 +8,5 @@ import 'package:dispatch_pi_dart/core/failures/failure.dart';
 class FailureStrings {
   static const String authenticationCategoryCode = "authentication";
   static const String databaseCategoryCode = "database";
+  static const String imageExchangeCategoryCode = "image_exchange";
 }
