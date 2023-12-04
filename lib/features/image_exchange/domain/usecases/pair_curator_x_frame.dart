@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/already_paired_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/curator_not_found_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/curator_x_frame_already_paired_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
@@ -105,7 +104,7 @@ class PairCuratorXFrame {
     return areCuratorXFrameAlreadyPairedEither.fold(Left.new,
         (bool areCuratorXFrameAlreadyPaired) {
       if (areCuratorXFrameAlreadyPaired) {
-        return const Left(CuratorXFrameAlreadyPairedFailure());
+        return const Left(AlreadyPairedFailure());
       }
 
       return _pairCuratorXFrame(
