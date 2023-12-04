@@ -3,6 +3,8 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/repositories/curator_authentication_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user/create_user_wrapper.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_password_valid.dart';
@@ -15,6 +17,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/i
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_refresh_tokens/invalidate_refresh_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}
@@ -64,3 +67,12 @@ class MockInvalidateRefreshToken<U extends User,
 class MockInvalidateAllRefreshTokens<U extends User,
         R extends UserAuthenticationRepository<U>> extends Mock
     implements InvalidateAllRefreshTokens<U, R> {}
+
+class MockImageExchangeRepository extends Mock
+    implements ImageExchangeRepository {}
+
+class MockCuratorAuthRepository extends Mock
+    implements CuratorAuthenticationRepository {}
+
+class MockFrameAuthRepository extends Mock
+    implements FrameAuthenticationRepository {}

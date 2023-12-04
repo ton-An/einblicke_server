@@ -136,4 +136,16 @@ abstract class UserAuthenticationRepository<T> {
   /// - [DatabaseReadFailure]
   /// - [UserNotFoundFailure]
   Future<Either<Failure, T>> getUserFromId(String userId);
+
+  /// Checks if the user with the given user id exists
+  ///
+  /// Parameters:
+  /// - [String] userId
+  ///
+  /// Returns:
+  /// - a [bool] indicating if the user exists
+  ///
+  /// Failures:
+  /// - [DatabaseReadFailure]
+  Future<Either<Failure, bool>> doesUserWithIdExist(String userId);
 }
