@@ -1,9 +1,9 @@
-import 'package:dispatch_pi_dart/domain/models/access_token_claims.dart';
-import 'package:dispatch_pi_dart/domain/models/authentication_credentials.dart';
-import 'package:dispatch_pi_dart/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/domain/models/encrypted_token.dart';
-import 'package:dispatch_pi_dart/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/domain/models/refresh_token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/access_token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/refresh_token_claims.dart';
 
 import 'mocks.dart';
 import 'secrets_fixture.dart';
