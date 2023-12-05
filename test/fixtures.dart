@@ -4,6 +4,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.d
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/refresh_token_claims.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 
 import 'mocks.dart';
 import 'secrets_fixture.dart';
@@ -103,3 +104,8 @@ const List<int> tImageBytes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 final DateTime tCreatedAt = DateTime(2013, 5, 25, 17, 15);
 
 const String tImageId = "testImageId";
+
+const Image tImage = Image(
+  imageId: tImageId,
+  imageBytes: tImageBytes,
+);

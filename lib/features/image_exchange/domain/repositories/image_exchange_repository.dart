@@ -1,8 +1,11 @@
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/failures/cloud_storage_unavailable_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/image_save_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_write_failure.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 
 /// {@template image_exchange_repository}
 /// Repository for exchanging images between a curator and a frame
@@ -40,14 +43,15 @@ abstract class ImageExchangeRepository {
     required String frameId,
   });
 
-  /// Saves an image to the database
+  /// Saves an image to storage
   ///
   /// Parameters:
   /// - [String] imageId
   /// - [List<int>] imageBytes
   ///
   /// Failures:
-  /// - [ImageSaveFailure]
+  /// - [CloudStorageWriteFailure]
+  /// - [CloudStorageUnavailableFailure]
   Future<Either<Failure, None>> saveImage({
     required String imageId,
     required List<int> imageBytes,
@@ -72,4 +76,30 @@ abstract class ImageExchangeRepository {
 
   /// Generates an id for an image
   String generateImageId();
+
+  /// Gets the latest image id from the database
+  ///
+  /// Returns:
+  /// - [List<int>] imageBytes
+  ///
+  /// Failures:
+  /// - [DatabaseReadFailure]
+  Future<Either<Failure, String>> getLatestImageIdFromDb({
+    required String frameId,
+  });
+
+  /// Gets an image from storage
+  ///
+  /// Parameters:
+  /// - [String] imageId
+  ///
+  /// Returns:
+  /// - [List<int>] imageBytes
+  ///
+  /// Failures:
+  /// - [CloudStorageReadFailure]
+  /// - [CloudStorageUnavailableFailure]
+  Future<Either<Failure, Image>> getImageById({
+    required String imageId,
+  });
 }

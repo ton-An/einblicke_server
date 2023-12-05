@@ -1,10 +1,11 @@
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/failures/cloud_storage_unavailable_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/image_save_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/not_paired_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_write_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
@@ -22,7 +23,8 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/send_im
 /// - [NotPairedFailure]
 /// - [DatabaseReadFailure]
 /// - [DatabaseWriteFailure]
-/// - [ImageSaveFailure]
+/// - [CloudStorageUnavailableFailure]
+/// - [CloudStorageWriteFailure]
 /// - ... TBD ...
 /// {@endtemplate}
 class ReceiveImageFromCurator {
