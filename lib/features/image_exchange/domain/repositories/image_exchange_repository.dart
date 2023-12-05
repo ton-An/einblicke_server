@@ -84,6 +84,7 @@ abstract class ImageExchangeRepository {
   ///
   /// Failures:
   /// - [DatabaseReadFailure]
+  /// - [NoImagesFoundFailure]
   Future<Either<Failure, String>> getLatestImageIdFromDb({
     required String frameId,
   });
