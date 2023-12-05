@@ -104,8 +104,20 @@ const List<int> tImageBytes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 final DateTime tCreatedAt = DateTime(2013, 5, 25, 17, 15);
 
 const String tImageId = "testImageId";
+const String tSecondImageId = "testSecondImageId";
+const String tThirdImageId = "testThirdImageId";
 
 const Image tImage = Image(
   imageId: tImageId,
+  imageBytes: tImageBytes,
+);
+
+const Image tSecondImage = Image(
+  imageId: tSecondImageId,
+  imageBytes: tImageBytes,
+);
+
+const Image tThirdImage = Image(
+  imageId: tThirdImageId,
   imageBytes: tImageBytes,
 );

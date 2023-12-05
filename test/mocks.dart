@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:clock/clock.dart';
+import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
@@ -17,7 +21,9 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/i
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_refresh_tokens/invalidate_refresh_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/send_image_to_frame.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -79,3 +85,8 @@ class MockFrameAuthRepository extends Mock
     implements FrameAuthenticationRepository {}
 
 class MockSendImageToFrame extends Mock implements SendImageToFrame {}
+
+class MockImageStreamController extends Mock
+    implements StreamController<Either<Failure, Image>> {}
+
+class MockGetLatestImage extends Mock implements GetLatestImage {}
