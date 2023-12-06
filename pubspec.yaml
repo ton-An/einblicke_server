@@ -9,8 +9,11 @@ environment:
 dependencies:
   clock: ^1.1.1
   dart_frog: ^1.0.0
+  dart_frog_auth: ^1.1.0
+  dart_frog_web_socket: ^1.0.0
   dartz: ^0.10.1
   equatable: ^2.0.5
+  get_it: ^7.6.4
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
 
