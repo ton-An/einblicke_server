@@ -8,13 +8,12 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/c
 import 'package:dispatch_pi_dart/injection_container.dart';
 
 /// An authentiaction middleware that verifies a users access token
-Middleware authenticationMiddleware<
-    U extends User,
-    R extends UserAuthenticationRepository<U>,
-    V extends CheckAccessTokenValidityWrapper<U, R>>() {
+Middleware authenticationMiddleware<U extends User,
+    R extends UserAuthenticationRepository<U>>() {
   return bearerAuthentication<User>(
     authenticator: (context, token) async {
-      final V checkAccessTokenValidity = getIt.get<V>();
+      final CheckAccessTokenValidityWrapper<U, R> checkAccessTokenValidity =
+          getIt.get();
 
       final Either<Failure, User> tokenValidityEither =
           await checkAccessTokenValidity(accessToken: token);
