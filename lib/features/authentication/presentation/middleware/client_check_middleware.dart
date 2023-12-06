@@ -1,0 +1,31 @@
+import 'dart:io';
+
+import 'package:dart_frog/dart_frog.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_id_valid.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_secret_valid.dart';
+import 'package:dispatch_pi_dart/injection_container.dart';
+
+Middleware clientCheckMiddleware() {
+  return (handler) => (context) async {
+        final String? clientId = context.request.headers['client_id'];
+        final String? clientSecret = context.request.headers['client_secret'];
+        final IsClientIdValid isClientIdValidUsecase =
+            getIt.get<IsClientIdValid>();
+        final IsClientSecretValid isClientSecretValidUsecase =
+            getIt.get<IsClientSecretValid>();
+
+        if (clientId == null || clientSecret == null) {
+          return Response(statusCode: HttpStatus.unauthorized);
+        }
+
+        final bool isClientIdValid = isClientIdValidUsecase(clientId);
+        final bool isClientSecretValid =
+            isClientSecretValidUsecase(clientSecret);
+
+        if (isClientIdValid && isClientSecretValid) {
+          return handler(context);
+        } else {
+          return Response(statusCode: HttpStatus.unauthorized);
+        }
+      };
+}
