@@ -25,7 +25,6 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dar
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/send_image_to_frame.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}
@@ -84,8 +83,6 @@ class MockCuratorAuthRepository extends Mock
 
 class MockFrameAuthRepository extends Mock
     implements FrameAuthenticationRepository {}
-
-class MockSendImageToFrame extends Mock implements SendImageToFrame {}
 
 class MockImageStreamController extends Mock
     implements StreamController<Either<Failure, Image>> {}

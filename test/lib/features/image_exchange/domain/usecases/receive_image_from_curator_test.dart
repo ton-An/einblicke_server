@@ -15,16 +15,13 @@ import '../../../../../mocks.dart';
 void main() {
   late ReceiveImageFromCurator receiveImageFromCurator;
   late MockImageExchangeRepository mockImageExchangeRepository;
-  late MockSendImageToFrame mockSendImageToFrame;
   late MockClock mockClock;
 
   setUp(() {
     mockImageExchangeRepository = MockImageExchangeRepository();
-    mockSendImageToFrame = MockSendImageToFrame();
     mockClock = MockClock();
     receiveImageFromCurator = ReceiveImageFromCurator(
       imageExchangeRepository: mockImageExchangeRepository,
-      sendImageToFrame: mockSendImageToFrame,
       clock: mockClock,
     );
 
@@ -54,13 +51,6 @@ void main() {
         frameId: any(named: "frameId"),
         imageId: any(named: "imageId"),
         createdAt: any(named: "createdAt"),
-      ),
-    ).thenAnswer((_) async => const Right(None()));
-
-    when(
-      () => mockSendImageToFrame(
-        frameId: any(named: "frameId"),
-        imageId: any(named: "imageId"),
       ),
     ).thenAnswer((_) async => const Right(None()));
   });
@@ -231,45 +221,6 @@ void main() {
 
       // assert
       expect(result, const Left(DatabaseWriteFailure()));
-    });
-  });
-
-  group("send the image to the frame", () {
-    test("should send the image to the frame", () async {
-      // act
-      await receiveImageFromCurator(
-        curatorId: tCuratorId,
-        frameId: tPictureFrameId,
-        imageBytes: tImageBytes,
-      );
-
-      // assert
-      verify(
-        () => mockSendImageToFrame(
-          frameId: tPictureFrameId,
-          imageId: tImageId,
-        ),
-      );
-    });
-
-    test("should relay [Failure]s", () async {
-      // arrange
-      when(
-        () => mockSendImageToFrame(
-          frameId: any(named: "frameId"),
-          imageId: any(named: "imageId"),
-        ),
-      ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
-
-      // act
-      final result = await receiveImageFromCurator(
-        curatorId: tCuratorId,
-        frameId: tPictureFrameId,
-        imageBytes: tImageBytes,
-      );
-
-      // assert
-      expect(result, const Left(DatabaseReadFailure()));
     });
   });
 

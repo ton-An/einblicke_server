@@ -9,7 +9,6 @@ import 'package:dispatch_pi_dart/core/failures/storage_write_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/send_image_to_frame.dart';
 
 /// {@template receive_image_from_curator}
 /// Receives an image from a [Curator] and sends it to a [PictureFrame].
@@ -31,15 +30,11 @@ class ReceiveImageFromCurator {
   /// {@macro receive_image_from_curator}
   ReceiveImageFromCurator({
     required this.imageExchangeRepository,
-    required this.sendImageToFrame,
     required this.clock,
   });
 
   /// Used to interact with the database and storage
   final ImageExchangeRepository imageExchangeRepository;
-
-  /// Used to send the image to the frame
-  final SendImageToFrame sendImageToFrame;
 
   /// Used to get the current time
   final Clock clock;
@@ -132,21 +127,6 @@ class ReceiveImageFromCurator {
       createdAt: createdAt,
     );
 
-    return saveImageToDbEither.fold(Left.new, (_) {
-      return _sendImageToFrame(
-        frameId: frameId,
-        imageId: imageId,
-      );
-    });
-  }
-
-  Future<Either<Failure, None>> _sendImageToFrame({
-    required String frameId,
-    required String imageId,
-  }) {
-    return sendImageToFrame(
-      frameId: frameId,
-      imageId: imageId,
-    );
+    return saveImageToDbEither;
   }
 }
