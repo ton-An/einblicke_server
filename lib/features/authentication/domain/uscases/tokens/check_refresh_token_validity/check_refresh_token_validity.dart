@@ -3,11 +3,13 @@ import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/expired_token_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/invalid_user_role_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/refresh_token_reuse_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/get_user_with_type.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
 
 /// {@template check_refresh_token_validity}
@@ -26,6 +28,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/i
 /// - [InvalidTokenFailure]
 /// - [RefreshTokenReuseFailure]
 /// - [DatabaseReadFailure]
+/// - [InvalidUserTypeFailure]
 /// {@endtemplate}
 class CheckRefreshTokenValidityWrapper<U extends User,
     R extends UserAuthenticationRepository<U>> {
@@ -34,6 +37,7 @@ class CheckRefreshTokenValidityWrapper<U extends User,
     required this.userAuthRepository,
     required this.basicAuthRepository,
     required this.isTokenExpiredUseCase,
+    required this.getUserWithType,
   });
 
   /// The repository for user authentication related operations
@@ -45,14 +49,17 @@ class CheckRefreshTokenValidityWrapper<U extends User,
   /// The use case for checking if a token is expired
   final IsTokenExpired isTokenExpiredUseCase;
 
+  /// The use case for getting a user from the database
+  final GetUserWithType<U, R> getUserWithType;
+
   /// {@macro check_refresh_token_validity}
-  Future<Either<Failure, String>> call({
+  Future<Either<Failure, U>> call({
     required String refreshToken,
   }) async {
     return _checkTokenSignatureValidity(refreshToken: refreshToken);
   }
 
-  Future<Either<Failure, String>> _checkTokenSignatureValidity({
+  Future<Either<Failure, U>> _checkTokenSignatureValidity({
     required String refreshToken,
   }) async {
     final Either<Failure, TokenClaims> signatureCheckEither =
@@ -69,7 +76,7 @@ class CheckRefreshTokenValidityWrapper<U extends User,
     );
   }
 
-  Future<Either<Failure, String>> _checkTokenExpiration({
+  Future<Either<Failure, U>> _checkTokenExpiration({
     required String refreshToken,
     required TokenClaims payload,
   }) async {
@@ -87,7 +94,7 @@ class CheckRefreshTokenValidityWrapper<U extends User,
     );
   }
 
-  Future<Either<Failure, String>> _checkTokenReuse({
+  Future<Either<Failure, U>> _checkTokenReuse({
     required String refreshToken,
     required TokenClaims payload,
   }) async {
@@ -104,8 +111,17 @@ class CheckRefreshTokenValidityWrapper<U extends User,
           return const Left(RefreshTokenReuseFailure());
         }
 
-        return Right(payload.userId);
+        return _getUser(userId: payload.userId);
       },
+    );
+  }
+
+  Future<Either<Failure, U>> _getUser({
+    required String userId,
+  }) async {
+    return getUserWithType(
+      userId: userId,
+      userType: U,
     );
   }
 }

@@ -18,17 +18,24 @@ void main() {
   late MockUserAuthRepository mockUserAuthenticationRepository;
   late MockBasicAuthRepository mockBasicAuthRepository;
   late MockIsTokenExpired mockIsTokenExpired;
+  late MockGetUserWithType mockGetUserWithType;
+
+  late MockUser tMockUser;
 
   setUp(() {
     mockUserAuthenticationRepository = MockUserAuthRepository();
     mockBasicAuthRepository = MockBasicAuthRepository();
     mockIsTokenExpired = MockIsTokenExpired();
+    mockGetUserWithType = MockGetUserWithType();
     checkRefreshTokenValidityWrapper =
         CheckRefreshTokenValidityWrapper<MockUser, MockUserAuthRepository>(
       userAuthRepository: mockUserAuthenticationRepository,
       basicAuthRepository: mockBasicAuthRepository,
       isTokenExpiredUseCase: mockIsTokenExpired,
+      getUserWithType: mockGetUserWithType,
     );
+
+    tMockUser = MockUser();
 
     when(
       () => mockBasicAuthRepository.checkTokenSignatureValidity(
@@ -51,6 +58,15 @@ void main() {
       ),
     ).thenAnswer(
       (_) async => const Right(true),
+    );
+
+    when(
+      () => mockGetUserWithType(
+        userId: any(named: "userId"),
+        userType: any(named: "userType"),
+      ),
+    ).thenAnswer(
+      (_) async => Right(tMockUser),
     );
   });
 
@@ -172,12 +188,48 @@ void main() {
     });
   });
 
-  test("should return the userId if the token is valid", () async {
+  group("get user", () {
+    test("should get the user with type", () async {
+      // act
+      await checkRefreshTokenValidityWrapper(refreshToken: tRefreshToken);
+
+      // assert
+      verify(
+        () => mockGetUserWithType(
+          userId: tUserId,
+          userType: MockUser,
+        ),
+      );
+    });
+
+    test("should relay [Failure]s", () async {
+      // arrange
+      when(
+        () => mockGetUserWithType(
+          userId: any(named: "userId"),
+          userType: any(named: "userType"),
+        ),
+      ).thenAnswer(
+        (_) async => const Left(
+          DatabaseReadFailure(),
+        ),
+      );
+
+      // act
+      final result =
+          await checkRefreshTokenValidityWrapper(refreshToken: tRefreshToken);
+
+      // assert
+      expect(result, const Left(DatabaseReadFailure()));
+    });
+  });
+
+  test("should return a user if the token is valid", () async {
     // act
     final result =
         await checkRefreshTokenValidityWrapper(refreshToken: tRefreshToken);
 
     // assert
-    expect(result, const Right(tUserId));
+    expect(result, Right(tMockUser));
   });
 }

@@ -1,10 +1,9 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/expired_token_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/invalid_user_role_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_access_token_validity/check_access_token_validity.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -17,6 +16,7 @@ void main() {
   late MockBasicAuthRepository mockBasicAuthRepository;
   late MockIsTokenExpired mockIsTokenExpired;
   late MockUserAuthRepository mockUserAuthRepository;
+  late MockGetUserWithType mockGetUserWithType;
 
   late MockUser tMockUser;
 
@@ -24,11 +24,13 @@ void main() {
     mockBasicAuthRepository = MockBasicAuthRepository();
     mockIsTokenExpired = MockIsTokenExpired();
     mockUserAuthRepository = MockUserAuthRepository();
+    mockGetUserWithType = MockGetUserWithType();
     checkAccessTokenValidity =
         CheckAccessTokenValidityWrapper<MockUser, MockUserAuthRepository>(
       basicAuthRepository: mockBasicAuthRepository,
       isTokenExpiredUseCase: mockIsTokenExpired,
       userAuthenticationRepository: mockUserAuthRepository,
+      getUserWithType: mockGetUserWithType,
     );
 
     tMockUser = MockUser();
@@ -50,6 +52,15 @@ void main() {
     when(
       () => mockUserAuthRepository.getUserFromId(
         any(),
+      ),
+    ).thenAnswer(
+      (_) async => Right(tMockUser),
+    );
+
+    when(
+      () => mockGetUserWithType(
+        userId: any(named: "userId"),
+        userType: any(named: "userType"),
       ),
     ).thenAnswer(
       (_) async => Right(tMockUser),
@@ -118,47 +129,45 @@ void main() {
   });
 
   group("get user", () {
-    test("should get the user and return it", () async {
+    test("should get the user with type", () async {
       // act
-      final result = await checkAccessTokenValidity(accessToken: tAccessToken);
+      await checkAccessTokenValidity(accessToken: tAccessToken);
 
       // assert
-      expect(result, Right(tMockUser));
       verify(
-        () => mockUserAuthRepository.getUserFromId(
-          tAccessTokenClaims.userId,
+        () => mockGetUserWithType(
+          userId: tAccessTokenClaims.userId,
+          userType: MockUser,
         ),
       );
-    });
-
-    test("should return a [InvalidUserTypeFailure] if the user type is invalid",
-        () async {
-      // arrange
-      when(() => mockBasicAuthRepository.checkTokenSignatureValidity(any()))
-          .thenAnswer(
-        (_) => Right(tInvalidUserTypeAccessTokenClaims),
-      );
-
-      // act
-      final result = await checkAccessTokenValidity(accessToken: tAccessToken);
-
-      // assert
-      expect(result, const Left(InvalidUserTypeFailure()));
     });
 
     test("should relay [Failure]s", () async {
       // arrange
       when(
-        () => mockUserAuthRepository.getUserFromId(
-          any(),
+        () => mockGetUserWithType(
+          userId: any(named: "userId"),
+          userType: any(named: "userType"),
         ),
-      ).thenAnswer((_) async => const Left(UserNotFoundFailure()));
+      ).thenAnswer(
+        (_) async => const Left(
+          DatabaseReadFailure(),
+        ),
+      );
 
       // act
       final result = await checkAccessTokenValidity(accessToken: tAccessToken);
 
       // assert
-      expect(result, const Left(UserNotFoundFailure()));
+      expect(result, const Left(DatabaseReadFailure()));
     });
+  });
+
+  test("should return a user", () async {
+    // act
+    final result = await checkAccessTokenValidity(accessToken: tAccessToken);
+
+    // assert
+    expect(result, Right(tMockUser));
   });
 }

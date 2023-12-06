@@ -9,6 +9,7 @@ class CheckFrameAccessTokenValidity extends CheckAccessTokenValidityWrapper<
   const CheckFrameAccessTokenValidity({
     required super.basicAuthRepository,
     required super.isTokenExpiredUseCase,
+    required super.getUserWithType,
     required FrameAuthenticationRepository frameAuthenticationRepository,
   }) : super(
           userAuthenticationRepository: frameAuthenticationRepository,

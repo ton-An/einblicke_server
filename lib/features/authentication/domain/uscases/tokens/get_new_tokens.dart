@@ -98,8 +98,8 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
 
         return Left(failure);
       },
-      (String userId) => _getUserFromId(
-        userId: userId,
+      (User user) => _generateAccessToken(
+        user: user,
         oldRefreshToken: refreshToken,
       ),
     );
@@ -121,22 +121,6 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
         (_) => const Left(RefreshTokenReuseFailure()),
       );
     });
-  }
-
-  Future<Either<Failure, AuthenticationCredentials>> _getUserFromId(
-      {required String userId, required String oldRefreshToken}) async {
-    final Either<Failure, User> getUserEither =
-        await userAuthRepository.getUserFromId(
-      userId,
-    );
-
-    return getUserEither.fold(
-      Left.new,
-      (User user) => _generateAccessToken(
-        user: user,
-        oldRefreshToken: oldRefreshToken,
-      ),
-    );
   }
 
   Future<Either<Failure, AuthenticationCredentials>> _generateAccessToken({

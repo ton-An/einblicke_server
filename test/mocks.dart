@@ -11,6 +11,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/repositories/cur
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user/create_user_wrapper.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/get_user_with_type.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_password_valid.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_username_valid.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_wrapper.dart';
@@ -92,3 +93,6 @@ class MockGetLatestImage extends Mock implements GetLatestImage {}
 class MockStreamSink extends Mock implements StreamSink {}
 
 class MockGetImageFromId extends Mock implements GetImageFromId {}
+
+class MockGetUserWithType extends Mock
+    implements GetUserWithType<MockUser, MockUserAuthRepository> {}

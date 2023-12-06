@@ -56,7 +56,7 @@ void main() {
       () => mockCheckRefreshTokenValidityWrapper(
         refreshToken: any(named: "refreshToken"),
       ),
-    ).thenAnswer((_) async => const Right(tUserId));
+    ).thenAnswer((_) async => Right(tMockUser));
     when(() => tMockUser.userId).thenReturn(tUserId);
     when(
       () => mockInvalidateAllRefreshTokens(
@@ -79,11 +79,6 @@ void main() {
         refreshToken: any(named: "refreshToken"),
       ),
     ).thenAnswer((_) async => const Right(None()));
-    when(
-      () => mockUserAuthRepository.getUserFromId(
-        any(),
-      ),
-    ).thenAnswer((_) async => Right(tMockUser));
   });
 
   group("check validity of the refresh token", () {
@@ -141,33 +136,6 @@ void main() {
       when(
         () => mockCheckRefreshTokenValidityWrapper(
           refreshToken: any(named: "refreshToken"),
-        ),
-      ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
-
-      // act
-      final result = await getNewTokens(oldRefreshToken: tRefreshToken);
-
-      // assert
-      expect(result, const Left(DatabaseReadFailure()));
-    });
-  });
-
-  group("get user from id", () {
-    test("should get the user from their id", () async {
-      // act
-      await getNewTokens(oldRefreshToken: tRefreshToken);
-
-      // assert
-      verify(
-        () => mockUserAuthRepository.getUserFromId(tUserId),
-      );
-    });
-
-    test("should relay [Failure]s", () async {
-      // arrange
-      when(
-        () => mockUserAuthRepository.getUserFromId(
-          any(),
         ),
       ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
 

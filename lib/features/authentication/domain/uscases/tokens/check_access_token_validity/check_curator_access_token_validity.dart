@@ -9,6 +9,7 @@ class CheckCuratorAccessTokenValidity extends CheckAccessTokenValidityWrapper<
   const CheckCuratorAccessTokenValidity({
     required super.basicAuthRepository,
     required super.isTokenExpiredUseCase,
+    required super.getUserWithType,
     required CuratorAuthenticationRepository curatorAuthenticationRepository,
   }) : super(
           userAuthenticationRepository: curatorAuthenticationRepository,
