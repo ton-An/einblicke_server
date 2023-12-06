@@ -9,3 +9,4 @@ linter:
     file_names: false
     prefer_single_quotes: false
     omit_local_variable_types: false
+    cascade_invocations: false
