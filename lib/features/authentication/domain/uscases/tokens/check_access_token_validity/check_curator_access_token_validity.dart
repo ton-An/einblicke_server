@@ -3,10 +3,10 @@ import 'package:dispatch_pi_dart/features/authentication/domain/repositories/fra
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_access_token_validity/check_access_token_validity.dart';
 
 /// {@macro check_access_token_validity_wrapper}
-class CheckFrameAccessTokenValidity extends CheckAccessTokenValidityWrapper<
+class CheckCuratorAccessTokenValidity extends CheckAccessTokenValidityWrapper<
     PictureFrame, FrameAuthenticationRepository> {
   /// {@macro check_access_token_validity_wrapper}
-  const CheckFrameAccessTokenValidity({
+  const CheckCuratorAccessTokenValidity({
     required super.basicAuthRepository,
     required super.isTokenExpiredUseCase,
     required FrameAuthenticationRepository frameAuthenticationRepository,
