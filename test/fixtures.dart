@@ -46,6 +46,15 @@ final AccessTokenClaims tAccessTokenClaims = AccessTokenClaims(
   ),
 );
 
+typedef InvalidUserType = String;
+
+final AccessTokenClaims tInvalidUserTypeAccessTokenClaims = AccessTokenClaims(
+  userId: tUserId,
+  userType: InvalidUserType,
+  issuedAt: tIssuedAt,
+  expiresAt: tValidExpiresAt,
+);
+
 final AccessTokenClaims tExpiredAccessTokenClaims = AccessTokenClaims(
   userId: tUserId,
   userType: MockUser().runtimeType,

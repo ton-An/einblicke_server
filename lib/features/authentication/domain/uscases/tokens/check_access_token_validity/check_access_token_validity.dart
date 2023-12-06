@@ -3,29 +3,37 @@ import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/expired_token_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/invalid_user_role_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
 
-/// {@template check_access_token_validity}
+/// {@template check_access_token_validity_wrapper}
 /// Checks if an access token is valid
 ///
 /// Parameters:
 /// - [String] accessToken
 ///
 /// Returns:
-/// - [String userId] if the token is valid
+/// - [U] a user object if the token is valid
 ///
 /// Failures:
 /// - [ExpiredTokenFailure]
 /// - [InvalidTokenFailure]
 /// - [DatabaseReadFailure]
+/// - [InvalidUserTypeFailure]
+/// - [UserNotFoundFailure]
 /// {@endtemplate}
-class CheckAccessTokenValidity {
-  /// {@macro check_access_token_validity}
-  const CheckAccessTokenValidity({
+class CheckAccessTokenValidityWrapper<U extends User,
+    R extends UserAuthenticationRepository<U>> {
+  /// {@macro check_access_token_validity_wrapper}
+  const CheckAccessTokenValidityWrapper({
     required this.basicAuthRepository,
     required this.isTokenExpiredUseCase,
+    required this.userAuthenticationRepository,
   });
 
   /// Used for checking the signature of the token
@@ -34,15 +42,19 @@ class CheckAccessTokenValidity {
   /// Checks if a token is expired
   final IsTokenExpired isTokenExpiredUseCase;
 
+  /// Used for getting the user from the database
+  final R userAuthenticationRepository;
+
   /// {@macro check_access_token_validity}
-  Future<Either<Failure, String>> call({required String accessToken}) {
+  Future<Either<Failure, U>> call({required String accessToken}) {
     return _checkTokenSignatureValidity(
       accessToken: accessToken,
     );
   }
 
-  Future<Either<Failure, String>> _checkTokenSignatureValidity(
-      {required String accessToken}) async {
+  Future<Either<Failure, U>> _checkTokenSignatureValidity({
+    required String accessToken,
+  }) async {
     final Either<Failure, TokenClaims> signatureCheckEither =
         basicAuthRepository.checkTokenSignatureValidity(
       accessToken,
@@ -56,7 +68,7 @@ class CheckAccessTokenValidity {
     );
   }
 
-  Future<Either<Failure, String>> _checkTokenExpiration({
+  Future<Either<Failure, U>> _checkTokenExpiration({
     required TokenClaims tokenPayload,
   }) async {
     final bool isTokenExpired = isTokenExpiredUseCase(
@@ -69,7 +81,21 @@ class CheckAccessTokenValidity {
       );
     }
 
-    return Right(
+    return _getUser(
+      tokenPayload: tokenPayload,
+    );
+  }
+
+  Future<Either<Failure, U>> _getUser({
+    required TokenClaims tokenPayload,
+  }) async {
+    if (tokenPayload.userType != U) {
+      return const Left(
+        InvalidUserTypeFailure(),
+      );
+    }
+
+    return userAuthenticationRepository.getUserFromId(
       tokenPayload.userId,
     );
   }
