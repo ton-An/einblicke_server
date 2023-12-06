@@ -19,6 +19,12 @@ class AuthenticationCredentials extends Equatable {
   /// The refresh token for a user used to generate a new access token
   final EncryptedToken refreshToken;
 
+  /// Converts this instance to a json [Map]
+  Map<String, dynamic> toJson() => {
+        'access_token': accessToken.token,
+        'refresh_token': refreshToken.token,
+      };
+
   @override
   List<Object?> get props => [accessToken, refreshToken];
 }
