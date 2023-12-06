@@ -1,14 +1,30 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/failures/cloud_storage_unavailable_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/frame_not_connected_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/no_images_found_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/models/socket_connection.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
-import 'package:equatable/equatable.dart';
 
+/// {@template frame_socket_handler}
+/// Handles the websocket connections to the picture frames
+///
+/// Methods:
+/// - [addConnection] adds a new connection to the list of connections
+/// - [removeConnection] removes a connection from the list of connections
+/// - [sendImage] sends an image to all connections of a specific frame
+///
+/// [addConnection] is the only mehtod that adds it's [Failure]s to the stream
+///
+/// {@endtemplate}
 class FrameSocketHandler {
+  /// {@macro frame_socket_handler}
   FrameSocketHandler({
     required this.getImageFromId,
     required this.getLatestImage,
@@ -19,8 +35,17 @@ class FrameSocketHandler {
 
   final List<SocketConnetion> _connections = [];
 
-  Future<void> addConnection(
-      {required String frameId, required StreamSink streamSink}) async {
+  /// Adds a new connection to the list of connections
+  ///
+  /// Failures (emitted to the specific frames):
+  /// - [DatabaseReadFailure]
+  /// - [NoImagesFoundFailure]
+  /// - [CloudStorageReadFailure]
+  /// - [CloudStorageUnavailableFailure]
+  Future<void> addConnection({
+    required String frameId,
+    required StreamSink streamSink,
+  }) async {
     final latestImageEither = await getLatestImage(frameId: frameId);
 
     latestImageEither.fold(
@@ -34,6 +59,10 @@ class FrameSocketHandler {
     _connections.add(connetion);
   }
 
+  /// Removes a connection from the list of connections
+  ///
+  /// Failures:
+  /// - [FrameNotConnectedFailure] if the connection does not exist
   Either<Failure, None> removeConnection({
     required StreamSink streamSink,
   }) {
@@ -49,6 +78,12 @@ class FrameSocketHandler {
     return const Right(None());
   }
 
+  /// Sends an image to all connections of a specific frame
+  ///
+  /// Failures:
+  /// - [FrameNotConnectedFailure] if the frame is not connected
+  /// - [CloudStorageReadFailure]
+  /// - [CloudStorageUnavailableFailure]
   Future<Either<Failure, None>> sendImage({
     required String frameId,
     required String imageId,
@@ -94,17 +129,4 @@ class FrameSocketHandler {
       (connection) => connection.sink == streamSink,
     );
   }
-}
-
-class SocketConnetion extends Equatable {
-  const SocketConnetion({
-    required this.frameId,
-    required this.sink,
-  });
-
-  final String frameId;
-  final StreamSink sink;
-
-  @override
-  List<Object?> get props => [frameId, sink];
 }

@@ -5,6 +5,7 @@ import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_access_token_validity.dart';
 import 'package:dispatch_pi_dart/injection_container.dart';
 
+/// An authentiaction middleware that verifies a users access token
 Middleware authenticationMiddleware() {
   return bearerAuthentication<String>(
     authenticator: (context, token) async {

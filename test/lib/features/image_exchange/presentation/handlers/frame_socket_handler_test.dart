@@ -3,12 +3,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/frame_not_connected_failure.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../routes/frame_socket/frame_socket_handler.dart';
-import '../../fixtures.dart';
-import '../../mocks.dart';
+import '../../../../../fixtures.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   late FrameSocketHandler frameSocketHandler;
