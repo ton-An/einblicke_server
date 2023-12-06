@@ -3,6 +3,7 @@ import 'package:dispatch_pi_dart/core/failures/cloud_storage_unavailable_failure
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_dart/core/failures/no_images_found_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/storage_write_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';

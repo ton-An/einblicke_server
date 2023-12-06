@@ -2,7 +2,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_by_id.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
