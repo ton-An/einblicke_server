@@ -9,6 +9,7 @@ environment:
 dependencies:
   build_runner: ^2.4.7
   clock: ^1.1.1
+  crypto: ^3.0.3
   dart_frog: ^1.0.0
   dart_frog_auth: ^1.1.0
   dart_frog_web_socket: ^1.0.0
@@ -18,6 +19,7 @@ dependencies:
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
   mysql1: ^0.20.0
+  uuid: ^4.2.1
 
 dev_dependencies:
   mocktail: ^1.0.0
