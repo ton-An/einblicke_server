@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/data_sources/crypto_local_data_source.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
@@ -22,11 +23,13 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/i
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_refresh_tokens/invalidate_refresh_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_remote_data_source.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:mysql1/mysql1.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}
 
@@ -96,3 +99,10 @@ class MockGetImageFromId extends Mock implements GetImageFromId {}
 
 class MockGetUserWithType extends Mock
     implements GetUserWithType<MockUser, MockUserAuthRepository> {}
+
+class MockImageExchangeRemoteDataSource extends Mock
+    implements ImageExchangeRemoteDataSource {}
+
+class MockCryptoLocalDataSource extends Mock implements CryptoLocalDataSource {}
+
+class MockMySqlException extends Mock implements MySqlException {}

@@ -130,3 +130,5 @@ const Image tThirdImage = Image(
   imageId: tThirdImageId,
   imageBytes: tImageBytes,
 );
+
+const String tUuidString = "testUuidString";

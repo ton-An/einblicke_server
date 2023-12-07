@@ -77,7 +77,7 @@ abstract class ImageExchangeRemoteDataSource {
   ///
   /// Throws:
   /// - [MySqlException]
-  Future<Image> getLatestImageIdFromDb({
+  Future<String> getLatestImageIdFromDb({
     required String frameId,
   });
 
