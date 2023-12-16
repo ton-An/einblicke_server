@@ -6,7 +6,7 @@ import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_remote_data_source.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:sqlite3/sqlite3.dart';
 
 /// {@template image_exchange_repository_impl}
 /// Repository for exchanging images between a curator and a frame
@@ -37,7 +37,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return Right(areCuratorXFramePaired);
-    } on MySqlException catch (_) {
+    } on SqliteException catch (_) {
       return const Left(DatabaseReadFailure());
     }
   }
@@ -64,7 +64,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return Right(latestImageId);
-    } on MySqlException catch (_) {
+    } on SqliteException catch (_) {
       return const Left(DatabaseReadFailure());
     }
   }
@@ -81,7 +81,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return const Right(None());
-    } on MySqlException {
+    } on SqliteException {
       return const Left(DatabaseWriteFailure());
     }
   }
@@ -111,7 +111,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return const Right(None());
-    } on MySqlException {
+    } on SqliteException {
       return const Left(DatabaseWriteFailure());
     }
   }

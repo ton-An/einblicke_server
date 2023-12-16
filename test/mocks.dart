@@ -30,7 +30,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/ima
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:sqlite3/sqlite3.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}
 
@@ -106,7 +106,9 @@ class MockImageExchangeRemoteDataSource extends Mock
 
 class MockCryptoLocalDataSource extends Mock implements CryptoLocalDataSource {}
 
-class MockMySqlException extends Mock implements MySqlException {}
+class MockSqliteException extends Mock implements SqliteException {}
 
 class MockBasicAuthLocalDataSource extends Mock
     implements BasicAuthLocalDataSource {}
+
+class MockDatabase extends Mock implements Database {}

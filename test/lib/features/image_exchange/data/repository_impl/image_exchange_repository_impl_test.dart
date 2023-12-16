@@ -7,15 +7,15 @@ import 'package:dispatch_pi_dart/features/image_exchange/data/repository_impleme
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../../fixtures.dart';
-import '../../../../mocks.dart';
+import '../../../../../fixtures.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   late ImageExchangeRepositoryImpl imageExchangeRepositoryImpl;
   late MockImageExchangeRemoteDataSource mockImageExchangeRemoteDataSource;
   late MockCryptoLocalDataSource mockCryptoLocalDataSource;
 
-  late MockMySqlException tMockMysqlException;
+  late MockSqliteException tMockSqliteExcpetion;
 
   setUp(() {
     mockImageExchangeRemoteDataSource = MockImageExchangeRemoteDataSource();
@@ -25,7 +25,7 @@ void main() {
       cryptoLocalDataSource: mockCryptoLocalDataSource,
     );
 
-    tMockMysqlException = MockMySqlException();
+    tMockSqliteExcpetion = MockSqliteException();
   });
 
   group("areCuratorXFramePaired()", () {
@@ -56,7 +56,7 @@ void main() {
     });
 
     test(
-        "should return a [DatabaseReadFailure] when the data source throws a [MySqlException]",
+        "should return a [DatabaseReadFailure] when the data source throws a [SqliteException]",
         () async {
       // arrange
       when(
@@ -64,7 +64,7 @@ void main() {
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
         ),
-      ).thenThrow(tMockMysqlException);
+      ).thenThrow(tMockSqliteExcpetion);
 
       // act
       final result = await imageExchangeRepositoryImpl.areCuratorXFramePaired(
@@ -121,13 +121,13 @@ void main() {
 
     test(
         "should return a [DatabaseReadFailure] when the data source "
-        "throws a [MySqlException]", () async {
+        "throws a [SqliteException]", () async {
       // arrange
       when(
         () => mockImageExchangeRemoteDataSource.getLatestImageIdFromDb(
           frameId: any(named: "frameId"),
         ),
-      ).thenThrow(tMockMysqlException);
+      ).thenThrow(tMockSqliteExcpetion);
 
       // act
       final result = await imageExchangeRepositoryImpl.getLatestImageIdFromDb(
@@ -176,7 +176,7 @@ void main() {
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
         ),
-      ).thenThrow(tMockMysqlException);
+      ).thenThrow(tMockSqliteExcpetion);
 
       // act
       final result = await imageExchangeRepositoryImpl.pairCuratorXFrame(
@@ -226,7 +226,7 @@ void main() {
 
     test(
         "should return a [DatabaseWriteFailure] when the data source "
-        "throws a [MySqlException]", () async {
+        "throws a [SqliteException]", () async {
       // arrange
       when(
         () => mockImageExchangeRemoteDataSource.saveImageToDb(
@@ -235,7 +235,7 @@ void main() {
           imageId: any(named: "imageId"),
           createdAt: any(named: "createdAt"),
         ),
-      ).thenThrow(tMockMysqlException);
+      ).thenThrow(tMockSqliteExcpetion);
 
       // act
       final result = await imageExchangeRepositoryImpl.saveImageToDb(

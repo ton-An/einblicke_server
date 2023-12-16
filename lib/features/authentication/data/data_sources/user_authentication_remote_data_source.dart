@@ -1,5 +1,3 @@
-import 'package:mysql1/mysql1.dart';
-
 /// {@template user_authentication_remote_data_source}
 /// Remote data source for user authentication
 /// {@endtemplate}
@@ -17,7 +15,7 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [bool] indicating if the username is taken
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<bool> isUsernameTaken(String username);
 
   /// Checks if the given user id is already in
@@ -30,7 +28,7 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [bool] indicating if the user id is taken
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<bool> isUserIdTaken(String userId);
 
   /// Creates a record of a user with the given username and password hash
@@ -45,7 +43,7 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - a [T] object representing the created user
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<T> createUser({
     required String userId,
     required String username,
@@ -63,7 +61,7 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - a [T] object representing the user
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<T> getUser({
     required String username,
     required String passwordHash,
@@ -76,7 +74,7 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [String] refreshToken
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<void> saveRefreshTokenToDb({
     required String userId,
     required String refreshToken,
@@ -89,7 +87,7 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [String] refreshToken
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<void> removeRefreshTokenFromDb({
     required String userId,
     required String refreshToken,
@@ -101,7 +99,7 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [String] userId
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<void> removeAllRefreshTokensFromDb(String userId);
 
   /// Checks if the given refresh token is in the database
@@ -115,7 +113,7 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [bool] indicating if the refresh token is in the database
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<bool> isRefreshTokenInUserDb({
     required String userId,
     required String refreshToken,
@@ -130,7 +128,7 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - a [T] object representing the user
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<T> getUserFromId(String userId);
 
   /// Checks if a user with the given user id exists in the database
@@ -142,6 +140,6 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [bool] indicating if the user exists
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<bool> doesUserWithIdExist(String userId);
 }
