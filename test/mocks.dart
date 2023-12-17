@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/crypto_local_data_source.dart';
+import 'package:dispatch_pi_dart/features/authentication/data/data_sources/user_authentication_remote_data_source.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
@@ -127,3 +128,6 @@ class MockCryptoRepository extends Mock implements CryptoRepository {}
 class MockCryptoLocalDataSource extends Mock implements CryptoLocalDataSource {}
 
 class MockUuid extends Mock implements Uuid {}
+
+class MockUserAuthenticationLocalDataSource extends Mock
+    implements UserAuthenticationLocalDataSource {}

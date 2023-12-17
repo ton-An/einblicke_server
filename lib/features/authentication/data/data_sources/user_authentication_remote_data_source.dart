@@ -1,9 +1,12 @@
+import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
+import 'package:sqlite3/sqlite3.dart';
+
 /// {@template user_authentication_remote_data_source}
 /// Remote data source for user authentication
 /// {@endtemplate}
-abstract class UserAuthenticationRemoteDataSource<T> {
+abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// {@macro user_authentication_remote_data_source}
-  const UserAuthenticationRemoteDataSource();
+  const UserAuthenticationLocalDataSource();
 
   /// Checks if the given username is already in
   /// the database
@@ -40,11 +43,11 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [String] passwordHash
   ///
   /// Returns:
-  /// - a [T] object representing the created user
+  /// - a [U] object representing the created user
   ///
   /// Throws:
   /// - [SqliteException]
-  Future<T> createUser({
+  Future<U> createUser({
     required String userId,
     required String username,
     required String passwordHash,
@@ -58,11 +61,11 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [String] passwordHash
   ///
   /// Returns:
-  /// - a [T] object representing the user
+  /// - a [U] object representing the user
   ///
   /// Throws:
   /// - [SqliteException]
-  Future<T> getUser({
+  Future<U> getUser({
     required String username,
     required String passwordHash,
   });
@@ -125,11 +128,11 @@ abstract class UserAuthenticationRemoteDataSource<T> {
   /// - [String] userId
   ///
   /// Returns:
-  /// - a [T] object representing the user
+  /// - a [U] object representing the user
   ///
   /// Throws:
   /// - [SqliteException]
-  Future<T> getUserFromId(String userId);
+  Future<U> getUserFromId(String userId);
 
   /// Checks if a user with the given user id exists in the database
   ///

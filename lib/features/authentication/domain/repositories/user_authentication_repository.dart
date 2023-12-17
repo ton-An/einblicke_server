@@ -8,7 +8,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart
 /// {@template user_auth_repository}
 /// Repository for user authentication
 /// {@endtemplate}
-abstract class UserAuthenticationRepository<T> {
+abstract class UserAuthenticationRepository<U extends User> {
   /// {@macro user_auth_repository}
   const UserAuthenticationRepository();
 
@@ -44,11 +44,11 @@ abstract class UserAuthenticationRepository<T> {
   /// - [String] passwordHash
   ///
   /// Returns:
-  /// - a [T] object representing the created user
+  /// - a [U] object representing the created user
   ///
   /// Failures:
   /// - [DatabaseWriteFailure]
-  Future<Either<Failure, T>> createUser(
+  Future<Either<Failure, U>> createUser(
     String userId,
     String username,
     String passwordHash,
@@ -61,12 +61,12 @@ abstract class UserAuthenticationRepository<T> {
   /// - [String] passwordHash
   ///
   /// Returns:
-  /// - a [T] object representing the user
+  /// - a [U] object representing the user
   ///
   /// Failures:
   /// - [DatabaseReadFailure]
   /// - [UserNotFoundFailure]
-  Future<Either<Failure, T>> getUser(
+  Future<Either<Failure, U>> getUser(
     String username,
     String passwordHash,
   );
@@ -130,12 +130,12 @@ abstract class UserAuthenticationRepository<T> {
   /// - [String] userId
   ///
   /// Returns:
-  /// - a [User]
+  /// - a [U] user
   ///
   /// Failures:
   /// - [DatabaseReadFailure]
   /// - [UserNotFoundFailure]
-  Future<Either<Failure, T>> getUserFromId(String userId);
+  Future<Either<Failure, U>> getUserFromId(String userId);
 
   /// Checks if the user with the given user id exists
   ///
