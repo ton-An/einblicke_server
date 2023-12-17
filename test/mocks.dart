@@ -34,6 +34,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_lat
 import 'package:mocktail/mocktail.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite_async/sqlite_async.dart';
+import 'package:uuid/uuid.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}
 
@@ -124,3 +125,5 @@ class MockFile extends Mock implements File {}
 class MockCryptoRepository extends Mock implements CryptoRepository {}
 
 class MockCryptoLocalDataSource extends Mock implements CryptoLocalDataSource {}
+
+class MockUuid extends Mock implements Uuid {}
