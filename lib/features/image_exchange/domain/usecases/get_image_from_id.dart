@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_unavailable_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 
@@ -16,7 +15,6 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/ima
 ///
 /// Failures:
 /// - [StorageReadFailure]
-/// - [StorageUnavailableFailure]
 /// {@endtemplate}
 class GetImageFromId {
   /// {@macro get_image_by_id}

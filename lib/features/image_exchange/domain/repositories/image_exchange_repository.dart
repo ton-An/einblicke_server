@@ -4,7 +4,6 @@ import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/no_images_found_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_unavailable_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/write_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 
@@ -52,7 +51,6 @@ abstract class ImageExchangeRepository {
   ///
   /// Failures:
   /// - [StorageWriteFailure]
-  /// - [StorageUnavailableFailure]
   Future<Either<Failure, None>> saveImage({
     required String imageId,
     required List<int> imageBytes,
@@ -100,7 +98,6 @@ abstract class ImageExchangeRepository {
   ///
   /// Failures:
   /// - [StorageReadFailure]
-  /// - [StorageUnavailableFailure]
   Future<Either<Failure, Image>> getImageById({
     required String imageId,
   });

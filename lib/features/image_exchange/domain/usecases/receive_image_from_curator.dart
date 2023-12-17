@@ -4,7 +4,6 @@ import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/not_paired_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_unavailable_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/write_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
@@ -22,7 +21,6 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/ima
 /// - [NotPairedFailure]
 /// - [DatabaseReadFailure]
 /// - [DatabaseWriteFailure]
-/// - [StorageUnavailableFailure]
 /// - [StorageWriteFailure]
 /// - ... TBD ...
 /// {@endtemplate}
