@@ -3,6 +3,8 @@ import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 
 /// {@template user_auth_repository}
@@ -148,4 +150,22 @@ abstract class UserAuthenticationRepository<U extends User> {
   /// Failures:
   /// - [DatabaseReadFailure]
   Future<Either<Failure, bool>> doesUserWithIdExist(String userId);
+}
+
+/// {@template curator_authentication_repository}
+/// Repository wrapper for curator authentication
+/// {@endtemplate}
+abstract class CuratorAuthenticationRepository
+    extends UserAuthenticationRepository<Curator> {
+  /// {@macro curator_authentication_repository}
+  const CuratorAuthenticationRepository();
+}
+
+/// {@template frame_auth_repository}
+/// Repository wrapper for picture frame authentication
+/// {@endtemplate}
+abstract class FrameAuthenticationRepository
+    extends UserAuthenticationRepository<PictureFrame> {
+  /// {@macro frame_authentication_repository}
+  const FrameAuthenticationRepository();
 }

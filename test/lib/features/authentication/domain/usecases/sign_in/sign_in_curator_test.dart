@@ -3,7 +3,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/curator_authentication_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_curator.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';

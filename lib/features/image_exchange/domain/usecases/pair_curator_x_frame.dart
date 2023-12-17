@@ -8,8 +8,7 @@ import 'package:dispatch_pi_dart/core/failures/frame_not_found_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/curator_authentication_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/frame_authentication_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 
 /// {@template pair_curator_x_frame}
