@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -10,10 +13,16 @@ void main() {
   late ImageExchangeLocalDataSourceImpl imageExchangeLocalDataSourceImpl;
   late MockSqliteDatabase mockSqliteDatabase;
 
+  late MockFile tMockFile;
+
   setUp(() {
     mockSqliteDatabase = MockSqliteDatabase();
+
+    tMockFile = MockFile();
+
     imageExchangeLocalDataSourceImpl = ImageExchangeLocalDataSourceImpl(
       sqliteDatabase: mockSqliteDatabase,
+      imageDirectoryPath: tImageDirectoryPath,
     );
   });
 
@@ -58,7 +67,6 @@ void main() {
       expect(result, true);
     });
   });
-
   group("pairCuratorXFrame", () {
     setUp(() {
       when(() => mockSqliteDatabase.execute(any(), any()))
@@ -150,6 +158,65 @@ void main() {
         ),
       );
       expect(result, tImageId);
+    });
+  });
+
+  group("saveImage", () {
+    setUp(() {
+      when(() => tMockFile.writeAsBytes(any(), flush: any(named: "flush")))
+          .thenAnswer((_) async => tMockFile);
+    });
+
+    test("should write the image to the image directory", () {
+      IOOverrides.runZoned(
+        () async {
+          // act
+          await imageExchangeLocalDataSourceImpl.saveImage(
+            imageId: tImageId,
+            imageBytes: tImageBytes,
+          );
+
+          // assert
+          verify(
+            () => tMockFile.writeAsBytes(
+              tImageBytes,
+              flush: true,
+            ),
+          );
+        },
+        createFile: (String filePath) {
+          // assert
+          expect(filePath, tImageFilePath);
+          return tMockFile;
+        },
+      );
+    });
+  });
+
+  group("getImageById", () {
+    setUp(() {
+      when(() => tMockFile.readAsBytes())
+          .thenAnswer((_) async => Uint8List.fromList(tImageBytes));
+    });
+
+    test("should get the image from the image directory", () {
+      IOOverrides.runZoned(
+        () async {
+          // act
+          final result = await imageExchangeLocalDataSourceImpl.getImageById(
+            imageId: tImageId,
+          );
+
+          // assert
+          verify(() => tMockFile.readAsBytes());
+          expect(result, tImage);
+        },
+        createFile: (String filePath) {
+          // assert
+          expect(filePath, tImageFilePath);
+          return tMockFile;
+        },
+      );
     });
   });
 }

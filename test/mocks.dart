@@ -119,3 +119,5 @@ class MockSqliteDatabase extends Mock implements SqliteDatabase {}
 class MockResultSet extends Mock implements ResultSet {}
 
 class MockIOException extends Mock implements IOException {}
+
+class MockFile extends Mock implements File {}

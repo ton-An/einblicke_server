@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -99,10 +100,15 @@ abstract class ImageExchangeLocalDataSource {
 /// {@macro image_exchange_remote_data_source}
 class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
   /// {@macro image_exchange_remote_data_source}
-  const ImageExchangeLocalDataSourceImpl({required this.sqliteDatabase});
+  const ImageExchangeLocalDataSourceImpl({
+    required this.sqliteDatabase,
+    required this.imageDirectoryPath,
+  });
 
   /// The database connection
   final SqliteDatabase sqliteDatabase;
+
+  final String imageDirectoryPath;
 
   @override
   Future<bool> areCuratorXFramePaired({
@@ -121,9 +127,19 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
   }
 
   @override
-  Future<Image> getImageById({required String imageId}) {
-    // TODO: implement getImageById
-    throw UnimplementedError();
+  Future<Image> getImageById({required String imageId}) async {
+    final File imageFile = File(
+      "$imageDirectoryPath/$imageId.jpg",
+    );
+
+    final Uint8List imageBytes = await imageFile.readAsBytes();
+
+    final Image image = Image(
+      imageId: imageId,
+      imageBytes: imageBytes,
+    );
+
+    return Future.value(image);
   }
 
   @override
@@ -157,9 +173,12 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
   Future<void> saveImage({
     required String imageId,
     required List<int> imageBytes,
-  }) {
-    // TODO: implement saveImage
-    throw UnimplementedError();
+  }) async {
+    final File imageFile = File(
+      "$imageDirectoryPath/$imageId.jpg",
+    );
+
+    await imageFile.writeAsBytes(imageBytes, flush: true);
   }
 
   @override

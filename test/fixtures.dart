@@ -132,3 +132,8 @@ const Image tThirdImage = Image(
 );
 
 const String tUuidString = "testUuidString";
+
+const String tImageFileExtension = "jpg";
+const String tImageDirectoryPath = "testImageDirectoryPath";
+const String tImageFilePath =
+    "$tImageDirectoryPath/$tImageId.$tImageFileExtension";
