@@ -12,16 +12,16 @@ import '../../../../../mocks.dart';
 
 void main() {
   late ImageExchangeRepositoryImpl imageExchangeRepositoryImpl;
-  late MockImageExchangeRemoteDataSource mockImageExchangeRemoteDataSource;
+  late MockImageExchangeLocalDataSource mockImageExchangeLocalDataSource;
   late MockCryptoLocalDataSource mockCryptoLocalDataSource;
 
   late MockSqliteException tMockSqliteExcpetion;
 
   setUp(() {
-    mockImageExchangeRemoteDataSource = MockImageExchangeRemoteDataSource();
+    mockImageExchangeLocalDataSource = MockImageExchangeLocalDataSource();
     mockCryptoLocalDataSource = MockCryptoLocalDataSource();
     imageExchangeRepositoryImpl = ImageExchangeRepositoryImpl(
-      remoteDataSource: mockImageExchangeRemoteDataSource,
+      remoteDataSource: mockImageExchangeLocalDataSource,
       cryptoLocalDataSource: mockCryptoLocalDataSource,
     );
 
@@ -31,7 +31,7 @@ void main() {
   group("areCuratorXFramePaired()", () {
     setUp(() {
       when(
-        () => mockImageExchangeRemoteDataSource.areCuratorXFramePaired(
+        () => mockImageExchangeLocalDataSource.areCuratorXFramePaired(
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
         ),
@@ -47,7 +47,7 @@ void main() {
 
       // assert
       verify(
-        () => mockImageExchangeRemoteDataSource.areCuratorXFramePaired(
+        () => mockImageExchangeLocalDataSource.areCuratorXFramePaired(
           curatorId: tCuratorId,
           frameId: tPictureFrameId,
         ),
@@ -60,7 +60,7 @@ void main() {
         () async {
       // arrange
       when(
-        () => mockImageExchangeRemoteDataSource.areCuratorXFramePaired(
+        () => mockImageExchangeLocalDataSource.areCuratorXFramePaired(
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
         ),
@@ -98,7 +98,7 @@ void main() {
   group("getLatestImageIdFromDb()", () {
     setUp(() {
       when(
-        () => mockImageExchangeRemoteDataSource.getLatestImageIdFromDb(
+        () => mockImageExchangeLocalDataSource.getLatestImageIdFromDb(
           frameId: any(named: "frameId"),
         ),
       ).thenAnswer((_) async => tImageId);
@@ -112,7 +112,7 @@ void main() {
 
       // assert
       verify(
-        () => mockImageExchangeRemoteDataSource.getLatestImageIdFromDb(
+        () => mockImageExchangeLocalDataSource.getLatestImageIdFromDb(
           frameId: tPictureFrameId,
         ),
       );
@@ -124,7 +124,7 @@ void main() {
         "throws a [SqliteException]", () async {
       // arrange
       when(
-        () => mockImageExchangeRemoteDataSource.getLatestImageIdFromDb(
+        () => mockImageExchangeLocalDataSource.getLatestImageIdFromDb(
           frameId: any(named: "frameId"),
         ),
       ).thenThrow(tMockSqliteExcpetion);
@@ -142,7 +142,7 @@ void main() {
   group("pairCuratorXFrame()", () {
     setUp(() {
       when(
-        () => mockImageExchangeRemoteDataSource.pairCuratorXFrame(
+        () => mockImageExchangeLocalDataSource.pairCuratorXFrame(
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
         ),
@@ -159,7 +159,7 @@ void main() {
 
       // assert
       verify(
-        () => mockImageExchangeRemoteDataSource.pairCuratorXFrame(
+        () => mockImageExchangeLocalDataSource.pairCuratorXFrame(
           curatorId: tCuratorId,
           frameId: tPictureFrameId,
         ),
@@ -172,7 +172,7 @@ void main() {
         "throws a [MysqlException]", () async {
       // arrange
       when(
-        () => mockImageExchangeRemoteDataSource.pairCuratorXFrame(
+        () => mockImageExchangeLocalDataSource.pairCuratorXFrame(
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
         ),
@@ -194,7 +194,7 @@ void main() {
   group("saveImageToDb()", () {
     setUp(() {
       when(
-        () => mockImageExchangeRemoteDataSource.saveImageToDb(
+        () => mockImageExchangeLocalDataSource.saveImageToDb(
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
           imageId: any(named: "imageId"),
@@ -214,7 +214,7 @@ void main() {
 
       // assert
       verify(
-        () => mockImageExchangeRemoteDataSource.saveImageToDb(
+        () => mockImageExchangeLocalDataSource.saveImageToDb(
           curatorId: tCuratorId,
           frameId: tPictureFrameId,
           imageId: tImageId,
@@ -229,7 +229,7 @@ void main() {
         "throws a [SqliteException]", () async {
       // arrange
       when(
-        () => mockImageExchangeRemoteDataSource.saveImageToDb(
+        () => mockImageExchangeLocalDataSource.saveImageToDb(
           curatorId: any(named: "curatorId"),
           frameId: any(named: "frameId"),
           imageId: any(named: "imageId"),

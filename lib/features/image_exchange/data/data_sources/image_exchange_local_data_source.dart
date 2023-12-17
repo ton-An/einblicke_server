@@ -8,9 +8,9 @@ import 'package:sqlite_async/sqlite_async.dart';
 /// Remote data source for handling the exchange of images between
 /// a curator and a frame
 /// {@endtemplate}
-abstract class ImageExchangeRemoteDataSource {
+abstract class ImageExchangeLocalDataSource {
   /// {@macro image_exchange_remote_data_source}
-  const ImageExchangeRemoteDataSource();
+  const ImageExchangeLocalDataSource();
 
   /// Adds an entry to the curator_x_frame table
   /// for the given curator and frame
@@ -97,9 +97,9 @@ abstract class ImageExchangeRemoteDataSource {
 }
 
 /// {@macro image_exchange_remote_data_source}
-class ImageExchangeRemoteDataSourceImpl extends ImageExchangeRemoteDataSource {
+class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
   /// {@macro image_exchange_remote_data_source}
-  const ImageExchangeRemoteDataSourceImpl({required this.sqliteDatabase});
+  const ImageExchangeLocalDataSourceImpl({required this.sqliteDatabase});
 
   /// The database connection
   final SqliteDatabase sqliteDatabase;

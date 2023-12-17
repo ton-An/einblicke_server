@@ -3,7 +3,7 @@ import 'package:dispatch_pi_dart/core/data_sources/crypto_local_data_source.dart
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_remote_data_source.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -19,7 +19,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
   });
 
   /// {@macro image_exchange_remote_data_source}
-  final ImageExchangeRemoteDataSource remoteDataSource;
+  final ImageExchangeLocalDataSource remoteDataSource;
 
   /// {@macro crypto_local_data_source}
   final CryptoLocalDataSource cryptoLocalDataSource;

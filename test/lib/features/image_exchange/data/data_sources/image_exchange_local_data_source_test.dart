@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_remote_data_source.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:test/test.dart';
@@ -7,12 +7,12 @@ import '../../../../../fixtures.dart';
 import '../../../../../mocks.dart';
 
 void main() {
-  late ImageExchangeRemoteDataSourceImpl imageExchangeRemoteDataSourceImpl;
+  late ImageExchangeLocalDataSourceImpl imageExchangeLocalDataSourceImpl;
   late MockSqliteDatabase mockSqliteDatabase;
 
   setUp(() {
     mockSqliteDatabase = MockSqliteDatabase();
-    imageExchangeRemoteDataSourceImpl = ImageExchangeRemoteDataSourceImpl(
+    imageExchangeLocalDataSourceImpl = ImageExchangeLocalDataSourceImpl(
       sqliteDatabase: mockSqliteDatabase,
     );
   });
@@ -42,7 +42,7 @@ void main() {
         () async {
       // act
       final result =
-          await imageExchangeRemoteDataSourceImpl.areCuratorXFramePaired(
+          await imageExchangeLocalDataSourceImpl.areCuratorXFramePaired(
         curatorId: tCuratorId,
         frameId: tPictureFrameId,
       );
@@ -69,7 +69,7 @@ void main() {
         "should insert an entry into the curator_x_frame table for "
         "the given curator and frame", () async {
       // act
-      await imageExchangeRemoteDataSourceImpl.pairCuratorXFrame(
+      await imageExchangeLocalDataSourceImpl.pairCuratorXFrame(
         curatorId: tCuratorId,
         frameId: tPictureFrameId,
       );
@@ -95,7 +95,7 @@ void main() {
         "should insert an entry into the images table for "
         "the given curator, frame and image", () async {
       // act
-      await imageExchangeRemoteDataSourceImpl.saveImageToDb(
+      await imageExchangeLocalDataSourceImpl.saveImageToDb(
         curatorId: tCuratorId,
         frameId: tPictureFrameId,
         imageId: tImageId,
@@ -136,7 +136,7 @@ void main() {
         "should get the latest image id from the images table for "
         "the given frame", () async {
       // act
-      final result = await imageExchangeRemoteDataSourceImpl
+      final result = await imageExchangeLocalDataSourceImpl
           .getLatestImageIdFromDb(frameId: tPictureFrameId);
 
       // assert
