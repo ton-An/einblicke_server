@@ -2,8 +2,8 @@ import 'package:dispatch_pi_dart/features/authentication/data/repository_impleme
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../../fixtures.dart';
-import '../../../../mocks.dart';
+import '../../../../../fixtures.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   late BasicAuthenticationRepositoryImpl basicAuthenticationRepositoryImpl;
