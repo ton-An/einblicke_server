@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:sqlite3/sqlite3.dart';
+import 'package:sqlite_async/sqlite_async.dart';
 
 /// {@template image_exchange_remote_data_source}
 /// Remote data source for handling the exchange of images between
@@ -17,7 +20,7 @@ abstract class ImageExchangeRemoteDataSource {
   /// - [String] frameId
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<void> pairCuratorXFrame({
     required String curatorId,
     required String frameId,
@@ -34,7 +37,7 @@ abstract class ImageExchangeRemoteDataSource {
   /// - [bool] indicating if the entry exists
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<bool> areCuratorXFramePaired({
     required String curatorId,
     required String frameId,
@@ -47,7 +50,7 @@ abstract class ImageExchangeRemoteDataSource {
   /// - [List<int>] imageBytes
   ///
   /// Throws:
-  /// ... TBD ...
+  /// [IOException]
   Future<void> saveImage({
     required String imageId,
     required List<int> imageBytes,
@@ -62,7 +65,7 @@ abstract class ImageExchangeRemoteDataSource {
   /// - [DateTime] createdAt
   ///
   /// Throws:
-  /// - [MySqlException]
+  /// - [SqliteException]
   Future<void> saveImageToDb({
     required String curatorId,
     required String frameId,
@@ -76,8 +79,8 @@ abstract class ImageExchangeRemoteDataSource {
   /// - [String] frameId
   ///
   /// Throws:
-  /// - [MySqlException]
-  Future<String> getLatestImageIdFromDb({
+  /// -
+  Future<String?> getLatestImageIdFromDb({
     required String frameId,
   });
 
@@ -87,8 +90,89 @@ abstract class ImageExchangeRemoteDataSource {
   /// - [String] imageId
   ///
   /// Throws:
-  /// ... TBD ...
+  /// [IOException]
   Future<Image> getImageById({
     required String imageId,
   });
+}
+
+/// {@macro image_exchange_remote_data_source}
+class ImageExchangeRemoteDataSourceImpl extends ImageExchangeRemoteDataSource {
+  /// {@macro image_exchange_remote_data_source}
+  const ImageExchangeRemoteDataSourceImpl({required this.sqliteDatabase});
+
+  /// The database connection
+  final SqliteDatabase sqliteDatabase;
+
+  @override
+  Future<bool> areCuratorXFramePaired({
+    required String curatorId,
+    required String frameId,
+  }) async {
+    final Row queryResult = await sqliteDatabase.get(
+      "SELECT EXISTS(SELECT 1 FROM curator_x_frame "
+      "WHERE curator_id = ? AND frame_id = ?)",
+      [curatorId, frameId],
+    );
+
+    final bool isPaired = queryResult.containsValue(1);
+
+    return isPaired;
+  }
+
+  @override
+  Future<Image> getImageById({required String imageId}) {
+    // TODO: implement getImageById
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String?> getLatestImageIdFromDb({required String frameId}) async {
+    final Row queryResult = await sqliteDatabase.get(
+      "SELECT image_id FROM images "
+      "WHERE frame_id = ? "
+      "ORDER BY created_at DESC "
+      "LIMIT 1",
+      [frameId],
+    );
+
+    final String? imageId = queryResult.values.first as String?;
+
+    return imageId;
+  }
+
+  @override
+  Future<void> pairCuratorXFrame({
+    required String curatorId,
+    required String frameId,
+  }) async {
+    await sqliteDatabase.execute(
+      "INSERT INTO curator_x_frame (curator_id, frame_id) "
+      "VALUES (?, ?)",
+      [curatorId, frameId],
+    );
+  }
+
+  @override
+  Future<void> saveImage({
+    required String imageId,
+    required List<int> imageBytes,
+  }) {
+    // TODO: implement saveImage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> saveImageToDb({
+    required String curatorId,
+    required String frameId,
+    required String imageId,
+    required DateTime createdAt,
+  }) async {
+    await sqliteDatabase.execute(
+      "INSERT INTO images (curator_id, frame_id, image_id, created_at) "
+      "VALUES (?, ?, ?, ?)",
+      [curatorId, frameId, imageId, createdAt.toIso8601String()],
+    );
+  }
 }

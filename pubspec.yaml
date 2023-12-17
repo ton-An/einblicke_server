@@ -18,8 +18,8 @@ dependencies:
   get_it: ^7.6.4
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
-  sqlite3: 
-    path: ../sqlite3.dart/sqlite3
+  sqlite3: 1.11.2
+  sqlite_async: ^0.5.2
   uuid: ^4.2.1
 
 dev_dependencies:

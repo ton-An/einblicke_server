@@ -30,7 +30,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
     required String frameId,
   }) async {
     try {
-      final areCuratorXFramePaired =
+      final bool areCuratorXFramePaired =
           await remoteDataSource.areCuratorXFramePaired(
         curatorId: curatorId,
         frameId: frameId,
@@ -59,9 +59,14 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
   Future<Either<Failure, String>> getLatestImageIdFromDb(
       {required String frameId}) async {
     try {
-      final latestImageId = await remoteDataSource.getLatestImageIdFromDb(
+      final String? latestImageId =
+          await remoteDataSource.getLatestImageIdFromDb(
         frameId: frameId,
       );
+
+      if (latestImageId == null) {
+        return const Left(DatabaseReadFailure());
+      }
 
       return Right(latestImageId);
     } on SqliteException catch (_) {

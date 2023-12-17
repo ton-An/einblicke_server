@@ -31,6 +31,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_ima
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sqlite3/sqlite3.dart';
+import 'package:sqlite_async/sqlite_async.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}
 
@@ -111,4 +112,7 @@ class MockSqliteException extends Mock implements SqliteException {}
 class MockBasicAuthLocalDataSource extends Mock
     implements BasicAuthLocalDataSource {}
 
-class MockDatabase extends Mock implements Database {}
+class MockSqliteDatabase extends Mock implements SqliteDatabase {}
+
+// ignore: subtype_of_sealed_class
+class MockResultSet extends Mock implements ResultSet {}
