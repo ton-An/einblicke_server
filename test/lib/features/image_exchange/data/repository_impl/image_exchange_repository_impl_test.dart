@@ -15,16 +15,13 @@ import '../../../../../mocks.dart';
 void main() {
   late ImageExchangeRepositoryImpl imageExchangeRepositoryImpl;
   late MockImageExchangeLocalDataSource mockImageExchangeLocalDataSource;
-  late MockCryptoLocalDataSource mockCryptoLocalDataSource;
 
   late MockSqliteException tMockSqliteExcpetion;
 
   setUp(() {
     mockImageExchangeLocalDataSource = MockImageExchangeLocalDataSource();
-    mockCryptoLocalDataSource = MockCryptoLocalDataSource();
     imageExchangeRepositoryImpl = ImageExchangeRepositoryImpl(
       localDataSource: mockImageExchangeLocalDataSource,
-      cryptoLocalDataSource: mockCryptoLocalDataSource,
     );
 
     tMockSqliteExcpetion = MockSqliteException();
@@ -76,22 +73,6 @@ void main() {
 
       // assert
       expect(result, const Left(DatabaseReadFailure()));
-    });
-  });
-
-  group("generateImageId()", () {
-    setUp(() {
-      when(() => mockCryptoLocalDataSource.generateUuid())
-          .thenReturn(tUuidString);
-    });
-
-    test("should generate a uuid [String] and return it", () {
-      // act
-      final result = imageExchangeRepositoryImpl.generateImageId();
-
-      // assert
-      verify(() => mockCryptoLocalDataSource.generateUuid());
-      expect(result, tUuidString);
     });
   });
 

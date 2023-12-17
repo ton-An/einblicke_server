@@ -73,9 +73,6 @@ abstract class ImageExchangeRepository {
     required DateTime createdAt,
   });
 
-  /// Generates an id for an image
-  String generateImageId();
-
   /// Gets the latest image id from the database
   ///
   /// Returns:

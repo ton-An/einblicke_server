@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/data_sources/crypto_local_data_source.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
@@ -19,14 +18,10 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
   /// {@macro image_exchange_repository_impl}
   const ImageExchangeRepositoryImpl({
     required this.localDataSource,
-    required this.cryptoLocalDataSource,
   });
 
   /// {@macro image_exchange_remote_data_source}
   final ImageExchangeLocalDataSource localDataSource;
-
-  /// {@macro crypto_local_data_source}
-  final CryptoLocalDataSource cryptoLocalDataSource;
 
   @override
   Future<Either<Failure, bool>> areCuratorXFramePaired({
@@ -44,11 +39,6 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
     } on SqliteException {
       return const Left(DatabaseReadFailure());
     }
-  }
-
-  @override
-  String generateImageId() {
-    return cryptoLocalDataSource.generateUuid();
   }
 
   @override

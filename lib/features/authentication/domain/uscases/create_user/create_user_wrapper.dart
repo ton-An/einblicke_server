@@ -8,6 +8,7 @@ import 'package:dispatch_pi_dart/core/failures/user_id_generation_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/username_taken_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_password_valid.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_username_valid.dart';
@@ -37,6 +38,7 @@ class CreateUserWrapper<U extends User,
     required this.isPasswordValid,
     required this.userAuthRepository,
     required this.basicAuthRepository,
+    required this.cryptoRepository,
   });
 
   /// Used to check if the username is valid
@@ -50,6 +52,8 @@ class CreateUserWrapper<U extends User,
 
   /// Used to create the record of the user
   final R userAuthRepository;
+
+  final CryptoRepository cryptoRepository;
 
   /// {@macro create_user_wrapper}
   Future<Either<Failure, U>> call(
@@ -106,7 +110,7 @@ class CreateUserWrapper<U extends User,
     String password, [
     int currentIteration = 0,
   ]) {
-    final String userId = basicAuthRepository.generateUserId();
+    final String userId = cryptoRepository.generateUuid();
 
     return _checkUserIdTaken(userId, username, password, currentIteration);
   }

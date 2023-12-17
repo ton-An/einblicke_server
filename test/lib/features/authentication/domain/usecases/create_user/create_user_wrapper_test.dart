@@ -20,6 +20,7 @@ void main() {
   late MockIsPasswordValid mockIsPasswordValid;
   late MockBasicAuthRepository mockBasicAuthRepository;
   late MockUserAuthRepository mockUserAuthRepository;
+  late MockCryptoRepository mockCryptoRepository;
 
   late MockUser tMockUser;
 
@@ -28,11 +29,14 @@ void main() {
     mockIsPasswordValid = MockIsPasswordValid();
     mockBasicAuthRepository = MockBasicAuthRepository();
     mockUserAuthRepository = MockUserAuthRepository();
+    mockCryptoRepository = MockCryptoRepository();
+
     createUser = CreateUserWrapper(
       isUsernameValid: mockIsUsernameValid,
       isPasswordValid: mockIsPasswordValid,
       userAuthRepository: mockUserAuthRepository,
       basicAuthRepository: mockBasicAuthRepository,
+      cryptoRepository: mockCryptoRepository,
     );
 
     tMockUser = MockUser();
@@ -41,7 +45,7 @@ void main() {
     when(() => mockIsPasswordValid(any())).thenReturn(true);
     when(() => mockUserAuthRepository.isUsernameTaken(any()))
         .thenAnswer((_) async => const Right(false));
-    when(() => mockBasicAuthRepository.generateUserId()).thenReturn(tUserId);
+    when(() => mockCryptoRepository.generateUuid()).thenReturn(tUserId);
     when(() => mockUserAuthRepository.isUserIdTaken(any()))
         .thenAnswer((_) async => const Right(false));
     when(() => mockBasicAuthRepository.generatePasswordHash(any()))
@@ -141,7 +145,7 @@ void main() {
       await createUser(tUsername, tPassword);
 
       // assert
-      verify(() => mockBasicAuthRepository.generateUserId());
+      verify(() => mockCryptoRepository.generateUuid());
     });
   });
 
@@ -168,7 +172,7 @@ void main() {
       await createUser(tUsername, tPassword);
 
       // assert
-      verify(() => mockBasicAuthRepository.generateUserId()).called(2);
+      verify(() => mockCryptoRepository.generateUuid()).called(2);
     });
 
     test(
@@ -183,7 +187,7 @@ void main() {
 
       // assert
       expect(result, const Left<Failure, User>(UserIdGenerationFailure()));
-      verify(() => mockBasicAuthRepository.generateUserId()).called(5);
+      verify(() => mockCryptoRepository.generateUuid()).called(5);
     });
   });
 

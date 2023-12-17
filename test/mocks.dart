@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/data_sources/crypto_local_data_source.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/curator_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
@@ -106,8 +106,6 @@ class MockGetUserWithType extends Mock
 class MockImageExchangeLocalDataSource extends Mock
     implements ImageExchangeLocalDataSource {}
 
-class MockCryptoLocalDataSource extends Mock implements CryptoLocalDataSource {}
-
 class MockSqliteException extends Mock implements SqliteException {}
 
 class MockBasicAuthLocalDataSource extends Mock
@@ -121,3 +119,5 @@ class MockResultSet extends Mock implements ResultSet {}
 class MockIOException extends Mock implements IOException {}
 
 class MockFile extends Mock implements File {}
+
+class MockCryptoRepository extends Mock implements CryptoRepository {}

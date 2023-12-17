@@ -4,6 +4,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted
 import 'package:dispatch_pi_dart/features/authentication/domain/models/refresh_token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 
 /// {@template generate_refresh_token}
 /// Generates an refresh token for a given user
@@ -20,10 +21,13 @@ class GenerateRefreshToken {
     required this.basicAuthRepository,
     required this.secrets,
     required this.clock,
+    required this.cryptoRepository,
   });
 
   /// Use case for generating an encrypted token
   final BasicAuthenticationRepository basicAuthRepository;
+
+  final CryptoRepository cryptoRepository;
 
   /// Secrets for generating the token
   final Secrets secrets;
@@ -34,7 +38,7 @@ class GenerateRefreshToken {
   EncryptedToken call({required User user}) {
     final DateTime issuedAt = clock.now();
     final DateTime expiresAt = issuedAt.add(secrets.refreshTokenLifetime);
-    final String tokenId = basicAuthRepository.generateTokenId();
+    final String tokenId = cryptoRepository.generateUuid();
 
     final RefreshTokenClaims claims = RefreshTokenClaims(
       tokenId: tokenId,

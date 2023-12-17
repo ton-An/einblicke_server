@@ -7,6 +7,7 @@ import 'package:dispatch_pi_dart/core/failures/not_paired_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/write_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 
 /// {@template receive_image_from_curator}
@@ -28,11 +29,14 @@ class ReceiveImageFromCurator {
   /// {@macro receive_image_from_curator}
   ReceiveImageFromCurator({
     required this.imageExchangeRepository,
+    required this.cryptoRepository,
     required this.clock,
   });
 
   /// Used to interact with the database and storage
   final ImageExchangeRepository imageExchangeRepository;
+
+  final CryptoRepository cryptoRepository;
 
   /// Used to get the current time
   final Clock clock;
@@ -79,7 +83,7 @@ class ReceiveImageFromCurator {
     required String frameId,
     required List<int> imageBytes,
   }) async {
-    final String imageId = imageExchangeRepository.generateImageId();
+    final String imageId = cryptoRepository.generateUuid();
 
     return _saveImage(
       curatorId: curatorId,

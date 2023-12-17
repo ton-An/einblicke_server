@@ -10,14 +10,17 @@ void main() {
   late GenerateRefreshToken generateRefreshToken;
   late MockBasicAuthRepository mockBasicAuthRepository;
   late MockClock mockClock;
+  late MockCryptoRepository mockCryptoRepository;
 
   late MockUser tMockUser;
 
   setUp(() {
     mockBasicAuthRepository = MockBasicAuthRepository();
+    mockCryptoRepository = MockCryptoRepository();
     mockClock = MockClock();
     generateRefreshToken = GenerateRefreshToken(
       basicAuthRepository: mockBasicAuthRepository,
+      cryptoRepository: mockCryptoRepository,
       secrets: tSecrets,
       clock: mockClock,
     );
@@ -27,7 +30,7 @@ void main() {
     registerFallbackValue(MockTokenClaims());
 
     when(() => mockClock.now()).thenReturn(tIssuedAt);
-    when(() => mockBasicAuthRepository.generateTokenId()).thenReturn(tTokenId);
+    when(() => mockCryptoRepository.generateUuid()).thenReturn(tTokenId);
     when(() => mockBasicAuthRepository.generateJWEToken(any()))
         .thenReturn(tEncryptedRefreshToken.token);
     when(() => tMockUser.userId).thenReturn(tUserId);
@@ -48,7 +51,7 @@ void main() {
     generateRefreshToken(user: tMockUser);
 
     // assert
-    verify(() => mockBasicAuthRepository.generateTokenId());
+    verify(() => mockCryptoRepository.generateUuid());
   });
 
   test("should generate a jwe token", () {

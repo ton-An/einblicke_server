@@ -35,18 +35,6 @@ class BasicAuthenticationRepositoryImpl extends BasicAuthenticationRepository {
   }
 
   @override
-  String generateTokenId() {
-    // TODO: implement generateTokenId
-    throw UnimplementedError();
-  }
-
-  @override
-  String generateUserId() {
-    // TODO: implement generateUserId
-    throw UnimplementedError();
-  }
-
-  @override
   Either<Failure, String> getUserIdFromToken(String token) {
     // TODO: implement getUserIdFromToken
     throw UnimplementedError();

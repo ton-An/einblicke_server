@@ -19,15 +19,6 @@ abstract class BasicAuthenticationRepository {
   /// - a [String] containing the hash of the given password
   String generatePasswordHash(String password);
 
-  /// Generates a unique user id for the given username
-  ///
-  /// Technically, this is not necessary atm, as the username is already unique.
-  /// But, it in the future, not having a unique user id could be an issue.
-  ///
-  /// Returns:
-  /// - a [String] containing the unique user id
-  String generateUserId();
-
   /// Generates a signed token with the given payload
   ///
   /// Parameters:
@@ -50,15 +41,6 @@ abstract class BasicAuthenticationRepository {
   Either<Failure, TokenClaims> checkTokenSignatureValidity(
     String refreshToken,
   );
-
-  /// Generates a unique id for a token
-  ///
-  /// Returns:
-  /// - a [String] containing the unique token id
-  ///
-  /// Failures:
-  /// - ... TBD ...
-  String generateTokenId();
 
   /// Gets the user id from a given token
   ///

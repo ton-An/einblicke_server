@@ -15,13 +15,16 @@ import '../../../../../mocks.dart';
 void main() {
   late ReceiveImageFromCurator receiveImageFromCurator;
   late MockImageExchangeRepository mockImageExchangeRepository;
+  late MockCryptoRepository mockCryptoRepository;
   late MockClock mockClock;
 
   setUp(() {
     mockImageExchangeRepository = MockImageExchangeRepository();
     mockClock = MockClock();
+    mockCryptoRepository = MockCryptoRepository();
     receiveImageFromCurator = ReceiveImageFromCurator(
       imageExchangeRepository: mockImageExchangeRepository,
+      cryptoRepository: mockCryptoRepository,
       clock: mockClock,
     );
 
@@ -35,7 +38,7 @@ void main() {
     when(() => mockClock.now()).thenReturn(tCreatedAt);
 
     when(
-      () => mockImageExchangeRepository.generateImageId(),
+      () => mockCryptoRepository.generateUuid(),
     ).thenReturn(tImageId);
 
     when(
@@ -126,7 +129,7 @@ void main() {
       );
 
       // assert
-      verify(() => mockImageExchangeRepository.generateImageId());
+      verify(() => mockCryptoRepository.generateUuid());
     });
   });
 
