@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/cloud_storage_unavailable_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/frame_not_connected_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/no_images_found_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/read_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_unavailable_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/socket_connection.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
@@ -40,8 +40,8 @@ class FrameSocketHandler {
   /// Failures (emitted to the specific frames):
   /// - [DatabaseReadFailure]
   /// - [NoImagesFoundFailure]
-  /// - [CloudStorageReadFailure]
-  /// - [CloudStorageUnavailableFailure]
+  /// - [StorageReadFailure]
+  /// - [StorageUnavailableFailure]
   Future<void> addConnection({
     required String frameId,
     required StreamSink streamSink,
@@ -82,8 +82,8 @@ class FrameSocketHandler {
   ///
   /// Failures:
   /// - [FrameNotConnectedFailure] if the frame is not connected
-  /// - [CloudStorageReadFailure]
-  /// - [CloudStorageUnavailableFailure]
+  /// - [StorageReadFailure]
+  /// - [StorageUnavailableFailure]
   Future<Either<Failure, None>> sendImage({
     required String frameId,
     required String imageId,

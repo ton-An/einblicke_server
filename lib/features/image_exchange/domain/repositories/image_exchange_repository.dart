@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/cloud_storage_unavailable_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/no_images_found_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_write_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/read_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_unavailable_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/write_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 
 /// {@template image_exchange_repository}
@@ -51,8 +51,8 @@ abstract class ImageExchangeRepository {
   /// - [List<int>] imageBytes
   ///
   /// Failures:
-  /// - [CloudStorageWriteFailure]
-  /// - [CloudStorageUnavailableFailure]
+  /// - [StorageWriteFailure]
+  /// - [StorageUnavailableFailure]
   Future<Either<Failure, None>> saveImage({
     required String imageId,
     required List<int> imageBytes,
@@ -99,8 +99,8 @@ abstract class ImageExchangeRepository {
   /// - [List<int>] imageBytes
   ///
   /// Failures:
-  /// - [CloudStorageReadFailure]
-  /// - [CloudStorageUnavailableFailure]
+  /// - [StorageReadFailure]
+  /// - [StorageUnavailableFailure]
   Future<Either<Failure, Image>> getImageById({
     required String imageId,
   });

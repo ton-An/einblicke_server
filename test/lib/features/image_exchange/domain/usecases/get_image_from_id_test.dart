@@ -1,7 +1,7 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/read_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -45,12 +45,12 @@ void main() {
       () => mockImageExchangeRepository.getImageById(
         imageId: any(named: "imageId"),
       ),
-    ).thenAnswer((_) async => const Left(CloudStorageReadFailure()));
+    ).thenAnswer((_) async => const Left(StorageReadFailure()));
 
     // act
     final result = await getImageFromId(imageId: tImageId);
 
     // assert
-    expect(result, const Left(CloudStorageReadFailure()));
+    expect(result, const Left(StorageReadFailure()));
   });
 }

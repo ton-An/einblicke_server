@@ -5,8 +5,8 @@ import 'package:dispatch_pi_dart/core/data_sources/crypto_local_data_source.dart
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_write_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/read_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/write_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
@@ -62,7 +62,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
 
       return Right(image);
     } on IOException {
-      return const Left(CloudStorageReadFailure());
+      return const Left(StorageReadFailure());
     }
   }
 
@@ -116,7 +116,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
 
       return const Right(None());
     } on IOException {
-      return const Left(CloudStorageWriteFailure());
+      return const Left(StorageWriteFailure());
     }
   }
 

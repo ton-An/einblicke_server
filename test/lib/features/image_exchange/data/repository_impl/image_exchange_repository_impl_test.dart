@@ -3,8 +3,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/storage_write_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/read_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/write_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/data/repository_implementations/image_exchange_repository_impl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -120,7 +120,7 @@ void main() {
     });
 
     test(
-        "should return a [CloudStorageReadFailure] when the data source "
+        "should return a [StorageReadFailure] when the data source "
         "throws a [IOException]", () async {
       // arrange
       when(
@@ -135,7 +135,7 @@ void main() {
       );
 
       // assert§
-      expect(result, const Left(CloudStorageReadFailure()));
+      expect(result, const Left(StorageReadFailure()));
     });
   });
 
@@ -261,7 +261,7 @@ void main() {
     });
 
     test(
-        "should return a [CloudStorageWriteFailure] when the data source "
+        "should return a [StorageWriteFailure] when the data source "
         "throws a [IOException]", () async {
       // arrange
       when(
@@ -278,7 +278,7 @@ void main() {
       );
 
       // assert
-      expect(result, const Left(CloudStorageWriteFailure()));
+      expect(result, const Left(StorageWriteFailure()));
     });
   });
 
