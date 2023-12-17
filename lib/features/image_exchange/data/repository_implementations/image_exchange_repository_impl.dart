@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/data_sources/crypto_local_data_source.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_write_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
@@ -14,12 +18,12 @@ import 'package:sqlite3/sqlite3.dart';
 class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
   /// {@macro image_exchange_repository_impl}
   const ImageExchangeRepositoryImpl({
-    required this.remoteDataSource,
+    required this.localDataSource,
     required this.cryptoLocalDataSource,
   });
 
   /// {@macro image_exchange_remote_data_source}
-  final ImageExchangeLocalDataSource remoteDataSource;
+  final ImageExchangeLocalDataSource localDataSource;
 
   /// {@macro crypto_local_data_source}
   final CryptoLocalDataSource cryptoLocalDataSource;
@@ -31,13 +35,13 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
   }) async {
     try {
       final bool areCuratorXFramePaired =
-          await remoteDataSource.areCuratorXFramePaired(
+          await localDataSource.areCuratorXFramePaired(
         curatorId: curatorId,
         frameId: frameId,
       );
 
       return Right(areCuratorXFramePaired);
-    } on SqliteException catch (_) {
+    } on SqliteException {
       return const Left(DatabaseReadFailure());
     }
   }
@@ -50,17 +54,25 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
   @override
   Future<Either<Failure, Image>> getImageById({
     required String imageId,
-  }) {
-    // TODO: implement getImageById
-    throw UnimplementedError();
+  }) async {
+    try {
+      final Image image = await localDataSource.getImageById(
+        imageId: imageId,
+      );
+
+      return Right(image);
+    } on IOException {
+      return const Left(CloudStorageReadFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, String>> getLatestImageIdFromDb(
-      {required String frameId}) async {
+  Future<Either<Failure, String>> getLatestImageIdFromDb({
+    required String frameId,
+  }) async {
     try {
       final String? latestImageId =
-          await remoteDataSource.getLatestImageIdFromDb(
+          await localDataSource.getLatestImageIdFromDb(
         frameId: frameId,
       );
 
@@ -80,7 +92,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
     required String frameId,
   }) async {
     try {
-      await remoteDataSource.pairCuratorXFrame(
+      await localDataSource.pairCuratorXFrame(
         curatorId: curatorId,
         frameId: frameId,
       );
@@ -95,9 +107,17 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
   Future<Either<Failure, None>> saveImage({
     required String imageId,
     required List<int> imageBytes,
-  }) {
-    // TODO: implement saveImage
-    throw UnimplementedError();
+  }) async {
+    try {
+      await localDataSource.saveImage(
+        imageId: imageId,
+        imageBytes: imageBytes,
+      );
+
+      return const Right(None());
+    } on IOException {
+      return const Left(CloudStorageWriteFailure());
+    }
   }
 
   @override
@@ -108,7 +128,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
     required DateTime createdAt,
   }) async {
     try {
-      await remoteDataSource.saveImageToDb(
+      await localDataSource.saveImageToDb(
         curatorId: curatorId,
         frameId: frameId,
         imageId: imageId,

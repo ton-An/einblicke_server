@@ -3,6 +3,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_read_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/storage_write_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/data/repository_implementations/image_exchange_repository_impl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -21,7 +23,7 @@ void main() {
     mockImageExchangeLocalDataSource = MockImageExchangeLocalDataSource();
     mockCryptoLocalDataSource = MockCryptoLocalDataSource();
     imageExchangeRepositoryImpl = ImageExchangeRepositoryImpl(
-      remoteDataSource: mockImageExchangeLocalDataSource,
+      localDataSource: mockImageExchangeLocalDataSource,
       cryptoLocalDataSource: mockCryptoLocalDataSource,
     );
 
@@ -93,7 +95,49 @@ void main() {
     });
   });
 
-  group("getImageById()", () {});
+  group("getImageById()", () {
+    setUp(() {
+      when(
+        () => mockImageExchangeLocalDataSource.getImageById(
+          imageId: any(named: "imageId"),
+        ),
+      ).thenAnswer((_) async => tImage);
+    });
+
+    test("should get the image from the data source and return it", () async {
+      // act
+      final result = await imageExchangeRepositoryImpl.getImageById(
+        imageId: tImageId,
+      );
+
+      // assert
+      verify(
+        () => mockImageExchangeLocalDataSource.getImageById(
+          imageId: tImageId,
+        ),
+      );
+      expect(result, const Right(tImage));
+    });
+
+    test(
+        "should return a [CloudStorageReadFailure] when the data source "
+        "throws a [IOException]", () async {
+      // arrange
+      when(
+        () => mockImageExchangeLocalDataSource.getImageById(
+          imageId: any(named: "imageId"),
+        ),
+      ).thenThrow(MockIOException());
+
+      // act
+      final result = await imageExchangeRepositoryImpl.getImageById(
+        imageId: tImageId,
+      );
+
+      // assert§
+      expect(result, const Left(CloudStorageReadFailure()));
+    });
+  });
 
   group("getLatestImageIdFromDb()", () {
     setUp(() {
@@ -189,7 +233,54 @@ void main() {
     });
   });
 
-  group("saveImage()", () {});
+  group("saveImage()", () {
+    setUp(() {
+      when(
+        () => mockImageExchangeLocalDataSource.saveImage(
+          imageId: any(named: "imageId"),
+          imageBytes: any(named: "imageBytes"),
+        ),
+      ).thenAnswer((_) => Future.value());
+    });
+
+    test("should save the image to the db and return [None]", () async {
+      // act
+      final result = await imageExchangeRepositoryImpl.saveImage(
+        imageId: tImageId,
+        imageBytes: tImageBytes,
+      );
+
+      // assert
+      verify(
+        () => mockImageExchangeLocalDataSource.saveImage(
+          imageId: tImageId,
+          imageBytes: tImageBytes,
+        ),
+      );
+      expect(result, const Right(None()));
+    });
+
+    test(
+        "should return a [CloudStorageWriteFailure] when the data source "
+        "throws a [IOException]", () async {
+      // arrange
+      when(
+        () => mockImageExchangeLocalDataSource.saveImage(
+          imageId: any(named: "imageId"),
+          imageBytes: any(named: "imageBytes"),
+        ),
+      ).thenThrow(MockIOException());
+
+      // act
+      final result = await imageExchangeRepositoryImpl.saveImage(
+        imageId: tImageId,
+        imageBytes: tImageBytes,
+      );
+
+      // assert
+      expect(result, const Left(CloudStorageWriteFailure()));
+    });
+  });
 
   group("saveImageToDb()", () {
     setUp(() {

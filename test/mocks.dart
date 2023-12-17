@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
@@ -116,3 +117,5 @@ class MockSqliteDatabase extends Mock implements SqliteDatabase {}
 
 // ignore: subtype_of_sealed_class
 class MockResultSet extends Mock implements ResultSet {}
+
+class MockIOException extends Mock implements IOException {}
