@@ -5,12 +5,12 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dar
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite_async/sqlite_async.dart';
 
-/// {@template image_exchange_remote_data_source}
-/// Remote data source for handling the exchange of images between
+/// {@template image_exchange_local_data_source}
+/// Local data source for handling the exchange of images between
 /// a curator and a frame
 /// {@endtemplate}
 abstract class ImageExchangeLocalDataSource {
-  /// {@macro image_exchange_remote_data_source}
+  /// {@macro image_exchange_local_data_source}
   const ImageExchangeLocalDataSource();
 
   /// Adds an entry to the curator_x_frame table
@@ -97,9 +97,9 @@ abstract class ImageExchangeLocalDataSource {
   });
 }
 
-/// {@macro image_exchange_remote_data_source}
+/// {@macro image_exchange_local_data_source}
 class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
-  /// {@macro image_exchange_remote_data_source}
+  /// {@macro image_exchange_local_data_source}
   const ImageExchangeLocalDataSourceImpl({
     required this.sqliteDatabase,
     required this.imageDirectoryPath,

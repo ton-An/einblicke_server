@@ -1,11 +1,11 @@
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-/// {@template user_authentication_remote_data_source}
-/// Remote data source for user authentication
+/// {@template user_authentication_local_data_source}
+/// Local data source for user authentication
 /// {@endtemplate}
 abstract class UserAuthenticationLocalDataSource<U extends User> {
-  /// {@macro user_authentication_remote_data_source}
+  /// {@macro user_authentication_local_data_source}
   const UserAuthenticationLocalDataSource();
 
   /// Checks if the given username is already in

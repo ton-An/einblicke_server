@@ -20,7 +20,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
     required this.localDataSource,
   });
 
-  /// {@macro image_exchange_remote_data_source}
+  /// {@macro image_exchange_local_data_source}
   final ImageExchangeLocalDataSource localDataSource;
 
   @override
