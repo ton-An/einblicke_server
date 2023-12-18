@@ -17,3 +17,5 @@ coverage/
 
 # Misc
 secrets_impl.dart
+
+*.g.dart

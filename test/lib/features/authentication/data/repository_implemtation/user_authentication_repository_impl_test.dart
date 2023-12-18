@@ -2,6 +2,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
+import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/repository_implementation/user_authentication_repository_impl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -150,8 +151,29 @@ void main() {
     });
 
     test(
-        "should return a [DatabaseWriteFailure] when the local data source throws a [SqliteException]",
-        () async {
+        "should return a [UserNotFoundFailure] if the data source returns null "
+        "instead of a user", () async {
+      // arrange
+      when(
+        () => mockUserAuthLocalDataSource.getUser(
+          username: any(named: "username"),
+          passwordHash: any(named: "passwordHash"),
+        ),
+      ).thenAnswer((_) async => null);
+
+      // act
+      final result = await repository.getUser(
+        tUsername,
+        tPasswordHash,
+      );
+
+      // assert
+      expect(result, const Left(UserNotFoundFailure()));
+    });
+
+    test(
+        "should return a [DatabaseWriteFailure] when the local data source "
+        "throws a [SqliteException]", () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.getUser(
@@ -192,6 +214,23 @@ void main() {
         ),
       );
       expect(result, Right(tMockUser));
+    });
+
+    test(
+        "should return a [UserNotFoundFailure] if the local data source "
+        "returns null instead of a user", () async {
+      // arrange
+      when(
+        () => mockUserAuthLocalDataSource.getUserFromId(
+          any(),
+        ),
+      ).thenAnswer((_) async => null);
+
+      // act
+      final result = await repository.getUserFromId(tUserId);
+
+      // assert
+      expect(result, const Left(UserNotFoundFailure()));
     });
 
     test(

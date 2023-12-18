@@ -1,3 +1,4 @@
+import 'package:dispatch_pi_dart/core/db_names.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/access_token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
@@ -5,6 +6,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/refresh_token_claims.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
+import 'package:sqlite3/sqlite3.dart';
 
 import 'mocks.dart';
 import 'secrets_fixture.dart';
@@ -137,3 +139,39 @@ const String tImageFileExtension = "jpg";
 const String tImageDirectoryPath = "testImageDirectoryPath";
 const String tImageFilePath =
     "$tImageDirectoryPath/$tImageId.$tImageFileExtension";
+
+final MockResultSet tMockResultSet = MockResultSet();
+
+const CuratorTable tCuratorTable = CuratorTable();
+
+final Row tDbCuratorRow = Row(
+  ResultSet(
+    [
+      tCuratorTable.userId,
+      tCuratorTable.username,
+      tCuratorTable.passwordHash,
+    ],
+    [tCuratorTable.tableName],
+    [
+      [
+        tCurator.userId,
+        tCurator.username,
+        tCurator.passwordHash,
+      ],
+    ],
+  ),
+  [
+    tCurator.userId,
+    tCurator.username,
+    tCurator.passwordHash,
+  ],
+);
+
+final Row tEmptyDbRow = Row(
+  ResultSet(
+    [],
+    [],
+    [],
+  ),
+  [],
+);

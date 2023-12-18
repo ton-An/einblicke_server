@@ -1,7 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -54,10 +57,14 @@ class UserAuthenticationRepositoryImpl<U extends User>
     String passwordHash,
   ) async {
     try {
-      final U user = await userAuthLocalDataSource.getUser(
+      final U? user = await userAuthLocalDataSource.getUser(
         username: username,
         passwordHash: passwordHash,
       );
+
+      if (user == null) {
+        return const Left(UserNotFoundFailure());
+      }
 
       return Right(user);
     } on SqliteException {
@@ -68,7 +75,11 @@ class UserAuthenticationRepositoryImpl<U extends User>
   @override
   Future<Either<Failure, U>> getUserFromId(String userId) async {
     try {
-      final U user = await userAuthLocalDataSource.getUserFromId(userId);
+      final U? user = await userAuthLocalDataSource.getUserFromId(userId);
+
+      if (user == null) {
+        return const Left(UserNotFoundFailure());
+      }
 
       return Right(user);
     } on SqliteException {
@@ -166,3 +177,10 @@ class UserAuthenticationRepositoryImpl<U extends User>
     }
   }
 }
+
+/// {@macro user_auth_repository}
+typedef CuratorAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Curator>;
+
+/// {@macro user_auth_repository}
+typedef FrameAuthRepositoryImpl
+    = UserAuthenticationRepositoryImpl<PictureFrame>;
