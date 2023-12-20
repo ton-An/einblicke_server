@@ -97,7 +97,7 @@ void main() {
     group("if the token has been re-used", () {
       setUp(() {
         when(() => mockBasicAuthRepository.getUserIdFromToken(any()))
-            .thenReturn(const Right(tUserId));
+            .thenAnswer((_) async => const Right(tUserId));
         when(
           () => mockCheckRefreshTokenValidityWrapper(
             refreshToken: any(named: "refreshToken"),

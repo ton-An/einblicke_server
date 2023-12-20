@@ -42,7 +42,7 @@ void main() {
         any(),
       ),
     ).thenAnswer(
-      (_) => Right(tAccessTokenClaims),
+      (_) async => Right(tAccessTokenClaims),
     );
 
     when(
@@ -89,7 +89,7 @@ void main() {
         () => mockBasicAuthRepository.checkTokenSignatureValidity(
           any(),
         ),
-      ).thenAnswer((_) => const Left(TokenVerificationFailure()));
+      ).thenAnswer((_) async => const Left(TokenVerificationFailure()));
 
       // act
       final result =

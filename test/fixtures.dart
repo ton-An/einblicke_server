@@ -6,6 +6,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/refresh_token_claims.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
+import 'package:jose/jose.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 import 'mocks.dart';
@@ -73,6 +74,27 @@ final RefreshTokenClaims tRefreshTokenClaims = RefreshTokenClaims(
     tSecrets.refreshTokenLifetime,
   ),
 );
+
+final JsonWebKey tJsonWebKey = JsonWebKey.fromJson(tSecrets.jsonWebKey);
+
+final Map<String, String> tAccessTokenClaimsMap = {
+  "user_id": tUserId,
+  "user_type": "MockUser",
+  "issued_at": tIssuedAt.toIso8601String(),
+  "expires_at": tValidExpiresAt.toIso8601String(),
+};
+
+final Map<String, String> tRefreshTokenClaimsMap = {
+  "token_id": tTokenId,
+  "user_id": tUserId,
+  "user_type": "MockUser",
+  "issued_at": tIssuedAt.toIso8601String(),
+  "expires_at": tIssuedAt
+      .add(
+        tSecrets.refreshTokenLifetime,
+      )
+      .toIso8601String(),
+};
 
 const String tTokenString = "testTokenString";
 

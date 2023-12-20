@@ -110,7 +110,7 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
     required String refreshToken,
   }) async {
     final Either<Failure, String> getUserIdEither =
-        basicAuthRepository.getUserIdFromToken(refreshToken);
+        await basicAuthRepository.getUserIdFromToken(refreshToken);
 
     return getUserIdEither.fold(Left.new, (String userId) async {
       final Either<Failure, None> invalidateAllRefreshTokensEither =

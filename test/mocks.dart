@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/crypto_wrapper.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_dart/core/jwe_builder_wrapper.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/crypto_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
@@ -30,6 +32,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dar
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
+import 'package:jose/jose.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite_async/sqlite_async.dart';
@@ -129,3 +132,12 @@ class MockUuid extends Mock implements Uuid {}
 
 class MockUserAuthenticationLocalDataSource extends Mock
     implements UserAuthenticationLocalDataSource {}
+
+class MockCryptoWrapper extends Mock implements CryptoWrapper {}
+
+class MockJsonWebEncryptionBuilder extends Mock
+    implements JsonWebEncryptionBuilder {}
+
+class MockJWEBBuilderWrapper extends Mock implements JWEBuilderWrapper {}
+
+class MockJsonWebEncryption extends Mock implements JsonWebEncryption {}

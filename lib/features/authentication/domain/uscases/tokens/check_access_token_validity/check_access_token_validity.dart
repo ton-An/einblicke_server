@@ -61,7 +61,7 @@ class CheckAccessTokenValidityWrapper<U extends User,
     required String accessToken,
   }) async {
     final Either<Failure, TokenClaims> signatureCheckEither =
-        basicAuthRepository.checkTokenSignatureValidity(
+        await basicAuthRepository.checkTokenSignatureValidity(
       accessToken,
     );
 

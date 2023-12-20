@@ -38,7 +38,7 @@ abstract class BasicAuthenticationRepository {
   ///
   /// Failures:
   /// - [InvalidTokenFailure]
-  Either<Failure, TokenClaims> checkTokenSignatureValidity(
+  Future<Either<Failure, TokenClaims>> checkTokenSignatureValidity(
     String refreshToken,
   );
 
@@ -52,5 +52,5 @@ abstract class BasicAuthenticationRepository {
   ///
   /// Failures:
   /// - ... TBD ...
-  Either<Failure, String> getUserIdFromToken(String token);
+  Future<Either<Failure, String>> getUserIdFromToken(String token);
 }

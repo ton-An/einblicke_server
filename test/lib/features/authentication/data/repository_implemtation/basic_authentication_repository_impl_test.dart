@@ -1,4 +1,9 @@
+// ignore_for_file: inference_failure_on_instance_creation
+
+import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/repository_implementation/basic_authentication_repository_impl.dart';
+import 'package:jose/jose.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
@@ -18,7 +23,44 @@ void main() {
     registerFallbackValue(MockTokenClaims());
   });
 
-  group("checkTokenSignatureValidity", () {});
+  group("checkTokenSignatureValidity", () {
+    setUp(() {
+      when(() =>
+              mockBasicAuthLocalDataSource.checkTokenSignatureValidity(any()))
+          .thenAnswer((_) async => tAccessTokenClaims);
+    });
+
+    test(
+        "should call checkTokenSignatureValidity on the local data source "
+        "and return the result", () async {
+      // act
+      final result = await basicAuthenticationRepositoryImpl
+          .checkTokenSignatureValidity(tAccessToken);
+
+      // assert
+      expect(result, Right(tAccessTokenClaims));
+      verify(
+        () => mockBasicAuthLocalDataSource
+            .checkTokenSignatureValidity(tAccessToken),
+      );
+    });
+
+    test(
+        "should return a [InvalidTokenFailure] when checkTokenSignatureValidity "
+        "throws a [JoseException]", () async {
+      // arrange
+      when(() =>
+              mockBasicAuthLocalDataSource.checkTokenSignatureValidity(any()))
+          .thenThrow(JoseException("tMessage"));
+
+      // act
+      final result = await basicAuthenticationRepositoryImpl
+          .checkTokenSignatureValidity(tAccessToken);
+
+      // assert
+      expect(result, const Left(InvalidTokenFailure()));
+    });
+  });
 
   group("generateJWEToken", () {
     setUp(() {
@@ -27,8 +69,8 @@ void main() {
     });
 
     test(
-        "should call generateJWEToken on the local data source and return the result",
-        () {
+        "should call generateJWEToken on the local data source "
+        "and return the result", () {
       // act
       final result = basicAuthenticationRepositoryImpl
           .generateJWEToken(tAccessTokenClaims);
@@ -46,8 +88,8 @@ void main() {
     });
 
     test(
-        "should call generatePasswordHash on the local data source and return the result",
-        () {
+        "should call generatePasswordHash on the local data source "
+        "and return the result", () {
       // act
       final result =
           basicAuthenticationRepositoryImpl.generatePasswordHash(tPassword);
@@ -58,9 +100,39 @@ void main() {
     });
   });
 
-  group("generateTokenId", () {});
+  group("getUserIdFromToken", () {
+    setUp(() {
+      when(() => mockBasicAuthLocalDataSource.getUserIdFromToken(any()))
+          .thenAnswer((_) async => tUserId);
+    });
 
-  group("generateUserId", () {});
+    test(
+        "should call getUserIdFromToken on the local data source "
+        "and return the result", () async {
+      // act
+      final result = await basicAuthenticationRepositoryImpl
+          .getUserIdFromToken(tAccessToken);
 
-  group("getUserIdFromToken", () {});
+      // assert
+      expect(result, const Right(tUserId));
+      verify(
+        () => mockBasicAuthLocalDataSource.getUserIdFromToken(tAccessToken),
+      );
+    });
+
+    test(
+        "should return a [InvalidTokenFailure] when getUserIdFromToken "
+        "throws a [JoseException]", () async {
+      // arrange
+      when(() => mockBasicAuthLocalDataSource.getUserIdFromToken(any()))
+          .thenThrow(JoseException("tMessage"));
+
+      // act
+      final result = await basicAuthenticationRepositoryImpl
+          .getUserIdFromToken(tAccessToken);
+
+      // assert
+      expect(result, const Left(InvalidTokenFailure()));
+    });
+  });
 }

@@ -40,7 +40,7 @@ void main() {
         any(),
       ),
     ).thenAnswer(
-      (_) => Right(tAccessTokenClaims),
+      (_) async => Right(tAccessTokenClaims),
     );
 
     when(
@@ -87,7 +87,7 @@ void main() {
           any(),
         ),
       ).thenAnswer(
-        (_) => const Left(InvalidTokenFailure()),
+        (_) async => const Left(InvalidTokenFailure()),
       );
 
       // act

@@ -63,7 +63,7 @@ class CheckRefreshTokenValidityWrapper<U extends User,
     required String refreshToken,
   }) async {
     final Either<Failure, TokenClaims> signatureCheckEither =
-        basicAuthRepository.checkTokenSignatureValidity(
+        await basicAuthRepository.checkTokenSignatureValidity(
       refreshToken,
     );
 
