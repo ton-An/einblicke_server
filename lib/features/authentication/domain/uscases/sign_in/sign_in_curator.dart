@@ -29,10 +29,10 @@ class SignInCurator {
   final SignInWrapper<Curator, CuratorAuthenticationRepository> signInCurator;
 
   /// {@macro sign_in_curator}
-  Future<Either<Failure, AuthenticationCredentials>> call(
-    String username,
-    String password,
-  ) {
+  Future<Either<Failure, AuthenticationCredentials>> call({
+    required String username,
+    required String password,
+  }) {
     return signInCurator(username: username, password: password);
   }
 }

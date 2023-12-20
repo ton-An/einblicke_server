@@ -32,10 +32,10 @@ class SignInPictureFrame {
       signInPictureFrame;
 
   /// {@macro sign_in_picture_frame}
-  Future<Either<Failure, AuthenticationCredentials>> call(
-    String username,
-    String password,
-  ) {
+  Future<Either<Failure, AuthenticationCredentials>> call({
+    required String username,
+    required String password,
+  }) {
     return signInPictureFrame(
       username: username,
       password: password,

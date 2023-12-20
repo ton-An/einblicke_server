@@ -34,7 +34,8 @@ void main() {
     // arrange
 
     // act
-    final result = await signInCurator(tUsername, tPassword);
+    final result =
+        await signInCurator(username: tUsername, password: tPassword);
 
     // assert
     expect(result, Right(tAuthenticationCredentials));
@@ -51,7 +52,8 @@ void main() {
     ).thenAnswer((_) async => const Left(UserNotFoundFailure()));
 
     // act
-    final result = await signInCurator(tUsername, tPassword);
+    final result =
+        await signInCurator(username: tUsername, password: tPassword);
 
     // assert
     expect(result, const Left(UserNotFoundFailure()));
