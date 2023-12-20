@@ -227,7 +227,7 @@ void main() {
     });
   });
 
-  test("should return None", () async {
+  test("should return the image id", () async {
     // act
     final result = await receiveImageFromCurator(
       curatorId: tCuratorId,
@@ -236,6 +236,6 @@ void main() {
     );
 
     // assert
-    expect(result, const Right(None()));
+    expect(result, const Right(tImageId));
   });
 }

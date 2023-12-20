@@ -42,7 +42,7 @@ class ReceiveImageFromCurator {
   final Clock clock;
 
   /// {@macro receive_image_from_curator}
-  Future<Either<Failure, None>> call({
+  Future<Either<Failure, String>> call({
     required String curatorId,
     required String frameId,
     required List<int> imageBytes,
@@ -54,7 +54,7 @@ class ReceiveImageFromCurator {
     );
   }
 
-  Future<Either<Failure, None>> _checkIfCuratorXFramePaired({
+  Future<Either<Failure, String>> _checkIfCuratorXFramePaired({
     required String curatorId,
     required String frameId,
     required List<int> imageBytes,
@@ -78,7 +78,7 @@ class ReceiveImageFromCurator {
     });
   }
 
-  Future<Either<Failure, None>> _generateImageId({
+  Future<Either<Failure, String>> _generateImageId({
     required String curatorId,
     required String frameId,
     required List<int> imageBytes,
@@ -93,7 +93,7 @@ class ReceiveImageFromCurator {
     );
   }
 
-  Future<Either<Failure, None>> _saveImage({
+  Future<Either<Failure, String>> _saveImage({
     required String curatorId,
     required String frameId,
     required String imageId,
@@ -114,7 +114,7 @@ class ReceiveImageFromCurator {
     });
   }
 
-  Future<Either<Failure, None>> _saveImageToDb({
+  Future<Either<Failure, String>> _saveImageToDb({
     required String curatorId,
     required String frameId,
     required String imageId,
@@ -129,6 +129,15 @@ class ReceiveImageFromCurator {
       createdAt: createdAt,
     );
 
-    return saveImageToDbEither;
+    return saveImageToDbEither.fold(
+      Left.new,
+      (None none) => _returnImageId(imageId: imageId),
+    );
+  }
+
+  Future<Either<Failure, String>> _returnImageId({
+    required String imageId,
+  }) async {
+    return Right(imageId);
   }
 }
