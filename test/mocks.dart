@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/crypto_wrapper.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:dispatch_pi_dart/core/jwe_builder_wrapper.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/crypto_local_data_source.dart';
@@ -18,7 +17,6 @@ import 'package:dispatch_pi_dart/features/authentication/domain/repositories/use
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user/create_user_wrapper.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/get_user_with_type.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_password_valid.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_username_valid.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_wrapper.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_refresh_token_validity/check_refresh_token_validity.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_encrypted_token/generate_access_token.dart';
@@ -32,10 +30,10 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dar
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:jose/jose.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sqlite3/sqlite3.dart';
-import 'package:sqlite_async/sqlite_async.dart';
 import 'package:uuid/uuid.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}

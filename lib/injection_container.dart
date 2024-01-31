@@ -23,8 +23,6 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_u
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/get_user_with_type.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_id_valid.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_secret_valid.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_password_valid.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_username_valid.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_wrapper.dart';
@@ -48,6 +46,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_lat
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/pair_curator_x_frame.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/receive_image_from_curator.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:uuid/uuid.dart';
