@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:args/args.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user/create_curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user/create_picture_frame.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/pair_curator_x_frame.dart';
 import 'package:dispatch_pi_dart/injection_container.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 main(List<String> arguments) async {

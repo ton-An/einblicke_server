@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/crypto_wrapper.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:dispatch_pi_dart/core/jwe_builder_wrapper.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/crypto_local_data_source.dart';

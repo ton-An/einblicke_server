@@ -1,14 +1,10 @@
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/not_paired_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/write_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template receive_image_from_curator}
 /// Receives an image from a [Curator] and sends it to a [PictureFrame].

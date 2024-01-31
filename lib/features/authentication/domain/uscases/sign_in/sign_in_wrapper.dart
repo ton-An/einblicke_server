@@ -1,7 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
@@ -10,6 +7,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/repositories/use
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_encrypted_token/generate_access_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_encrypted_token/generate_refresh_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template sign_in_wrapper}
 /// A wrapper for signing in a [U] user with a given username and password

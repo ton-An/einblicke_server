@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/frame_image_stream.dart';
 import 'package:mocktail/mocktail.dart';

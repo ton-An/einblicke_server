@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:jose/jose.dart';
 
 /// {@template basic_authentication_repository_impl}

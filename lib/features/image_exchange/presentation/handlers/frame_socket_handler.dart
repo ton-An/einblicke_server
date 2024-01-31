@@ -1,15 +1,11 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/frame_not_connected_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/no_images_found_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/read_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/socket_connection.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template frame_socket_handler}
 /// Handles the websocket connections to the picture frames

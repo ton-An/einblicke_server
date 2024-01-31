@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_password_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/invalid_username_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/user_id_generation_failure.dart';

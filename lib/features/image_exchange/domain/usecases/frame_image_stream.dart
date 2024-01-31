@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
 

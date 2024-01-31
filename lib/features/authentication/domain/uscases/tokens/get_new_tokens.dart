@@ -1,11 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/expired_token_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/refresh_token_reuse_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
@@ -17,6 +10,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/g
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_all_refresh_tokens/invalidate_all_refresh_tokens.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_refresh_tokens/invalidate_refresh_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template get_new_tokens}
 /// A wrapper for getting new tokens for a given user

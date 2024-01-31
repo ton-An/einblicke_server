@@ -1,11 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template user_auth_repository}
 /// Repository for user authentication

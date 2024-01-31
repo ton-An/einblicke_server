@@ -1,13 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/invalid_password_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/invalid_username_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/username_taken_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user/create_user_wrapper.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template create_curator}
 /// Creates a [Curator] user with a given username and password

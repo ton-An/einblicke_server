@@ -1,8 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template invalidate_refresh_token}
 /// Invalidates the given refresh token for the given user id

@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template save_refresh_token}
 /// Saves the given refresh token for the given user id

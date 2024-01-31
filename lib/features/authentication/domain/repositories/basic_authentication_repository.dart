@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/invalid_token_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template basic_auth_repository}
 /// Repository for basic authentication related operations

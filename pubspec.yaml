@@ -23,6 +23,8 @@ dependencies:
   # sqlite_async: ^0.5.2
   uuid: ^4.2.1
   sqflite_common_ffi: ^2.3.1
+  dispatch_pi_shared:
+    path: ../dispatch_pi_shared
 
 dev_dependencies:
   mocktail: ^1.0.0

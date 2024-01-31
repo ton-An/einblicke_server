@@ -1,17 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/failure.dart';
-import 'package:dispatch_pi_dart/core/failures/invalid_password_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/invalid_username_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/user_id_generation_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/username_taken_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_password_valid.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_username_valid.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template create_user_wrapper}
 /// A wrapper for creating a [U] user with a given username and password
