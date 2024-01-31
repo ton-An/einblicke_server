@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
@@ -12,26 +13,35 @@ import 'package:dispatch_pi_dart/injection_container.dart';
 /// A middleware that verifies a users refresh token
 Middleware refreshTokensMiddleware<U extends User,
     R extends UserAuthenticationRepository<U>>() {
-  return (Handler handler) => (RequestContext context) async {
-        final GetNewTokens<U, R> getNewTokens = getIt.get();
-        final String? refreshToken = context.request.headers['refresh_token'];
+  return (Handler handler) {
+    return (RequestContext context) async {
+      final GetNewTokens<U, R> getNewTokens = getIt.get();
 
-        if (refreshToken == null) {
-          return Response(statusCode: HttpStatus.unauthorized);
-        }
+      final String bodyString = await context.request.body();
+      final Map<String, String> bodyMap =
+          Map.castFrom<String, dynamic, String, String>(
+        jsonDecode(bodyString) as Map<String, dynamic>,
+      );
 
-        final Either<Failure, AuthenticationCredentials> getNewTokensEither =
-            await getNewTokens(oldRefreshToken: refreshToken);
+      final String? refreshToken = bodyMap['refresh_token'];
 
-        return getNewTokensEither.fold(
-          (Failure failure) => Response(statusCode: HttpStatus.unauthorized),
-          (AuthenticationCredentials credentials) {
-            handler.use(
-              provider((context) => credentials),
-            );
+      if (refreshToken == null) {
+        return Response(statusCode: HttpStatus.unauthorized);
+      }
 
-            return handler(context);
-          },
-        );
-      };
+      final Either<Failure, AuthenticationCredentials> getNewTokensEither =
+          await getNewTokens(oldRefreshToken: refreshToken);
+
+      return getNewTokensEither.fold(
+        (Failure failure) => Response(statusCode: HttpStatus.unauthorized),
+        (AuthenticationCredentials credentials) {
+          final newHandler = handler.use(
+            provider<AuthenticationCredentials>((context) => credentials),
+          );
+
+          return newHandler(context);
+        },
+      );
+    };
+  };
 }

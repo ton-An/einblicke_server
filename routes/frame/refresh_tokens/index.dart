@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
@@ -13,7 +14,7 @@ Future<Response> onRequest(RequestContext context) async {
 
   final Map<String, dynamic> credentialsMap = credentials.toJson();
 
-  final bodyString = credentialsMap.toString();
+  final bodyString = jsonEncode(credentialsMap);
 
   return Response(
     body: bodyString,

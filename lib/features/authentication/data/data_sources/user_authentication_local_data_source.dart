@@ -2,8 +2,7 @@ import 'package:dispatch_pi_dart/core/db_names.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
-import 'package:sqlite3/sqlite3.dart';
-import 'package:sqlite_async/sqlite_async.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 /// {@template user_authentication_local_data_source}
 /// Local data source for user authentication
@@ -164,13 +163,13 @@ class UserAuthLocalDataSourceImpl<U extends User>
   });
 
   /// Sqlite database
-  final SqliteDatabase sqliteDatabase;
+  final Database sqliteDatabase;
 
   /// Names for the user table
-  final UserTable userTableNames;
+  final UserTable<U> userTableNames;
 
   /// Names for the refresh token table
-  final UserRefreshTokenTable refreshTokenTableNames;
+  final UserRefreshTokenTable<U> refreshTokenTableNames;
 
   @override
   Future<U> createUser({
@@ -201,13 +200,14 @@ class UserAuthLocalDataSourceImpl<U extends User>
 
   @override
   Future<bool> doesUserWithIdExist(String userId) async {
-    final Row queryResult = await sqliteDatabase.get(
+    final List<Map<String, Object?>> queryResult =
+        await sqliteDatabase.rawQuery(
       "SELECT EXISTS(SELECT 1 FROM ${userTableNames.tableName} "
       "WHERE ${userTableNames.userId} = ?)",
       [userId],
     );
 
-    final bool doesUserWithIdExist = queryResult.containsValue(1);
+    final bool doesUserWithIdExist = queryResult.first.containsValue(1);
 
     return doesUserWithIdExist;
   }
@@ -217,21 +217,25 @@ class UserAuthLocalDataSourceImpl<U extends User>
     required String username,
     required String passwordHash,
   }) async {
-    final Row queryResult = await sqliteDatabase.get(
-      "SELECT 1 FROM ${userTableNames.tableName} "
+    final List<Map<String, Object?>> queryResult =
+        await sqliteDatabase.rawQuery(
+      "SELECT  ${userTableNames.userId},  ${userTableNames.username},  ${userTableNames.passwordHash} FROM ${userTableNames.tableName} "
       "WHERE ${userTableNames.username} = ? "
       "AND ${userTableNames.passwordHash} = ?",
       [username, passwordHash],
     );
 
-    if (queryResult.isEmpty) {
+    if (queryResult.isEmpty ||
+        queryResult.first[userTableNames.userId] == null ||
+        queryResult.first[userTableNames.username] == null ||
+        queryResult.first[userTableNames.passwordHash] == null) {
       return null;
     }
 
     final U user = _instanciateUser(
-      userId: queryResult[userTableNames.userId] as String,
-      username: queryResult[userTableNames.username] as String,
-      passwordHash: queryResult[userTableNames.passwordHash] as String,
+      userId: queryResult.first[userTableNames.userId]! as String,
+      username: queryResult.first[userTableNames.username]! as String,
+      passwordHash: queryResult.first[userTableNames.passwordHash]! as String,
     );
 
     return user;
@@ -239,20 +243,23 @@ class UserAuthLocalDataSourceImpl<U extends User>
 
   @override
   Future<U?> getUserFromId(String userId) async {
-    final Row queryResult = await sqliteDatabase.get(
-      "SELECT 1 FROM ${userTableNames.tableName} "
+    final List<Map<String, dynamic>> queryResult =
+        await sqliteDatabase.rawQuery(
+      "SELECT ${userTableNames.userId},  ${userTableNames.username},  ${userTableNames.passwordHash} FROM ${userTableNames.tableName} "
       "WHERE ${userTableNames.userId} = ?",
       [userId],
     );
 
-    if (queryResult.isEmpty) {
+    if (queryResult.isEmpty ||
+        queryResult.first[userTableNames.userId] == null ||
+        queryResult.first[userTableNames.username] == null ||
+        queryResult.first[userTableNames.passwordHash] == null) {
       return null;
     }
-
     final U user = _instanciateUser(
-      userId: queryResult[userTableNames.userId] as String,
-      username: queryResult[userTableNames.username] as String,
-      passwordHash: queryResult[userTableNames.passwordHash] as String,
+      userId: queryResult.first[userTableNames.userId] as String,
+      username: queryResult.first[userTableNames.username] as String,
+      passwordHash: queryResult.first[userTableNames.passwordHash] as String,
     );
 
     return user;
@@ -263,7 +270,8 @@ class UserAuthLocalDataSourceImpl<U extends User>
     required String userId,
     required String refreshToken,
   }) async {
-    final Row queryResult = await sqliteDatabase.get(
+    final List<Map<String, dynamic>> queryResult =
+        await sqliteDatabase.rawQuery(
       "SELECT EXISTS(SELECT 1 FROM "
       "${refreshTokenTableNames.tableName} "
       "WHERE ${refreshTokenTableNames.userId} = ? "
@@ -271,33 +279,35 @@ class UserAuthLocalDataSourceImpl<U extends User>
       [userId, refreshToken],
     );
 
-    final bool isRefreshTokenInUserDb = queryResult.containsValue(1);
+    final bool isRefreshTokenInUserDb = queryResult.first.containsValue(1);
 
     return isRefreshTokenInUserDb;
   }
 
   @override
   Future<bool> isUserIdTaken(String userId) async {
-    final Row queryResult = await sqliteDatabase.get(
+    final List<Map<String, dynamic>> queryResult =
+        await sqliteDatabase.rawQuery(
       "SELECT EXISTS(SELECT 1 FROM ${userTableNames.tableName} "
       "WHERE ${userTableNames.userId} = ?)",
       [userId],
     );
 
-    final bool isUserIdTaken = queryResult.containsValue(1);
+    final bool isUserIdTaken = queryResult.first.containsValue(1);
 
     return isUserIdTaken;
   }
 
   @override
   Future<bool> isUsernameTaken(String username) async {
-    final Row queryResult = await sqliteDatabase.get(
+    final List<Map<String, dynamic>> queryResult =
+        await sqliteDatabase.rawQuery(
       "SELECT EXISTS(SELECT 1 FROM ${userTableNames.tableName} "
       "WHERE ${userTableNames.username} = ?)",
       [username],
     );
 
-    final bool isUsernameTaken = queryResult.containsValue(1);
+    final bool isUsernameTaken = queryResult.first.containsValue(1);
 
     return isUsernameTaken;
   }
@@ -365,8 +375,13 @@ class UserAuthLocalDataSourceImpl<U extends User>
   }
 }
 
-/// {@macro user_authentication_local_data_source}
-typedef CuratorAuthLocalDataSource = UserAuthLocalDataSourceImpl<Curator>;
+typedef CuratorAuthLocalDataSource = UserAuthenticationLocalDataSource<Curator>;
+typedef FrameAuthLocalDataSource
+    = UserAuthenticationLocalDataSource<PictureFrame>;
 
 /// {@macro user_authentication_local_data_source}
-typedef FrameAuthLocalDataSource = UserAuthLocalDataSourceImpl<PictureFrame>;
+typedef CuratorAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Curator>;
+
+/// {@macro user_authentication_local_data_source}
+typedef FrameAuthLocalDataSourceImpl
+    = UserAuthLocalDataSourceImpl<PictureFrame>;

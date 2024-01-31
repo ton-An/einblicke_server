@@ -82,9 +82,9 @@ class BasicAuthLocalDataSourceImpl extends BasicAuthLocalDataSource {
   /// Used to get app's secrets
   final Secrets secrets;
 
-  static const String _jweHashAlgorithm = "RSA-OAEP-256";
+  static const String _jweHashAlgorithm = "RSA1_5";
 
-  static const String _encytpionAlgorithm = "A256CBC-HS512";
+  static const String _encytpionAlgorithm = "A128CBC-HS256";
 
   @override
   Future<TokenClaims> checkTokenSignatureValidity(String token) async {
@@ -142,8 +142,9 @@ class BasicAuthLocalDataSourceImpl extends BasicAuthLocalDataSource {
     final JosePayload payload = await jweToken.getPayload(keyStore);
 
     final Map<String, String> payloadMap =
-        jsonDecode(payload.stringContent) as Map<String, String>;
-
+        Map.castFrom<String, dynamic, String, String>(
+      jsonDecode(payload.stringContent) as Map<String, dynamic>,
+    );
     return payloadMap;
   }
 

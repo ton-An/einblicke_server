@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
+import 'package:jose/jose.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
@@ -133,5 +134,16 @@ void main() {
     });
   });
 
-  group("getUserIdFromToken", () {});
+  group("getUserIdFromToken", () {
+    test("gsddsf", () {
+      // arrange
+      final result = JsonWebKey.generate("RSA1_5");
+
+      print(result.toString());
+
+      // act
+
+      // assert
+    });
+  });
 }

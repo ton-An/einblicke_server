@@ -21,5 +21,5 @@ abstract class Secrets {
   Duration get refreshTokenLifetime;
 
   /// The secret used to sign the tokens
-  Map<String, String> get jsonWebKey;
+  Map<String, dynamic> get jsonWebKey;
 }

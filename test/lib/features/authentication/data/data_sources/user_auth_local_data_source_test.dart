@@ -13,8 +13,8 @@ import '../../../../../mocks.dart';
 void main() {
   late UserAuthenticationLocalDataSource dataSource;
   late MockSqliteDatabase mockSqliteDatabase;
-  late UserTable userTable;
-  late UserRefreshTokenTable userRefreshTokenTable;
+  late UserTable<Curator> userTable;
+  late UserRefreshTokenTable<Curator> userRefreshTokenTable;
 
   late Curator tUser;
 

@@ -10,14 +10,15 @@ Middleware clientCheckMiddleware() {
   return (handler) => (context) async {
         final String? clientId = context.request.headers['client_id'];
         final String? clientSecret = context.request.headers['client_secret'];
-        final IsClientIdValid isClientIdValidUsecase =
-            getIt.get<IsClientIdValid>();
-        final IsClientSecretValid isClientSecretValidUsecase =
-            getIt.get<IsClientSecretValid>();
 
         if (clientId == null || clientSecret == null) {
           return Response(statusCode: HttpStatus.unauthorized);
         }
+
+        final IsClientIdValid isClientIdValidUsecase =
+            getIt.get<IsClientIdValid>();
+        final IsClientSecretValid isClientSecretValidUsecase =
+            getIt.get<IsClientSecretValid>();
 
         final bool isClientIdValid = isClientIdValidUsecase(clientId);
         final bool isClientSecretValid =

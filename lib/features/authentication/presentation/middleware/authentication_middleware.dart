@@ -10,17 +10,17 @@ import 'package:dispatch_pi_dart/injection_container.dart';
 /// An authentiaction middleware that verifies a users access token
 Middleware authenticationMiddleware<U extends User,
     R extends UserAuthenticationRepository<U>>() {
-  return bearerAuthentication<User>(
+  return bearerAuthentication<U>(
     authenticator: (context, token) async {
       final CheckAccessTokenValidityWrapper<U, R> checkAccessTokenValidity =
           getIt.get();
 
-      final Either<Failure, User> tokenValidityEither =
+      final Either<Failure, U> tokenValidityEither =
           await checkAccessTokenValidity(accessToken: token);
 
       return tokenValidityEither.fold(
         (Failure failure) => null,
-        (User user) => user,
+        (U user) => user,
       );
     },
   );

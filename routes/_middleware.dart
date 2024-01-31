@@ -4,11 +4,7 @@ import 'package:dispatch_pi_dart/injection_container.dart';
 
 /// Adds a [FrameSocketHandler] provider
 Handler middleware(Handler handler) {
-  handler
-    ..use(requestLogger())
-    ..use(
-      provider((context) => getIt.get<FrameSocketHandler>()),
-    );
-
-  return handler;
+  return handler.use(requestLogger()).use(
+        provider((context) => getIt.get<FrameSocketHandler>()),
+      );
 }

@@ -1,7 +1,11 @@
+import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
+
 /// {@template user_table}
 /// Abstract class for the names of the user table
 /// {@endtemplate}
-abstract class UserTable {
+abstract class UserTable<U extends User> {
   /// {@macro user_table}
   const UserTable({
     required this.tableName,
@@ -26,7 +30,7 @@ abstract class UserTable {
 /// {@template user_refresh_token_table}
 /// Abstract class for the names of the user refresh token table
 /// {@endtemplate}
-abstract class UserRefreshTokenTable {
+abstract class UserRefreshTokenTable<U extends User> {
   /// {@macro user_refresh_token_table}
   const UserRefreshTokenTable({
     required this.tableName,
@@ -47,7 +51,7 @@ abstract class UserRefreshTokenTable {
 /// {@template user_table}
 /// Wrapper for the names of the curator user table
 /// {@endtemplate}
-class CuratorTable extends UserTable {
+class CuratorTable extends UserTable<Curator> {
   /// {@macro user_table}
   const CuratorTable()
       : super(
@@ -61,7 +65,7 @@ class CuratorTable extends UserTable {
 /// {@template user_refresh_token_table}
 /// Wrapper for the names of the curator refresh token table
 /// {@endtemplate}
-class CuratorRefreshTokenTable extends UserRefreshTokenTable {
+class CuratorRefreshTokenTable extends UserRefreshTokenTable<Curator> {
   /// {@macro user_refresh_token_table}
   const CuratorRefreshTokenTable()
       : super(
@@ -74,7 +78,7 @@ class CuratorRefreshTokenTable extends UserRefreshTokenTable {
 /// {@template picture_frame_table}
 /// Wrapper for the names of the picture frame user table
 /// {@endtemplate}
-class PictureFrameTable extends UserTable {
+class PictureFrameTable extends UserTable<PictureFrame> {
   /// {@macro picture_frame_table}
   const PictureFrameTable()
       : super(
@@ -88,7 +92,7 @@ class PictureFrameTable extends UserTable {
 /// {@template frame_refresh_token_table}
 /// Wrapper for the names of the picture frame refresh token table
 /// {@endtemplate}
-class FrameRefreshTokenTable extends UserRefreshTokenTable {
+class FrameRefreshTokenTable extends UserRefreshTokenTable<PictureFrame> {
   /// {@macro frame_refresh_token_table}
   const FrameRefreshTokenTable()
       : super(

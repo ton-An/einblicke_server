@@ -4,9 +4,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/repositories/use
 import 'package:dispatch_pi_dart/features/authentication/presentation/middleware/refresh_tokens_middleware.dart';
 
 Handler middleware(Handler handler) {
-  handler.use(
+  return handler.use(
     refreshTokensMiddleware<PictureFrame, FrameAuthenticationRepository>(),
   );
-
-  return handler;
 }

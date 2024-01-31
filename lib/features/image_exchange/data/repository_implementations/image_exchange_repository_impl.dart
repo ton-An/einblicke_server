@@ -105,7 +105,8 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return const Right(None());
-    } on IOException {
+    } on IOException catch (_) {
+      print(_);
       return const Left(StorageWriteFailure());
     }
   }
@@ -128,6 +129,23 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       return const Right(None());
     } on SqliteException {
       return const Left(DatabaseWriteFailure());
+    }
+  }
+
+  // ToDo: test
+  @override
+  Future<Either<Failure, bool>> doesImageBelongToFrame(
+      {required String frameId, required String imageId}) async {
+    try {
+      final bool doesImageBelongToFrame =
+          await localDataSource.doesImageBelongToFrame(
+        frameId: frameId,
+        imageId: imageId,
+      );
+
+      return Right(doesImageBelongToFrame);
+    } on SqliteException {
+      return const Left(DatabaseReadFailure());
     }
   }
 }

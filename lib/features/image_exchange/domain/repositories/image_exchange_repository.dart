@@ -98,4 +98,20 @@ abstract class ImageExchangeRepository {
   Future<Either<Failure, Image>> getImageById({
     required String imageId,
   });
+
+  /// Checks if an image belongs to a frame
+  ///
+  /// Parameters:
+  /// - [String] frameId
+  /// - [String] imageId
+  ///
+  /// Returns:
+  /// - [bool] indicating if the image belongs to the frame
+  ///
+  /// Failures:
+  /// - [DatabaseReadFailure]
+  Future<Either<Failure, bool>> doesImageBelongToFrame({
+    required String frameId,
+    required String imageId,
+  });
 }

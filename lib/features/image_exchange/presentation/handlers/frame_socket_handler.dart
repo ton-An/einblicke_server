@@ -47,8 +47,8 @@ class FrameSocketHandler {
     final latestImageEither = await getLatestImage(frameId: frameId);
 
     latestImageEither.fold(
-      (failure) => streamSink.add(Left<Failure, Image>(failure)),
-      (image) => streamSink.add(Right<Failure, Image>(image)),
+      (failure) => streamSink.add(failure.code),
+      (image) => streamSink.add(image.imageId),
     );
 
     final SocketConnetion connetion =
@@ -108,7 +108,7 @@ class FrameSocketHandler {
   }) {
     for (final connection in _connections) {
       if (connection.frameId == frameId) {
-        connection.sink.add(Right<Failure, Image>(image));
+        connection.sink.add(image.imageId);
       }
     }
 
@@ -117,7 +117,9 @@ class FrameSocketHandler {
 
   bool _isFrameConnected({required String frameId}) {
     return _connections.any(
-      (connection) => connection.frameId == frameId,
+      (connection) {
+        return connection.frameId == frameId;
+      },
     );
   }
 

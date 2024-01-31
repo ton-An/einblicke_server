@@ -152,20 +152,6 @@ abstract class UserAuthenticationRepository<U extends User> {
   Future<Either<Failure, bool>> doesUserWithIdExist(String userId);
 }
 
-/// {@template curator_authentication_repository}
-/// Repository wrapper for curator authentication
-/// {@endtemplate}
-abstract class CuratorAuthenticationRepository
-    extends UserAuthenticationRepository<Curator> {
-  /// {@macro curator_authentication_repository}
-  const CuratorAuthenticationRepository();
-}
-
-/// {@template frame_auth_repository}
-/// Repository wrapper for picture frame authentication
-/// {@endtemplate}
-abstract class FrameAuthenticationRepository
-    extends UserAuthenticationRepository<PictureFrame> {
-  /// {@macro frame_authentication_repository}
-  const FrameAuthenticationRepository();
-}
+typedef CuratorAuthenticationRepository = UserAuthenticationRepository<Curator>;
+typedef FrameAuthenticationRepository
+    = UserAuthenticationRepository<PictureFrame>;

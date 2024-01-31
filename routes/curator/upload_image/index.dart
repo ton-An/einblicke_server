@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
@@ -21,22 +20,23 @@ Future<Response> onRequest(RequestContext context) async {
 
   final FormData formData = await context.request.formData();
   final UploadedFile? photo = formData.files['photo'];
+  final String? frameId = formData.fields['frame_id'];
 
   if (photo == null ||
-      photo.contentType.mimeType != contentTypePng.mimeType ||
-      photo.contentType.mimeType != contentTypeJpg.mimeType ||
-      photo.contentType.mimeType != contentTypeJpeg.mimeType) {
+      frameId == null ||
+      !(photo.contentType.mimeType == contentTypePng.mimeType ||
+          photo.contentType.mimeType == contentTypeJpg.mimeType ||
+          photo.contentType.mimeType == contentTypeJpeg.mimeType)) {
     return Response(statusCode: HttpStatus.badRequest);
   }
 
+  print(1);
+
   final List<int> photoBytes = await photo.readAsBytes();
-  final String bodyString = await context.request.body();
-  final Map<String, dynamic> body =
-      jsonDecode(bodyString) as Map<String, dynamic>;
 
-  final String frameId = body['frame_id'] as String;
+  print(2);
+
   final Curator curator = context.read<Curator>();
-
   final ReceiveImageFromCurator receiveImageFromCurator =
       getIt<ReceiveImageFromCurator>();
 
@@ -45,6 +45,8 @@ Future<Response> onRequest(RequestContext context) async {
     frameId: frameId,
     imageBytes: photoBytes,
   );
+  print(3);
+  print(imageIdEither);
 
   return imageIdEither.fold(
     (Failure failure) => Response(

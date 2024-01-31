@@ -2,8 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
-import 'package:sqlite3/sqlite3.dart';
-import 'package:sqlite_async/sqlite_async.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 /// {@template image_exchange_local_data_source}
 /// Local data source for handling the exchange of images between
@@ -95,6 +94,19 @@ abstract class ImageExchangeLocalDataSource {
   Future<Image> getImageById({
     required String imageId,
   });
+
+  /// Checks if an image belongs to a frame
+  ///
+  /// Parameters:
+  /// - [String] frameId
+  /// - [String] imageId
+  ///
+  /// Throws:
+  /// - [SqliteException]
+  Future<bool> doesImageBelongToFrame({
+    required String frameId,
+    required String imageId,
+  });
 }
 
 /// {@macro image_exchange_local_data_source}
@@ -106,7 +118,7 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
   });
 
   /// The database connection
-  final SqliteDatabase sqliteDatabase;
+  final Database sqliteDatabase;
 
   final String imageDirectoryPath;
 
@@ -115,13 +127,14 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
     required String curatorId,
     required String frameId,
   }) async {
-    final Row queryResult = await sqliteDatabase.get(
+    final List<Map<String, dynamic>> queryResult =
+        await sqliteDatabase.rawQuery(
       "SELECT EXISTS(SELECT 1 FROM curator_x_frame "
       "WHERE curator_id = ? AND frame_id = ?)",
       [curatorId, frameId],
     );
 
-    final bool isPaired = queryResult.containsValue(1);
+    final bool isPaired = queryResult.first.containsValue(1);
 
     return isPaired;
   }
@@ -144,15 +157,17 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
 
   @override
   Future<String?> getLatestImageIdFromDb({required String frameId}) async {
-    final Row queryResult = await sqliteDatabase.get(
+    final List<Map<String, dynamic>> queryResult =
+        await sqliteDatabase.rawQuery(
       "SELECT image_id FROM images "
       "WHERE frame_id = ? "
       "ORDER BY created_at DESC "
       "LIMIT 1",
       [frameId],
     );
+    print(queryResult);
 
-    final String? imageId = queryResult.values.first as String?;
+    final String? imageId = queryResult.first["image_id"] as String?;
 
     return imageId;
   }
@@ -178,6 +193,9 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
       "$imageDirectoryPath/$imageId.jpg",
     );
 
+    // ToDo: test
+    await imageFile.create(recursive: true);
+
     await imageFile.writeAsBytes(imageBytes, flush: true);
   }
 
@@ -193,5 +211,21 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
       "VALUES (?, ?, ?, ?)",
       [curatorId, frameId, imageId, createdAt.toIso8601String()],
     );
+  }
+
+  // ToDo: test
+  @override
+  Future<bool> doesImageBelongToFrame(
+      {required String frameId, required String imageId}) async {
+    final List<Map<String, dynamic>> queryResult =
+        await sqliteDatabase.rawQuery(
+      "SELECT EXISTS(SELECT 1 FROM images "
+      "WHERE frame_id = ? AND image_id = ?)",
+      [frameId, imageId],
+    );
+
+    final bool doesImageBelongToFrame = queryResult.first.containsValue(1);
+
+    return doesImageBelongToFrame;
   }
 }

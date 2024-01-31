@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/core/failures/failure.dart';
 import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
@@ -47,7 +48,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
 
       return Right(doesUserWithIdExist);
     } on SqliteException {
-      return const Left(DatabaseWriteFailure());
+      return const Left(DatabaseReadFailure());
     }
   }
 
@@ -113,7 +114,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
 
       return Right(isUserIdTaken);
     } on SqliteException {
-      return const Left(DatabaseWriteFailure());
+      return const Left(DatabaseReadFailure());
     }
   }
 
@@ -125,7 +126,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
 
       return Right(isUsernameTaken);
     } on SqliteException {
-      return const Left(DatabaseWriteFailure());
+      return const Left(DatabaseReadFailure());
     }
   }
 
