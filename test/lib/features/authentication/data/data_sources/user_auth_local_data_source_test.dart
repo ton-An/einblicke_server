@@ -2,28 +2,27 @@ import 'package:dispatch_pi_dart/core/db_names.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:sqlite3/sqlite3.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
 
 import '../../../../../fixtures.dart';
-import '../../../../../mocks.dart';
 
 // ToDo: Need to clean up the database tests (especially the test query results)
 
 void main() {
   late UserAuthenticationLocalDataSource dataSource;
-  late MockSqliteDatabase mockSqliteDatabase;
+  late Database database;
   late UserTable<Curator> userTable;
   late UserRefreshTokenTable<Curator> userRefreshTokenTable;
 
   late Curator tUser;
 
-  setUp(() {
-    mockSqliteDatabase = MockSqliteDatabase();
+  setUp(() async {
+    database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     userRefreshTokenTable = const CuratorRefreshTokenTable();
     userTable = const CuratorTable();
     dataSource = UserAuthLocalDataSourceImpl<Curator>(
-      sqliteDatabase: mockSqliteDatabase,
+      sqliteDatabase: database,
       userTableNames: userTable,
       refreshTokenTableNames: userRefreshTokenTable,
     );
@@ -38,7 +37,7 @@ void main() {
   group("createUser", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           any(),
           any(),
         ),
@@ -55,7 +54,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           "INSERT INTO ${userTable.tableName} "
           "(${userTable.userId}, ${userTable.username}, ${userTable.passwordHash}) "
           "VALUES (?, ?, ?)",
@@ -73,24 +72,24 @@ void main() {
   group("doesUserWithIdExist", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
-      ).thenAnswer(
-        (_) async => Row(
-          ResultSet(
-            [
-              "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
-            ],
-            [null],
-            [
-              [1],
-            ],
-          ),
-          [1],
-        ),
-      );
+      ).thenAnswer((_) async => []
+          //  Row(
+          //   ResultSet(
+          //     [
+          //       "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
+          //     ],
+          //     [null],
+          //     [
+          //       [1],
+          //     ],
+          //   ),
+          //   [1],
+          // ),
+          );
     });
 
     test("should return true if the user exists", () async {
@@ -99,7 +98,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
           [tUser.userId],
         ),
@@ -110,24 +109,24 @@ void main() {
     test("should return false if the user does not exist", () async {
       // arrange
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
-      ).thenAnswer(
-        (_) async => Row(
-          ResultSet(
-            [
-              "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
-            ],
-            [],
-            [
-              [0],
-            ],
-          ),
-          [0],
-        ),
-      );
+      ).thenAnswer((_) async => []
+          // Row(
+          //   ResultSet(
+          //     [
+          //       "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
+          //     ],
+          //     [],
+          //     [
+          //       [0],
+          //     ],
+          //   ),
+          //   [0],
+          // ),
+          );
 
       // act
       final result = await dataSource.doesUserWithIdExist(tUser.userId);
@@ -140,7 +139,7 @@ void main() {
   group("getUser", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
@@ -156,7 +155,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           "SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.username} = ? AND ${userTable.passwordHash} = ?",
           [tUser.username, tUser.passwordHash],
         ),
@@ -167,7 +166,7 @@ void main() {
     test("should return null if the user does not exist", () async {
       // arrange
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
@@ -189,7 +188,7 @@ void main() {
   group("getUserFromId", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
@@ -202,7 +201,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           "SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?",
           [tUser.userId],
         ),
@@ -213,7 +212,7 @@ void main() {
     test("should return null if the user does not exist", () async {
       // arrange
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
@@ -232,24 +231,24 @@ void main() {
   group("isRefreshTokenInUserDb", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
-      ).thenAnswer(
-        (_) async => Row(
-          ResultSet(
-            [
-              "SELECT EXISTS(SELECT 1 FROM ${userRefreshTokenTable.tableName} WHERE ${userRefreshTokenTable.refreshToken} = ? AND ${userRefreshTokenTable.userId} = ?)",
-            ],
-            [],
-            [
-              [1],
-            ],
-          ),
-          [1],
-        ),
-      );
+      ).thenAnswer((_) async => []
+          // Row(
+          //   ResultSet(
+          //     [
+          //       "SELECT EXISTS(SELECT 1 FROM ${userRefreshTokenTable.tableName} WHERE ${userRefreshTokenTable.refreshToken} = ? AND ${userRefreshTokenTable.userId} = ?)",
+          //     ],
+          //     [],
+          //     [
+          //       [1],
+          //     ],
+          //   ),
+          //   [1],
+          // ),
+          );
     });
 
     test("should return true if the token is in the databas", () async {
@@ -261,7 +260,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           "SELECT EXISTS(SELECT 1 FROM "
           "${userRefreshTokenTable.tableName} "
           "WHERE ${userRefreshTokenTable.userId} = ? "
@@ -275,24 +274,24 @@ void main() {
     test("should return false if the token is not in the database", () async {
       // arrange
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
-      ).thenAnswer(
-        (_) async => Row(
-          ResultSet(
-            [
-              "SELECT EXISTS(SELECT 1 FROM ${userRefreshTokenTable.tableName} WHERE ${userRefreshTokenTable.refreshToken} = ? AND ${userRefreshTokenTable.userId} = ?)",
-            ],
-            [],
-            [
-              [0],
-            ],
-          ),
-          [0],
-        ),
-      );
+      ).thenAnswer((_) async => []
+          // Row(
+          //   ResultSet(
+          //     [
+          //       "SELECT EXISTS(SELECT 1 FROM ${userRefreshTokenTable.tableName} WHERE ${userRefreshTokenTable.refreshToken} = ? AND ${userRefreshTokenTable.userId} = ?)",
+          //     ],
+          //     [],
+          //     [
+          //       [0],
+          //     ],
+          //   ),
+          //   [0],
+          // ),
+          );
 
       // act
       final result = await dataSource.isRefreshTokenInUserDb(
@@ -308,24 +307,24 @@ void main() {
   group("isUserIdTaken", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
-      ).thenAnswer(
-        (_) async => Row(
-          ResultSet(
-            [
-              "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
-            ],
-            [],
-            [
-              [1],
-            ],
-          ),
-          [1],
-        ),
-      );
+      ).thenAnswer((_) async => []
+          // Row(
+          //   ResultSet(
+          //     [
+          //       "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
+          //     ],
+          //     [],
+          //     [
+          //       [1],
+          //     ],
+          //   ),
+          //   [1],
+          // ),
+          );
     });
 
     test("should return true if the user id is taken", () async {
@@ -334,7 +333,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
           [tUser.userId],
         ),
@@ -345,24 +344,24 @@ void main() {
     test("should return false if the user id is not taken", () async {
       // arrange
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
-      ).thenAnswer(
-        (_) async => Row(
-          ResultSet(
-            [
-              "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
-            ],
-            [],
-            [
-              [0],
-            ],
-          ),
-          [0],
-        ),
-      );
+      ).thenAnswer((_) async => []
+          // Row(
+          //   ResultSet(
+          //     [
+          //       "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.userId} = ?)",
+          //     ],
+          //     [],
+          //     [
+          //       [0],
+          //     ],
+          //   ),
+          //   [0],
+          // ),
+          );
 
       // act
       final result = await dataSource.isUserIdTaken(tUser.userId);
@@ -375,24 +374,24 @@ void main() {
   group("isUsernameTaken", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
-      ).thenAnswer(
-        (_) async => Row(
-          ResultSet(
-            [
-              "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.username} = ?)",
-            ],
-            [],
-            [
-              [1],
-            ],
-          ),
-          [1],
-        ),
-      );
+      ).thenAnswer((_) async => []
+          // Row(
+          //   ResultSet(
+          //     [
+          //       "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.username} = ?)",
+          //     ],
+          //     [],
+          //     [
+          //       [1],
+          //     ],
+          //   ),
+          //   [1],
+          // ),
+          );
     });
 
     test("should return true if the username is taken", () async {
@@ -401,7 +400,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} "
           "WHERE ${userTable.username} = ?)",
           [tUser.username],
@@ -413,24 +412,24 @@ void main() {
     test("should return false if the username is not taken", () async {
       // arrange
       when(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           any(),
           any(),
         ),
-      ).thenAnswer(
-        (_) async => Row(
-          ResultSet(
-            [
-              "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.username} = ?)",
-            ],
-            [],
-            [
-              [0],
-            ],
-          ),
-          [0],
-        ),
-      );
+      ).thenAnswer((_) async => []
+          // Row(
+          //   ResultSet(
+          //     [
+          //       "SELECT EXISTS(SELECT 1 FROM ${userTable.tableName} WHERE ${userTable.username} = ?)",
+          //     ],
+          //     [],
+          //     [
+          //       [0],
+          //     ],
+          //   ),
+          //   [0],
+          // ),
+          );
 
       // act
       final result = await dataSource.isUsernameTaken(tUser.username);
@@ -443,7 +442,7 @@ void main() {
   group("removeAllRefreshTokensFromDb", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           any(),
           any(),
         ),
@@ -456,7 +455,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           "DELETE FROM ${userRefreshTokenTable.tableName} "
           "WHERE ${userRefreshTokenTable.userId} = ?",
           [tUser.userId],
@@ -468,7 +467,7 @@ void main() {
   group("removeRefreshTokenFromDb", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           any(),
           any(),
         ),
@@ -484,7 +483,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           "DELETE FROM ${userRefreshTokenTable.tableName} "
           "WHERE ${userRefreshTokenTable.userId} = ? "
           "AND ${userRefreshTokenTable.refreshToken} = ?",
@@ -497,7 +496,7 @@ void main() {
   group("saveRefreshTokenToDb", () {
     setUp(() {
       when(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           any(),
           any(),
         ),
@@ -513,7 +512,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           "INSERT INTO ${userRefreshTokenTable.tableName} "
           "(${userRefreshTokenTable.userId}, ${userRefreshTokenTable.refreshToken}) "
           "VALUES (?, ?)",

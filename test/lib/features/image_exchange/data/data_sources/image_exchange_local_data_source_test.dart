@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:sqlite3/sqlite3.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
 
 import '../../../../../fixtures.dart';
@@ -13,37 +13,38 @@ import '../../../../../mocks.dart';
 
 void main() {
   late ImageExchangeLocalDataSourceImpl imageExchangeLocalDataSourceImpl;
-  late MockSqliteDatabase mockSqliteDatabase;
+  late Database database;
 
   late MockFile tMockFile;
 
-  setUp(() {
-    mockSqliteDatabase = MockSqliteDatabase();
+  setUp(() async {
+    database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
 
     tMockFile = MockFile();
 
     imageExchangeLocalDataSourceImpl = ImageExchangeLocalDataSourceImpl(
-      sqliteDatabase: mockSqliteDatabase,
+      sqliteDatabase: database,
       imageDirectoryPath: tImageDirectoryPath,
     );
   });
 
   group("areCuratorXFramePaired", () {
     setUp(() {
-      final Row tDbRow = Row(
-        ResultSet(
-          [
-            "SELECT EXISTS(SELECT 1 FROM curator_x_frame WHERE curator_id = ? AND frame_id = ?)",
-          ],
-          [null],
-          [
-            [1],
-          ],
-        ),
-        [1],
-      );
+      final List<Map<String, Object?>> tDbRow = [];
+      // Row(
+      //   ResultSet(
+      //     [
+      //       "SELECT EXISTS(SELECT 1 FROM curator_x_frame WHERE curator_id = ? AND frame_id = ?)",
+      //     ],
+      //     [null],
+      //     [
+      //       [1],
+      //     ],
+      //   ),
+      //   [1],
+      // );
 
-      when(() => mockSqliteDatabase.get(any(), any()))
+      when(() => database.rawQuery(any(), any()))
           .thenAnswer((_) async => tDbRow);
     });
 
@@ -60,7 +61,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           "SELECT EXISTS(SELECT 1 FROM curator_x_frame "
           "WHERE curator_id = ? AND frame_id = ?)",
           [tCuratorId, tPictureFrameId],
@@ -71,8 +72,8 @@ void main() {
   });
   group("pairCuratorXFrame", () {
     setUp(() {
-      when(() => mockSqliteDatabase.execute(any(), any()))
-          .thenAnswer((_) async => MockResultSet());
+      when(() => database.execute(any(), any()))
+          .thenAnswer((_) async => Future.value());
     });
 
     test(
@@ -86,7 +87,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           "INSERT INTO curator_x_frame (curator_id, frame_id) "
           "VALUES (?, ?)",
           [tCuratorId, tPictureFrameId],
@@ -97,8 +98,8 @@ void main() {
 
   group("saveImageToDb", () {
     setUp(() {
-      when(() => mockSqliteDatabase.execute(any(), any()))
-          .thenAnswer((_) async => MockResultSet());
+      when(() => database.execute(any(), any()))
+          .thenAnswer((_) async => Future.value());
     });
 
     test(
@@ -114,7 +115,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.execute(
+        () => database.execute(
           "INSERT INTO images (curator_id, frame_id, image_id, created_at) "
           "VALUES (?, ?, ?, ?)",
           [tCuratorId, tPictureFrameId, tImageId, tCreatedAt.toIso8601String()],
@@ -125,20 +126,21 @@ void main() {
 
   group("getLatestImageIdFromDb", () {
     setUp(() {
-      final Row tDbRow = Row(
-        ResultSet(
-          [
-            "SELECT image_id FROM images WHERE frame_id = ? ORDER BY created_at DESC LIMIT 1",
-          ],
-          ["images"],
-          [
-            [tImageId],
-          ],
-        ),
-        [tImageId],
-      );
+      final List<Map<String, Object?>> tDbRow = [];
+      // Row(
+      //   ResultSet(
+      //     [
+      //       "SELECT image_id FROM images WHERE frame_id = ? ORDER BY created_at DESC LIMIT 1",
+      //     ],
+      //     ["images"],
+      //     [
+      //       [tImageId],
+      //     ],
+      //   ),
+      //   [tImageId],
+      // );
 
-      when(() => mockSqliteDatabase.get(any(), any()))
+      when(() => database.rawQuery(any(), any()))
           .thenAnswer((_) async => tDbRow);
     });
 
@@ -151,7 +153,7 @@ void main() {
 
       // assert
       verify(
-        () => mockSqliteDatabase.get(
+        () => database.rawQuery(
           "SELECT image_id FROM images "
           "WHERE frame_id = ? "
           "ORDER BY created_at DESC "

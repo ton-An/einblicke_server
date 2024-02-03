@@ -5,7 +5,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_f
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
-import 'package:sqlite3/sqlite3.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 /// {@macro user_auth_repository}
 class UserAuthenticationRepositoryImpl<U extends User>
@@ -32,7 +32,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
       );
 
       return Right(user);
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseWriteFailure());
     }
   }
@@ -44,7 +44,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
           await userAuthLocalDataSource.doesUserWithIdExist(userId);
 
       return Right(doesUserWithIdExist);
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseReadFailure());
     }
   }
@@ -65,7 +65,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
       }
 
       return Right(user);
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseWriteFailure());
     }
   }
@@ -80,7 +80,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
       }
 
       return Right(user);
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseWriteFailure());
     }
   }
@@ -98,7 +98,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
       );
 
       return Right(isRefreshTokenInUserDb);
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseWriteFailure());
     }
   }
@@ -110,7 +110,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
           await userAuthLocalDataSource.isUserIdTaken(userId);
 
       return Right(isUserIdTaken);
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseReadFailure());
     }
   }
@@ -122,7 +122,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
           await userAuthLocalDataSource.isUsernameTaken(username);
 
       return Right(isUsernameTaken);
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseReadFailure());
     }
   }
@@ -136,7 +136,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
       );
 
       return const Right(None());
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseWriteFailure());
     }
   }
@@ -153,7 +153,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
       );
 
       return const Right(None());
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseWriteFailure());
     }
   }
@@ -170,7 +170,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
       );
 
       return const Right(None());
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseWriteFailure());
     }
   }

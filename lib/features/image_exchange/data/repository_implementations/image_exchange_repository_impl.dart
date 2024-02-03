@@ -5,7 +5,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
-import 'package:sqlite3/sqlite3.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 /// {@template image_exchange_repository_impl}
 /// Repository for exchanging images between a curator and a frame
@@ -32,7 +32,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return Right(areCuratorXFramePaired);
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseReadFailure());
     }
   }
@@ -67,7 +67,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       }
 
       return Right(latestImageId);
-    } on SqliteException catch (_) {
+    } on DatabaseException catch (_) {
       return const Left(DatabaseReadFailure());
     }
   }
@@ -84,7 +84,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return const Right(None());
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseWriteFailure());
     }
   }
@@ -123,7 +123,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return const Right(None());
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseWriteFailure());
     }
   }
@@ -140,7 +140,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return Right(doesImageBelongToFrame);
-    } on SqliteException {
+    } on DatabaseException {
       return const Left(DatabaseReadFailure());
     }
   }

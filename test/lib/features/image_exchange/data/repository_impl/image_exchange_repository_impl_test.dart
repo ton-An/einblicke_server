@@ -13,7 +13,7 @@ void main() {
   late ImageExchangeRepositoryImpl imageExchangeRepositoryImpl;
   late MockImageExchangeLocalDataSource mockImageExchangeLocalDataSource;
 
-  late MockSqliteException tMockSqliteExcpetion;
+  late MockDatabaseException tMockSqliteExcpetion;
 
   setUp(() {
     mockImageExchangeLocalDataSource = MockImageExchangeLocalDataSource();
@@ -21,7 +21,7 @@ void main() {
       localDataSource: mockImageExchangeLocalDataSource,
     );
 
-    tMockSqliteExcpetion = MockSqliteException();
+    tMockSqliteExcpetion = MockDatabaseException();
   });
 
   group("areCuratorXFramePaired()", () {
@@ -52,7 +52,7 @@ void main() {
     });
 
     test(
-        "should return a [DatabaseReadFailure] when the data source throws a [SqliteException]",
+        "should return a [DatabaseReadFailure] when the data source throws a [DatabaseException]",
         () async {
       // arrange
       when(
@@ -143,7 +143,7 @@ void main() {
 
     test(
         "should return a [DatabaseReadFailure] when the data source "
-        "throws a [SqliteException]", () async {
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockImageExchangeLocalDataSource.getLatestImageIdFromDb(
@@ -295,7 +295,7 @@ void main() {
 
     test(
         "should return a [DatabaseWriteFailure] when the data source "
-        "throws a [SqliteException]", () async {
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockImageExchangeLocalDataSource.saveImageToDb(

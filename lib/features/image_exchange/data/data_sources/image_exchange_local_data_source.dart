@@ -20,7 +20,7 @@ abstract class ImageExchangeLocalDataSource {
   /// - [String] frameId
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<void> pairCuratorXFrame({
     required String curatorId,
     required String frameId,
@@ -37,7 +37,7 @@ abstract class ImageExchangeLocalDataSource {
   /// - [bool] indicating if the entry exists
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<bool> areCuratorXFramePaired({
     required String curatorId,
     required String frameId,
@@ -65,7 +65,7 @@ abstract class ImageExchangeLocalDataSource {
   /// - [DateTime] createdAt
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<void> saveImageToDb({
     required String curatorId,
     required String frameId,
@@ -102,7 +102,7 @@ abstract class ImageExchangeLocalDataSource {
   /// - [String] imageId
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<bool> doesImageBelongToFrame({
     required String frameId,
     required String imageId,

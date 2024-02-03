@@ -32,7 +32,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_lat
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:jose/jose.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:sqlite3/sqlite3.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:uuid/uuid.dart';
 
 class MockIsUsernameValid extends Mock implements IsUsernameValid {}
@@ -107,15 +107,8 @@ class MockGetUserWithType extends Mock
 class MockImageExchangeLocalDataSource extends Mock
     implements ImageExchangeLocalDataSource {}
 
-class MockSqliteException extends Mock implements SqliteException {}
-
 class MockBasicAuthLocalDataSource extends Mock
     implements BasicAuthLocalDataSource {}
-
-class MockSqliteDatabase extends Mock implements SqliteDatabase {}
-
-// ignore: subtype_of_sealed_class
-class MockResultSet extends Mock implements ResultSet {}
 
 class MockIOException extends Mock implements IOException {}
 
@@ -138,3 +131,5 @@ class MockJsonWebEncryptionBuilder extends Mock
 class MockJWEBBuilderWrapper extends Mock implements JWEBuilderWrapper {}
 
 class MockJsonWebEncryption extends Mock implements JsonWebEncryption {}
+
+class MockDatabaseException extends Mock implements DatabaseException {}

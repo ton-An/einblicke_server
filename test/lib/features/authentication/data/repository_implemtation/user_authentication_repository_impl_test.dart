@@ -12,7 +12,6 @@ import '../../../../../mocks.dart';
 void main() {
   late UserAuthenticationRepositoryImpl repository;
   late MockUserAuthenticationLocalDataSource mockUserAuthLocalDataSource;
-
   late MockUser tMockUser;
 
   setUp(() {
@@ -56,7 +55,7 @@ void main() {
     });
 
     test(
-        "should return a [DatabaseWriteFailure] when the local data source throws a [SqliteException]",
+        "should return a [DatabaseWriteFailure] when the local data source throws a [DatabaseException]",
         () async {
       // arrange
       when(
@@ -65,7 +64,7 @@ void main() {
           username: any(named: "username"),
           passwordHash: any(named: "passwordHash"),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.createUser(
@@ -104,20 +103,20 @@ void main() {
     });
 
     test(
-        "should return a [DatabaseWriteFailure] when the local data source throws a [SqliteException]",
+        "should return a [DatabaseReadFailure] when the local data source throws a [DatabaseException]",
         () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.doesUserWithIdExist(
           any(),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.doesUserWithIdExist(tUserId);
 
       // assert
-      expect(result, const Left(DatabaseWriteFailure()));
+      expect(result, const Left(DatabaseReadFailure()));
     });
   });
 
@@ -172,14 +171,14 @@ void main() {
 
     test(
         "should return a [DatabaseWriteFailure] when the local data source "
-        "throws a [SqliteException]", () async {
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.getUser(
           username: any(named: "username"),
           passwordHash: any(named: "passwordHash"),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.getUser(
@@ -234,13 +233,13 @@ void main() {
 
     test(
         "should return a [DatabaseWriteFailure] when the local data source "
-        "throws a [SqliteException]", () async {
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.getUserFromId(
           any(),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.getUserFromId(tUserId);
@@ -281,14 +280,14 @@ void main() {
 
     test(
         "should return a [DatabaseWriteFailure] when the local data source "
-        "throws a [SqliteException]", () async {
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.isRefreshTokenInUserDb(
           refreshToken: any(named: "refreshToken"),
           userId: any(named: "userId"),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.isRefreshTokenInUserDb(
@@ -326,20 +325,20 @@ void main() {
     });
 
     test(
-        "should return a [DatabaseWriteFailure] when the local data source "
-        "throws a [SqliteException]", () async {
+        "should return a [DatabaseReadFailure] when the local data source "
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.isUserIdTaken(
           any(),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.isUserIdTaken(tUserId);
 
       // assert
-      expect(result, const Left(DatabaseWriteFailure()));
+      expect(result, const Left(DatabaseReadFailure()));
     });
   });
 
@@ -368,20 +367,20 @@ void main() {
     });
 
     test(
-        "should return a [DatabaseWriteFailure] when the local data source "
-        "throws a [SqliteException]", () async {
+        "should return a [DatabaseReadFailure] when the local data source "
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.isUsernameTaken(
           any(),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.isUsernameTaken(tUsername);
 
       // assert
-      expect(result, const Left(DatabaseWriteFailure()));
+      expect(result, const Left(DatabaseReadFailure()));
     });
   });
 
@@ -411,13 +410,13 @@ void main() {
 
     test(
         "should return a [DatabaseWriteFailure] when the local data source "
-        "throws a [SqliteException]", () async {
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.removeAllRefreshTokensFromDb(
           any(),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.removeAllRefreshTokensFromDb(tUserId);
@@ -458,14 +457,14 @@ void main() {
 
     test(
         "should return a [DatabaseWriteFailure] when the local data source "
-        "throws a [SqliteException]", () async {
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.removeRefreshTokenFromDb(
           userId: any(named: "userId"),
           refreshToken: any(named: "refreshToken"),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.removeRefreshTokenFromDb(
@@ -509,14 +508,14 @@ void main() {
 
     test(
         "should return a [DatabaseWriteFailure] when the local data source "
-        "throws a [SqliteException]", () async {
+        "throws a [DatabaseException]", () async {
       // arrange
       when(
         () => mockUserAuthLocalDataSource.saveRefreshTokenToDb(
           userId: any(named: "userId"),
           refreshToken: any(named: "refreshToken"),
         ),
-      ).thenThrow(MockSqliteException());
+      ).thenThrow(MockDatabaseException());
 
       // act
       final result = await repository.saveRefreshTokenToDb(

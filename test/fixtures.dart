@@ -7,7 +7,6 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_f
 import 'package:dispatch_pi_dart/features/authentication/domain/models/refresh_token_claims.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:jose/jose.dart';
-import 'package:sqlite3/sqlite3.dart';
 
 import 'mocks.dart';
 import 'secrets_fixture.dart';
@@ -162,38 +161,32 @@ const String tImageDirectoryPath = "testImageDirectoryPath";
 const String tImageFilePath =
     "$tImageDirectoryPath/$tImageId.$tImageFileExtension";
 
-final MockResultSet tMockResultSet = MockResultSet();
+final List<Map<String, Object?>> tMockResultSet = [];
 
 const CuratorTable tCuratorTable = CuratorTable();
 
-final Row tDbCuratorRow = Row(
-  ResultSet(
-    [
-      tCuratorTable.userId,
-      tCuratorTable.username,
-      tCuratorTable.passwordHash,
-    ],
-    [tCuratorTable.tableName],
-    [
-      [
-        tCurator.userId,
-        tCurator.username,
-        tCurator.passwordHash,
-      ],
-    ],
-  ),
-  [
-    tCurator.userId,
-    tCurator.username,
-    tCurator.passwordHash,
-  ],
-);
+final List<Map<String, Object?>> tDbCuratorRow = [];
+//  Row(
+//   ResultSet(
+//     [
+//       tCuratorTable.userId,
+//       tCuratorTable.username,
+//       tCuratorTable.passwordHash,
+//     ],
+//     [tCuratorTable.tableName],
+//     [
+//       [
+//         tCurator.userId,
+//         tCurator.username,
+//         tCurator.passwordHash,
+//       ],
+//     ],
+//   ),
+//   [
+//     tCurator.userId,
+//     tCurator.username,
+//     tCurator.passwordHash,
+//   ],
+// );
 
-final Row tEmptyDbRow = Row(
-  ResultSet(
-    [],
-    [],
-    [],
-  ),
-  [],
-);
+final List<Map<String, Object?>> tEmptyDbRow = [];

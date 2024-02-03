@@ -21,7 +21,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - [bool] indicating if the username is taken
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<bool> isUsernameTaken(String username);
 
   /// Checks if the given user id is already in
@@ -34,7 +34,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - [bool] indicating if the user id is taken
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<bool> isUserIdTaken(String userId);
 
   /// Creates a record of a user with the given username and password hash
@@ -49,7 +49,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - a [U] object representing the created user
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<U> createUser({
     required String userId,
     required String username,
@@ -67,7 +67,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - a [U] object representing the user
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<U?> getUser({
     required String username,
     required String passwordHash,
@@ -80,7 +80,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - [String] refreshToken
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<void> saveRefreshTokenToDb({
     required String userId,
     required String refreshToken,
@@ -93,7 +93,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - [String] refreshToken
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<void> removeRefreshTokenFromDb({
     required String userId,
     required String refreshToken,
@@ -105,7 +105,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - [String] userId
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<void> removeAllRefreshTokensFromDb(String userId);
 
   /// Checks if the given refresh token is in the database
@@ -119,7 +119,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - [bool] indicating if the refresh token is in the database
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<bool> isRefreshTokenInUserDb({
     required String userId,
     required String refreshToken,
@@ -134,7 +134,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - a [U] object representing the user
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<U?> getUserFromId(String userId);
 
   /// Checks if a user with the given user id exists in the database
@@ -146,7 +146,7 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// - [bool] indicating if the user exists
   ///
   /// Throws:
-  /// - [SqliteException]
+  /// - [DatabaseException]
   Future<bool> doesUserWithIdExist(String userId);
 }
 
