@@ -44,6 +44,10 @@ void main() {
     );
   });
 
+  tearDown(() async {
+    await database.close();
+  });
+
   group("createUser", () {
     test("should write the user to the database and return it", () async {
       // act
