@@ -16,8 +16,10 @@ const String tUserId = "testUserId";
 
 const String tPassword = "testPassword1-";
 const String tPasswordHash = "testPasswordHash";
+const String tAnotherPasswordHash = "testAnotherPasswordHash";
 
 const String tUsername = "testUsername";
+const String tAnotherUsername = "testAnotherUsername";
 const String tInvalidUsername = "invalsadasdasd@#213idUsername";
 const String tInvalidPassword =
     "invaosjdfpowjr2390jr03ofnms@li@#dasdasdPassword";
@@ -26,6 +28,7 @@ final Type tUserType = tCurator.runtimeType;
 
 const String tAccessToken = "testAccessToken";
 const String tRefreshToken = "testRefreshToken";
+const String tAnotherRefreshToken = "testRefreshToken";
 const String tTokenId = "testTokenId";
 
 AuthenticationCredentials tAuthenticationCredentials =
@@ -114,6 +117,7 @@ EncryptedToken tEncryptedRefreshToken = EncryptedToken(
 
 // Curator
 const String tCuratorId = "testCuratorId";
+const String tAnotherCuratorId = "testAnotherCuratorId";
 
 const Curator tCurator = Curator(
   userId: tCuratorId,
