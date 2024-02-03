@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_username_valid.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:test/test.dart';
 
 import '../../../../../fixtures.dart';

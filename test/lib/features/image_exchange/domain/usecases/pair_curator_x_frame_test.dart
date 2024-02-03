@@ -7,11 +7,8 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/already_paired_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/curator_not_found_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/database_read_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/frame_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/pair_curator_x_frame.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

@@ -1,8 +1,8 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
@@ -56,6 +56,6 @@ void main() {
     );
 
     // assert
-    expect(result, Left(DatabaseWriteFailure()));
+    expect(result, const Left(DatabaseWriteFailure()));
   });
 }

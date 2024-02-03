@@ -1,9 +1,8 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/database_write_failure.dart';
-import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/data/repository_implementation/user_authentication_repository_impl.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

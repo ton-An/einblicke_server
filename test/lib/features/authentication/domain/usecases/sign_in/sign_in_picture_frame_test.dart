@@ -1,10 +1,10 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/failures/user_not_found_failure.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_picture_frame.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
