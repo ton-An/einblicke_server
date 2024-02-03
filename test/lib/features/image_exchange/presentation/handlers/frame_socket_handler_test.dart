@@ -55,10 +55,10 @@ void main() {
       );
 
       // assert
-      verify(() => tMockStreamSink.add(const Right(tImage)));
+      verify(() => tMockStreamSink.add(tImageId));
     });
 
-    test("should add [Failure]s to the [StreamSink]", () async {
+    test("should add failures code to the [StreamSink]", () async {
       // arrange
       when(
         () => mockGetLatestImage(frameId: any(named: "frameId")),
@@ -71,7 +71,7 @@ void main() {
       );
 
       // assert
-      verify(() => tMockStreamSink.add(const Left(DatabaseReadFailure())));
+      verify(() => tMockStreamSink.add(const DatabaseReadFailure().code));
     });
 
     test(
@@ -144,10 +144,6 @@ void main() {
   });
 
   group("send image", () {
-    // check if at least one connection to the frameId exists, if not failure
-    // get image
-    // add image to all the frame sink
-
     group("if connected to the frame", () {
       setUp(() async {
         await frameSocketHandler.addConnection(
@@ -179,8 +175,8 @@ void main() {
         );
 
         // assert
-        verify(() => tMockStreamSink.add(const Right(tImage)));
-        verify(() => tSecondMockStreamSink.add(const Right(tImage)));
+        verify(() => tMockStreamSink.add(tImageId));
+        verify(() => tSecondMockStreamSink.add(tImageId));
       });
 
       test("should return [None] on success", () async {
