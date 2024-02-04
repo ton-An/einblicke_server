@@ -32,13 +32,13 @@ void main() {
     );
 
     when(
-      () => mockCuratorAuthRepository.doesUserWithIdExist(
+      () => mockCuratorAuthRepository.isUserIdTaken(
         any(),
       ),
     ).thenAnswer((_) async => const Right(true));
 
     when(
-      () => mockFrameAuthRepository.doesUserWithIdExist(
+      () => mockFrameAuthRepository.isUserIdTaken(
         any(),
       ),
     ).thenAnswer((_) async => const Right(true));
@@ -59,7 +59,7 @@ void main() {
   });
 
   group("check if curator exists", () {
-    test("should check if a curator with the give id exists", () async {
+    test("should check if a curator with the given id exists", () async {
       // act
       await pairCuratorXFrame(
         curatorId: tCuratorId,
@@ -67,14 +67,14 @@ void main() {
       );
 
       // assert
-      verify(() => mockCuratorAuthRepository.doesUserWithIdExist(tCuratorId));
+      verify(() => mockCuratorAuthRepository.isUserIdTaken(tCuratorId));
     });
 
     test("should return [CuratorNotFoundFailure] if curator does not exist",
         () async {
       // arrange
       when(
-        () => mockCuratorAuthRepository.doesUserWithIdExist(
+        () => mockCuratorAuthRepository.isUserIdTaken(
           any(),
         ),
       ).thenAnswer((_) async => const Right(false));
@@ -92,9 +92,7 @@ void main() {
     test("should relay [Failure]s", () async {
       // arrange
       when(
-        () => mockCuratorAuthRepository.doesUserWithIdExist(
-          any(),
-        ),
+        () => mockCuratorAuthRepository.isRefreshTokenInUserDb(any(), any()),
       ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
 
       // act
@@ -108,7 +106,7 @@ void main() {
     });
   });
   group("check if frame exists", () {
-    test("should check if a frame with the give id exists", () async {
+    test("should check if a frame with the given id exists", () async {
       // act
       await pairCuratorXFrame(
         curatorId: tCuratorId,
@@ -116,15 +114,14 @@ void main() {
       );
 
       // assert
-      verify(
-          () => mockFrameAuthRepository.doesUserWithIdExist(tPictureFrameId));
+      verify(() => mockFrameAuthRepository.isUserIdTaken(tPictureFrameId));
     });
 
     test("should return [FrameNotFoundFailure] if curator does not exist",
         () async {
       // arrange
       when(
-        () => mockFrameAuthRepository.doesUserWithIdExist(
+        () => mockFrameAuthRepository.isUserIdTaken(
           any(),
         ),
       ).thenAnswer((invocation) async => const Right(false));
@@ -142,7 +139,7 @@ void main() {
     test("should relay [Failure]s", () async {
       // arrange
       when(
-        () => mockFrameAuthRepository.doesUserWithIdExist(
+        () => mockFrameAuthRepository.isUserIdTaken(
           any(),
         ),
       ).thenAnswer((_) async => const Left(DatabaseReadFailure()));

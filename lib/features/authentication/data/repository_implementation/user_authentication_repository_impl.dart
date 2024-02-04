@@ -38,18 +38,6 @@ class UserAuthenticationRepositoryImpl<U extends User>
   }
 
   @override
-  Future<Either<Failure, bool>> doesUserWithIdExist(String userId) async {
-    try {
-      final bool doesUserWithIdExist =
-          await userAuthLocalDataSource.doesUserWithIdExist(userId);
-
-      return Right(doesUserWithIdExist);
-    } on DatabaseException {
-      return const Left(DatabaseReadFailure());
-    }
-  }
-
-  @override
   Future<Either<Failure, U>> getUser(
     String username,
     String passwordHash,

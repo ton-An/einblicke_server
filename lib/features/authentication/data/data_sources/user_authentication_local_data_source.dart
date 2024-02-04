@@ -136,18 +136,6 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// Throws:
   /// - [DatabaseException]
   Future<U?> getUserFromId(String userId);
-
-  /// Checks if a user with the given user id exists in the database
-  ///
-  /// Parameters:
-  /// - [String] userId
-  ///
-  /// Returns:
-  /// - [bool] indicating if the user exists
-  ///
-  /// Throws:
-  /// - [DatabaseException]
-  Future<bool> doesUserWithIdExist(String userId);
 }
 
 /// {@template user_auth_local_data_source}
@@ -196,20 +184,6 @@ class UserAuthLocalDataSourceImpl<U extends User>
     );
 
     return user;
-  }
-
-  @override
-  Future<bool> doesUserWithIdExist(String userId) async {
-    final List<Map<String, Object?>> queryResult =
-        await sqliteDatabase.rawQuery(
-      "SELECT EXISTS(SELECT 1 FROM ${userTableNames.tableName} "
-      "WHERE ${userTableNames.userId} = ?)",
-      [userId],
-    );
-
-    final bool doesUserWithIdExist = queryResult.first.containsValue(1);
-
-    return doesUserWithIdExist;
   }
 
   @override
