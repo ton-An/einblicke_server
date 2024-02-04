@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/domain/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 

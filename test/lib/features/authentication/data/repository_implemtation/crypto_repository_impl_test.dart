@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/features/authentication/data/repository_implementation/crypto_repository_impl.dart';
+import 'package:dispatch_pi_dart/core/data/repository_implementation/crypto_repository_impl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

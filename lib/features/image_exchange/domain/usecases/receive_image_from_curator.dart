@@ -1,8 +1,8 @@
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/domain/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 

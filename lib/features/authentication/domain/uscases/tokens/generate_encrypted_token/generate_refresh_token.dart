@@ -1,10 +1,10 @@
 import 'package:clock/clock.dart';
+import 'package:dispatch_pi_dart/core/domain/crypto_repository.dart';
 import 'package:dispatch_pi_dart/core/secrets.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/refresh_token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 
 /// {@template generate_refresh_token}
 /// Generates an refresh token for a given user
