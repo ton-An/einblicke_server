@@ -53,8 +53,8 @@ class PairCuratorXFrame {
     final Either<Failure, bool> isCuratorIdTakenEither =
         await curatorAuthenticationRepository.isUserIdTaken(curatorId);
 
-    return isCuratorIdTakenEither.fold(Left.new, (bool doesCuratorExist) {
-      if (!doesCuratorExist) {
+    return isCuratorIdTakenEither.fold(Left.new, (bool isCuratorIdTaken) {
+      if (!isCuratorIdTaken) {
         return const Left(CuratorNotFoundFailure());
       }
 
@@ -72,8 +72,8 @@ class PairCuratorXFrame {
     final Either<Failure, bool> isFrameIdTakenEither =
         await frameAuthenticationRepository.isUserIdTaken(frameId);
 
-    return isFrameIdTakenEither.fold(Left.new, (bool doesFrameExist) {
-      if (!doesFrameExist) {
+    return isFrameIdTakenEither.fold(Left.new, (bool isFrameIdTaken) {
+      if (!isFrameIdTaken) {
         return const Left(FrameNotFoundFailure());
       }
 

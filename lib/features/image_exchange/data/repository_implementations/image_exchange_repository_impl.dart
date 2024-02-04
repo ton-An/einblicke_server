@@ -130,16 +130,16 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
 
   // ToDo: test
   @override
-  Future<Either<Failure, bool>> doesImageBelongToFrame(
+  Future<Either<Failure, bool>> isImageAssociatedWithFrame(
       {required String frameId, required String imageId}) async {
     try {
-      final bool doesImageBelongToFrame =
-          await localDataSource.doesImageBelongToFrame(
+      final bool isImageAssociatedWithFrame =
+          await localDataSource.isImageAssociatedWithFrame(
         frameId: frameId,
         imageId: imageId,
       );
 
-      return Right(doesImageBelongToFrame);
+      return Right(isImageAssociatedWithFrame);
     } on DatabaseException {
       return const Left(DatabaseReadFailure());
     }

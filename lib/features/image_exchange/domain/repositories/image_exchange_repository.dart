@@ -105,7 +105,7 @@ abstract class ImageExchangeRepository {
   ///
   /// Failures:
   /// - [DatabaseReadFailure]
-  Future<Either<Failure, bool>> doesImageBelongToFrame({
+  Future<Either<Failure, bool>> isImageAssociatedWithFrame({
     required String frameId,
     required String imageId,
   });

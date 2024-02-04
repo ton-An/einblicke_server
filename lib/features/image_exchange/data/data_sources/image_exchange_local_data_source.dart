@@ -103,7 +103,7 @@ abstract class ImageExchangeLocalDataSource {
   ///
   /// Throws:
   /// - [DatabaseException]
-  Future<bool> doesImageBelongToFrame({
+  Future<bool> isImageAssociatedWithFrame({
     required String frameId,
     required String imageId,
   });
@@ -214,7 +214,7 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
 
   // ToDo: test
   @override
-  Future<bool> doesImageBelongToFrame(
+  Future<bool> isImageAssociatedWithFrame(
       {required String frameId, required String imageId}) async {
     final List<Map<String, dynamic>> queryResult =
         await sqliteDatabase.rawQuery(
@@ -223,8 +223,8 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
       [frameId, imageId],
     );
 
-    final bool doesImageBelongToFrame = queryResult.first.containsValue(1);
+    final bool isImageAssociatedWithFrame = queryResult.first.containsValue(1);
 
-    return doesImageBelongToFrame;
+    return isImageAssociatedWithFrame;
   }
 }

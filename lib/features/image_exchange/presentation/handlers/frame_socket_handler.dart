@@ -60,10 +60,10 @@ class FrameSocketHandler {
   Either<Failure, None> removeConnection({
     required StreamSink streamSink,
   }) {
-    final bool doesSpecificConnectionExist =
-        _doesSpecificConnectionExist(streamSink: streamSink);
+    final bool isConnectionPresent =
+        _isConnectionPresent(streamSink: streamSink);
 
-    if (!doesSpecificConnectionExist) {
+    if (!isConnectionPresent) {
       return const Left(FrameNotConnectedFailure());
     }
 
@@ -119,7 +119,7 @@ class FrameSocketHandler {
     );
   }
 
-  bool _doesSpecificConnectionExist({required StreamSink streamSink}) {
+  bool _isConnectionPresent({required StreamSink streamSink}) {
     return _connections.any(
       (connection) => connection.sink == streamSink,
     );

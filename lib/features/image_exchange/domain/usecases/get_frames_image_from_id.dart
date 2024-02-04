@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 // ToDo: test
 class GetFramesImageFromId {
@@ -26,15 +26,15 @@ class GetFramesImageFromId {
     required String frameId,
     required String imageId,
   }) async {
-    final Either<Failure, bool> doesImageBelongToFrame =
-        await imageExchangeRepository.doesImageBelongToFrame(
+    final Either<Failure, bool> isImageAssociatedWithFrameEither =
+        await imageExchangeRepository.isImageAssociatedWithFrame(
       frameId: frameId,
       imageId: imageId,
     );
 
-    return doesImageBelongToFrame.fold(
+    return isImageAssociatedWithFrameEither.fold(
       Left.new,
-      (bool doesImageBelongToFrame) {
+      (bool isImageAssociatedWithFrame) {
         return _getImage(imageId: imageId);
       },
     );
