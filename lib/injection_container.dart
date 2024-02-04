@@ -17,9 +17,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.d
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user/create_curator.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user/create_picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user/create_user_wrapper.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/get_user_with_type.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_id_valid.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_secret_valid.dart';
@@ -162,9 +160,15 @@ Future<void> initGetIt() async {
       getUserWithType: getIt(),
     ),
   );
-  getIt.registerLazySingleton(() => CreateCurator(createCurator: getIt()));
   getIt.registerLazySingleton(
-      () => CreatePictureFrame(creaPictureFrame: getIt()));
+    () => CreatePictureFrame(
+      basicAuthRepository: getIt(),
+      cryptoRepository: getIt(),
+      userAuthRepository: getIt(),
+      isUsernameValid: getIt(),
+      isPasswordValid: getIt(),
+    ),
+  );
   getIt.registerLazySingleton(
     () => PairCuratorXFrame(
         imageExchangeRepository: getIt(),
@@ -177,7 +181,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => CreateUserWrapper<Curator, CuratorAuthenticationRepository>(
+    () => CreateCurator(
       isUsernameValid: getIt(),
       isPasswordValid: getIt(),
       userAuthRepository: getIt(),
@@ -186,7 +190,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => CreateUserWrapper<Frame, FrameAuthenticationRepository>(
+    () => CreatePictureFrame(
       isUsernameValid: getIt(),
       isPasswordValid: getIt(),
       userAuthRepository: getIt(),

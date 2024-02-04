@@ -1,13 +1,60 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/core/domain/crypto_repository.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
-/// {@template create_user_wrapper}
-/// A wrapper for creating a [U] user with a given username and password
+/*
+  To-Do:
+    - [ ] Reflect on the future of the relationship between the wrapper and it's children (i.e. maybe make the wrapper abstract)
+*/
+
+/// {@template create_frame}
+/// __Create Frame__ creates a user account for a picture frame.
+/// {@endtemplate}
 ///
+/// {@macro create_user}
+class CreatePictureFrame
+    extends CreateUserWrapper<Frame, FrameAuthenticationRepository> {
+  /// {@macro create_frame}
+  ///
+  /// {@macro create_user}
+  const CreatePictureFrame({
+    required super.basicAuthRepository,
+    required super.cryptoRepository,
+    required super.isPasswordValid,
+    required super.isUsernameValid,
+    required super.userAuthRepository,
+  });
+}
+
+/// {@template create_curator}
+/// __Create Curator__ creates a user account for a curator.
+///
+/// {@endtemplate}
+/// {@macro create_user}
+class CreateCurator
+    extends CreateUserWrapper<Curator, CuratorAuthenticationRepository> {
+  /// {@macro create_curator}
+  ///
+  /// {@macro create_user}
+  const CreateCurator({
+    required super.basicAuthRepository,
+    required super.cryptoRepository,
+    required super.isPasswordValid,
+    required super.isUsernameValid,
+    required super.userAuthRepository,
+  });
+}
+
+/// {@template create_user_wrapper}
+/// __Create User Wrapper__ creates a user account for a [U] user.
+/// {@endtemplate}
+///
+/// {@template create_user}
 /// Parameters:
 /// - [String] username
 /// - [String] password
@@ -25,6 +72,8 @@ import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 class CreateUserWrapper<U extends User,
     R extends UserAuthenticationRepository<U>> {
   /// {@macro create_user_wrapper}
+  ///
+  /// {@macro create_user}
   const CreateUserWrapper({
     required this.isUsernameValid,
     required this.isPasswordValid,
