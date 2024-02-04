@@ -1,7 +1,10 @@
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:equatable/equatable.dart';
 
 /// {@template image}
-/// Represents an image in the application
+/// __Image__ is a container for an image that is sent to a [Frame] for display.
+///
+/// It contains an [imageId] and [imageBytes]
 /// {@endtemplate}
 class Image extends Equatable {
   /// {@macro image}
