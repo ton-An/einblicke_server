@@ -50,12 +50,12 @@ void createCurator(String username, String password) async {
 void createPictureFrame(String username, String password) async {
   final CreatePictureFrame createPictureFrame = getIt();
 
-  final Either<Failure, PictureFrame> curatorEither =
+  final Either<Failure, Frame> curatorEither =
       await createPictureFrame(username, password);
 
   curatorEither.fold(
       (Failure failure) => stdout.writeln("Oh, oh: " + failure.toString()),
-      (PictureFrame frame) {
+      (Frame frame) {
     stdout.writeln("Frame created: " + frame.toString());
   });
 }

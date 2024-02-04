@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/token_claims.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template basic_auth_repository}

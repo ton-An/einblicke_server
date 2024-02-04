@@ -7,7 +7,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/presentation/handlers/f
 Future<Response> onRequest(RequestContext context) async {
   final handler2 = webSocketHandler(
     (channel, protocol) {
-      final String frameId = context.read<PictureFrame>().userId;
+      final String frameId = context.read<Frame>().userId;
       final FrameSocketHandler frameSocketHandler =
           context.read<FrameSocketHandler>();
 

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
@@ -17,7 +17,7 @@ import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 /// - [String] password
 ///
 /// Returns:
-/// - [AuthenticationCredentials] if the user was found
+/// - [TokenBundle] if the user was found
 ///
 /// Failures:
 /// - [UserNotFoundFailure]
@@ -49,14 +49,14 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
   final SaveRefreshToken<U, R> saveRefreshTokenUsecase;
 
   /// {@macro sign_in_wrapper}
-  Future<Either<Failure, AuthenticationCredentials>> call({
+  Future<Either<Failure, TokenBundle>> call({
     required String username,
     required String password,
   }) {
     return _getHashedPassword(username: username, password: password);
   }
 
-  Future<Either<Failure, AuthenticationCredentials>> _getHashedPassword({
+  Future<Either<Failure, TokenBundle>> _getHashedPassword({
     required String username,
     required String password,
   }) {
@@ -69,7 +69,7 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, AuthenticationCredentials>> _getUser({
+  Future<Either<Failure, TokenBundle>> _getUser({
     required String username,
     required String passwordHash,
   }) async {
@@ -84,7 +84,7 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, AuthenticationCredentials>> _generateTokens({
+  Future<Either<Failure, TokenBundle>> _generateTokens({
     required U user,
   }) async {
     final EncryptedToken accessToken = generateAccessToken(user: user);
@@ -97,7 +97,7 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, AuthenticationCredentials>> _saveRefreshToken({
+  Future<Either<Failure, TokenBundle>> _saveRefreshToken({
     required U user,
     required EncryptedToken accessToken,
     required EncryptedToken refreshToken,
@@ -111,7 +111,7 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     return saveRefreshTokenEither.fold(
       Left.new,
       (None none) => Right(
-        AuthenticationCredentials(
+        TokenBundle(
           accessToken: accessToken,
           refreshToken: refreshToken,
         ),

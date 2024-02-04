@@ -2,9 +2,10 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_f
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 
 /// {@template curator}
-/// A [Curator] is a user who sends images to a [PictureFrame]
+/// __Curator__ is a container for a user who selects/curates images and sends them
+/// to a [Frame] for display.
 ///
-/// It includes a [userId], [username], and [passwordHash]
+/// It contains a [userId], [username], and [passwordHash]
 /// {@endtemplate}
 class Curator extends User {
   /// {@macro curator}

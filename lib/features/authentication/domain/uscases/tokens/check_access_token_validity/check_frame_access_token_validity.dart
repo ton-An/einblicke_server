@@ -4,7 +4,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/c
 
 /// {@macro check_access_token_validity_wrapper}
 class CheckFrameAccessTokenValidity extends CheckAccessTokenValidityWrapper<
-    PictureFrame, FrameAuthenticationRepository> {
+    Frame, FrameAuthenticationRepository> {
   /// {@macro check_access_token_validity_wrapper}
   const CheckFrameAccessTokenValidity({
     required super.basicAuthRepository,

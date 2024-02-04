@@ -13,7 +13,7 @@ import '../../../../../../mocks.dart';
 
 void main() {
   late SignInPictureFrame signInPictureFrame;
-  late MockSignInWrapper<PictureFrame, FrameAuthenticationRepository>
+  late MockSignInWrapper<Frame, FrameAuthenticationRepository>
       mockSignInPictureFrame;
 
   setUp(() {

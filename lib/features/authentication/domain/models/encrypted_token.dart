@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 /// {@template encrypted_token}
-/// Model for an encrypted token which is used for authentication
+/// __EncryptedToken__ is a container for an encrypted token which used for
+/// authentication.
 ///
-/// It includes the [token] and the [expiresAt] time
+/// It contains the [token] string and the [expiresAt] time of the token.
 /// {@endtemplate}
 class EncryptedToken extends Equatable {
   /// {@macro encrypted_token}

@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
 /// {@template user}
-/// Base class for all users
+/// __User__ is a contract for a user of the application.
 ///
-/// It includes an [username] and [passwordHash]
+/// It contains a [userId], an [username] and [passwordHash]
 /// {@endtemplate}
 abstract class User extends Equatable {
   /// {@macro user}

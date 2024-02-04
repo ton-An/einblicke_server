@@ -13,7 +13,7 @@ Future<Response> onRequest(RequestContext context) async {
     Response(statusCode: HttpStatus.methodNotAllowed);
   }
 
-  final String frameId = context.read<PictureFrame>().userId;
+  final String frameId = context.read<Frame>().userId;
   final String? imageId = context.request.uri.queryParameters['image_id'];
 
   if (imageId == null) {

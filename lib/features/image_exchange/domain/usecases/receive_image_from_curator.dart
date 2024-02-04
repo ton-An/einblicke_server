@@ -7,7 +7,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/ima
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template receive_image_from_curator}
-/// Receives an image from a [Curator] and sends it to a [PictureFrame].
+/// Receives an image from a [Curator] and sends it to a [Frame].
 ///
 /// Parameters:
 /// - [String] curatorId

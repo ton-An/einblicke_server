@@ -180,5 +180,4 @@ class UserAuthenticationRepositoryImpl<U extends User>
 typedef CuratorAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Curator>;
 
 /// {@macro user_auth_repository}
-typedef FrameAuthRepositoryImpl
-    = UserAuthenticationRepositoryImpl<PictureFrame>;
+typedef FrameAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Frame>;

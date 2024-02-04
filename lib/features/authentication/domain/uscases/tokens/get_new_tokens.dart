@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
@@ -19,7 +19,7 @@ import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 /// - [String] oldRefreshToken
 ///
 /// Returns:
-/// - [AuthenticationCredentials] object containing the new tokens
+/// - [TokenBundle] object containing the new tokens
 ///
 /// Failures:
 /// - [ExpiredTokenFailure]
@@ -67,14 +67,13 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
   /// Used to get the user id from the old refresh token
   final BasicAuthenticationRepository basicAuthRepository;
 
-  Future<Either<Failure, AuthenticationCredentials>> call({
+  Future<Either<Failure, TokenBundle>> call({
     required String oldRefreshToken,
   }) {
     return _checkRefreshTokenValidity(refreshToken: oldRefreshToken);
   }
 
-  Future<Either<Failure, AuthenticationCredentials>>
-      _checkRefreshTokenValidity({
+  Future<Either<Failure, TokenBundle>> _checkRefreshTokenValidity({
     required String refreshToken,
   }) async {
     final checkRefreshTokenValidityResult =
@@ -99,8 +98,7 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, AuthenticationCredentials>>
-      _invalidateAllRefreshTokens({
+  Future<Either<Failure, TokenBundle>> _invalidateAllRefreshTokens({
     required String refreshToken,
   }) async {
     final Either<Failure, String> getUserIdEither =
@@ -117,7 +115,7 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
     });
   }
 
-  Future<Either<Failure, AuthenticationCredentials>> _generateAccessToken({
+  Future<Either<Failure, TokenBundle>> _generateAccessToken({
     required User user,
     required String oldRefreshToken,
   }) async {
@@ -133,7 +131,7 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, AuthenticationCredentials>> _generateRefreshToken({
+  Future<Either<Failure, TokenBundle>> _generateRefreshToken({
     required User user,
     required String oldRefreshToken,
     required EncryptedToken accessToken,
@@ -148,8 +146,7 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, AuthenticationCredentials>>
-      _invalidateOldRefreshToken({
+  Future<Either<Failure, TokenBundle>> _invalidateOldRefreshToken({
     required User user,
     required String oldRefreshToken,
     required EncryptedToken accessToken,
@@ -173,7 +170,7 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, AuthenticationCredentials>> _saveNewRefreshToken({
+  Future<Either<Failure, TokenBundle>> _saveNewRefreshToken({
     required User user,
     required EncryptedToken accessToken,
     required EncryptedToken refreshToken,
@@ -185,7 +182,7 @@ class GetNewTokens<U extends User, R extends UserAuthenticationRepository<U>> {
 
     return saveTokenEither.fold(Left.new, (None none) {
       return Right(
-        AuthenticationCredentials(
+        TokenBundle(
           accessToken: accessToken,
           refreshToken: refreshToken,
         ),

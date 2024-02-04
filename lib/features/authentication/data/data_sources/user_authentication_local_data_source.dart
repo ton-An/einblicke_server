@@ -360,8 +360,8 @@ class UserAuthLocalDataSourceImpl<U extends User>
           username: username,
           passwordHash: passwordHash,
         ) as U;
-      case PictureFrame:
-        return PictureFrame(
+      case Frame:
+        return Frame(
           userId: userId,
           username: username,
           passwordHash: passwordHash,
@@ -376,12 +376,10 @@ class UserAuthLocalDataSourceImpl<U extends User>
 }
 
 typedef CuratorAuthLocalDataSource = UserAuthenticationLocalDataSource<Curator>;
-typedef FrameAuthLocalDataSource
-    = UserAuthenticationLocalDataSource<PictureFrame>;
+typedef FrameAuthLocalDataSource = UserAuthenticationLocalDataSource<Frame>;
 
 /// {@macro user_authentication_local_data_source}
 typedef CuratorAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Curator>;
 
 /// {@macro user_authentication_local_data_source}
-typedef FrameAuthLocalDataSourceImpl
-    = UserAuthLocalDataSourceImpl<PictureFrame>;
+typedef FrameAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Frame>;

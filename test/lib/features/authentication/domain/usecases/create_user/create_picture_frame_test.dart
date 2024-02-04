@@ -13,7 +13,7 @@ import '../../../../../../mocks.dart';
 
 void main() {
   late CreatePictureFrame createPictureFrame;
-  late MockCreateUserWrapper<PictureFrame, FrameAuthenticationRepository>
+  late MockCreateUserWrapper<Frame, FrameAuthenticationRepository>
       mockCreatePictureFrame;
 
   setUp(() {

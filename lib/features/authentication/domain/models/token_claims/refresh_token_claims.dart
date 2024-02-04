@@ -1,7 +1,12 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/token_claims.dart';
 
 /// {@template refresh_token_payload}
-/// Contains the payload of a refresh token
+/// __RefreshTokenClaims__ is a container for the claims specific to a refresh
+/// token.
+///
+/// It contains the [tokenId] of the token (refresh token specific),
+/// the [userId] of the user, the [userType] of the user,
+/// the [issuedAt] time of the token, and the [expiresAt] time of the token.
 /// {@endtemplate}
 class RefreshTokenClaims extends TokenClaims {
   /// {@macro refresh_token_payload}

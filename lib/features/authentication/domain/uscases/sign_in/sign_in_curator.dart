@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_wrapper.dart';
@@ -13,7 +13,7 @@ import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 /// - [String] the curator's password
 ///
 /// Returns:
-/// - [AuthenticationCredentials] if the curator was successfully signed in
+/// - [TokenBundle] if the curator was successfully signed in
 ///
 /// Failures:
 /// - [UserNotFoundFailure] if the curator was not found
@@ -27,7 +27,7 @@ class SignInCurator {
   final SignInWrapper<Curator, CuratorAuthenticationRepository> signInCurator;
 
   /// {@macro sign_in_curator}
-  Future<Either<Failure, AuthenticationCredentials>> call({
+  Future<Either<Failure, TokenBundle>> call({
     required String username,
     required String password,
   }) {

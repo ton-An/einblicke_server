@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_picture_frame.dart';
 import 'package:dispatch_pi_dart/injection_container.dart';
 
@@ -22,7 +22,7 @@ Future<Response> onRequest(RequestContext context) async {
 
   final SignInPictureFrame signInPictureFrame = getIt<SignInPictureFrame>();
 
-  final Either<Failure, AuthenticationCredentials> signInResult =
+  final Either<Failure, TokenBundle> signInResult =
       await signInPictureFrame(username: username, password: password);
 
   return signInResult.fold(
@@ -30,7 +30,7 @@ Future<Response> onRequest(RequestContext context) async {
       statusCode: 403,
       body: failure.code,
     ),
-    (AuthenticationCredentials credentials) => Response(
+    (TokenBundle credentials) => Response(
       body: jsonEncode(credentials.toJson()),
     ),
   );

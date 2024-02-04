@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/get_new_tokens.dart';
@@ -29,14 +29,14 @@ Middleware refreshTokensMiddleware<U extends User,
         return Response(statusCode: HttpStatus.unauthorized);
       }
 
-      final Either<Failure, AuthenticationCredentials> getNewTokensEither =
+      final Either<Failure, TokenBundle> getNewTokensEither =
           await getNewTokens(oldRefreshToken: refreshToken);
 
       return getNewTokensEither.fold(
         (Failure failure) => Response(statusCode: HttpStatus.unauthorized),
-        (AuthenticationCredentials credentials) {
+        (TokenBundle credentials) {
           final newHandler = handler.use(
-            provider<AuthenticationCredentials>((context) => credentials),
+            provider<TokenBundle>((context) => credentials),
           );
 
           return newHandler(context);

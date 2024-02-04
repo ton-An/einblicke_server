@@ -6,7 +6,10 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonSerializable()
 
 /// {@template token_payload}
-/// Contains the payload of a token
+/// __TokenClaims__ is a contract for the claims of a JWE token.
+///
+/// It contains the [userId] of the user, the [userType] of the user,
+/// the [issuedAt] time of the token, and the [expiresAt] time of the token.
 /// {@endtemplate}
 abstract class TokenClaims extends Equatable {
   /// {@macro token_payload}
@@ -37,7 +40,7 @@ abstract class TokenClaims extends Equatable {
       case 'Curator':
         return Curator;
       case 'PictureFrame':
-        return PictureFrame;
+        return Frame;
       default:
         throw Exception('Unknown type: $type');
     }

@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:dispatch_pi_dart/core/crypto_wrapper.dart';
 import 'package:dispatch_pi_dart/core/jwe_builder_wrapper.dart';
 import 'package:dispatch_pi_dart/core/secrets.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/access_token_claims.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/refresh_token_claims.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/access_token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/refresh_token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/token_claims.dart';
 import 'package:jose/jose.dart';
 
 /// {@template basic_auth_local_data_source}

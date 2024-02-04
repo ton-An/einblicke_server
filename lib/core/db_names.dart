@@ -78,7 +78,7 @@ class CuratorRefreshTokenTable extends UserRefreshTokenTable<Curator> {
 /// {@template picture_frame_table}
 /// Wrapper for the names of the picture frame user table
 /// {@endtemplate}
-class PictureFrameTable extends UserTable<PictureFrame> {
+class PictureFrameTable extends UserTable<Frame> {
   /// {@macro picture_frame_table}
   const PictureFrameTable()
       : super(
@@ -92,7 +92,7 @@ class PictureFrameTable extends UserTable<PictureFrame> {
 /// {@template frame_refresh_token_table}
 /// Wrapper for the names of the picture frame refresh token table
 /// {@endtemplate}
-class FrameRefreshTokenTable extends UserRefreshTokenTable<PictureFrame> {
+class FrameRefreshTokenTable extends UserRefreshTokenTable<Frame> {
   /// {@macro frame_refresh_token_table}
   const FrameRefreshTokenTable()
       : super(

@@ -150,5 +150,4 @@ abstract class UserAuthenticationRepository<U extends User> {
 }
 
 typedef CuratorAuthenticationRepository = UserAuthenticationRepository<Curator>;
-typedef FrameAuthenticationRepository
-    = UserAuthenticationRepository<PictureFrame>;
+typedef FrameAuthenticationRepository = UserAuthenticationRepository<Frame>;

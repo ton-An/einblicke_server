@@ -2,13 +2,14 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted
 import 'package:equatable/equatable.dart';
 
 /// {@template authentication_credentials}
-/// A model for storing the authentication credentials of a user
+/// __TokenBundle__ is a container for the authentication credentials of a user.
 ///
-/// It includes an [accessToken] and a [refreshToken]
+/// It contains an [accessToken] and a [refreshToken], both of which are
+/// instances of [EncryptedToken]
 /// {@endtemplate}
-class AuthenticationCredentials extends Equatable {
+class TokenBundle extends Equatable {
   /// {@macro authentication_credentials}
-  const AuthenticationCredentials({
+  const TokenBundle({
     required this.accessToken,
     required this.refreshToken,
   });

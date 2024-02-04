@@ -1,10 +1,10 @@
 import 'package:dispatch_pi_dart/core/db_names.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/access_token_claims.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/authentication_credentials.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/refresh_token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/access_token_claims.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/refresh_token_claims.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:jose/jose.dart';
 
@@ -31,8 +31,7 @@ const String tRefreshToken = "testRefreshToken";
 const String tAnotherRefreshToken = "testRefreshToken";
 const String tTokenId = "testTokenId";
 
-AuthenticationCredentials tAuthenticationCredentials =
-    AuthenticationCredentials(
+TokenBundle tAuthenticationCredentials = TokenBundle(
   accessToken: tEncryptedAccessToken,
   refreshToken: tEncryptedRefreshToken,
 );
@@ -128,7 +127,7 @@ const Curator tCurator = Curator(
 // PictureFrame
 const String tPictureFrameId = "testPictureFrameId";
 
-const PictureFrame tPictureFrame = PictureFrame(
+const Frame tPictureFrame = Frame(
   userId: tPictureFrameId,
   username: tUsername,
   passwordHash: tPasswordHash,

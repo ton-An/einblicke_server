@@ -4,14 +4,14 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
 
-/// {@template pictureFrame}
-/// A [PictureFrame] is a frame that displays images sent by [Curator]s
+/// {@template frame}
+/// __Frame__ is a container for a picture frame that displays images selected/curated by a [Curator].
 ///
-/// It includes a [userId], [username], and [passwordHash]
+/// It contains a [userId], [username], and [passwordHash]
 /// {@endtemplate}
-class PictureFrame extends User {
-  /// {@macro pictureFrame}
-  const PictureFrame({
+class Frame extends User {
+  /// {@macro frame}
+  const Frame({
     required super.userId,
     required super.username,
     required super.passwordHash,

@@ -5,14 +5,14 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_u
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template create_picture_frame}
-/// Creates a [PictureFrame] user with a given username and password
+/// Creates a [Frame] user with a given username and password
 ///
 /// Parameters:
 /// - [String] username
 /// - [String] password
 ///
 /// Returns:
-/// - [PictureFrame] if the user was created successfully
+/// - [Frame] if the user was created successfully
 ///
 /// Failures:
 /// - [InvalidUsernameFailure]
@@ -28,11 +28,10 @@ class CreatePictureFrame {
   });
 
   /// Used to create the record of the picture frame
-  CreateUserWrapper<PictureFrame, FrameAuthenticationRepository>
-      creaPictureFrame;
+  CreateUserWrapper<Frame, FrameAuthenticationRepository> creaPictureFrame;
 
   /// {@macro create_picture_frame}
-  Future<Either<Failure, PictureFrame>> call(
+  Future<Either<Failure, Frame>> call(
     String username,
     String password,
   ) async {

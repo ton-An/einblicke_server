@@ -1,7 +1,7 @@
 import 'package:clock/clock.dart';
 import 'package:dispatch_pi_dart/core/secrets.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/access_token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/access_token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
 

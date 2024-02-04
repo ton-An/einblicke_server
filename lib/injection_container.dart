@@ -89,8 +89,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => CheckAccessTokenValidityWrapper<PictureFrame,
-        FrameAuthenticationRepository>(
+    () => CheckAccessTokenValidityWrapper<Frame, FrameAuthenticationRepository>(
       basicAuthRepository: getIt(),
       isTokenExpiredUseCase: getIt(),
       getUserWithType: getIt(),
@@ -114,7 +113,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => GetNewTokens<PictureFrame, FrameAuthenticationRepository>(
+    () => GetNewTokens<Frame, FrameAuthenticationRepository>(
       checkRefreshTokenValidityWrapper: getIt(),
       generateAccessToken: getIt(),
       generateRefreshToken: getIt(),
@@ -131,7 +130,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => InvalidateRefreshToken<PictureFrame, FrameAuthenticationRepository>(
+    () => InvalidateRefreshToken<Frame, FrameAuthenticationRepository>(
       userAuthenticationRepository: getIt(),
     ),
   );
@@ -141,8 +140,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () =>
-        InvalidateAllRefreshTokens<PictureFrame, FrameAuthenticationRepository>(
+    () => InvalidateAllRefreshTokens<Frame, FrameAuthenticationRepository>(
       userAuthenticationRepository: getIt(),
     ),
   );
@@ -156,8 +154,8 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => CheckRefreshTokenValidityWrapper<PictureFrame,
-        FrameAuthenticationRepository>(
+    () =>
+        CheckRefreshTokenValidityWrapper<Frame, FrameAuthenticationRepository>(
       userAuthRepository: getIt(),
       basicAuthRepository: getIt(),
       isTokenExpiredUseCase: getIt(),
@@ -188,7 +186,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => CreateUserWrapper<PictureFrame, FrameAuthenticationRepository>(
+    () => CreateUserWrapper<Frame, FrameAuthenticationRepository>(
       isUsernameValid: getIt(),
       isPasswordValid: getIt(),
       userAuthRepository: getIt(),
@@ -204,7 +202,7 @@ Future<void> initGetIt() async {
             userAuthenticationRepository: getIt(),
           ));
   getIt.registerLazySingleton(
-    () => GetUserWithType<PictureFrame, FrameAuthenticationRepository>(
+    () => GetUserWithType<Frame, FrameAuthenticationRepository>(
       userAuthenticationRepository: getIt(),
     ),
   );
@@ -233,7 +231,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => SignInWrapper<PictureFrame, FrameAuthenticationRepository>(
+    () => SignInWrapper<Frame, FrameAuthenticationRepository>(
       userAuthRepository: getIt(),
       basicAuthRepository: getIt(),
       generateAccessToken: getIt(),
@@ -256,7 +254,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => SaveRefreshToken<PictureFrame, FrameAuthenticationRepository>(
+    () => SaveRefreshToken<Frame, FrameAuthenticationRepository>(
       userAuthenticationRepository: getIt(),
     ),
   );
@@ -311,7 +309,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton<FrameAuthenticationRepository>(
-    () => UserAuthenticationRepositoryImpl<PictureFrame>(
+    () => UserAuthenticationRepositoryImpl<Frame>(
       userAuthLocalDataSource: getIt(),
     ),
   );
@@ -342,7 +340,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton<FrameAuthLocalDataSource>(
-    () => UserAuthLocalDataSourceImpl<PictureFrame>(
+    () => UserAuthLocalDataSourceImpl<Frame>(
       sqliteDatabase: getIt(),
       userTableNames: getIt(),
       refreshTokenTableNames: getIt(),
@@ -356,10 +354,10 @@ Future<void> initGetIt() async {
   getIt.registerLazySingleton<UserRefreshTokenTable<Curator>>(
     () => const CuratorRefreshTokenTable(),
   );
-  getIt.registerLazySingleton<UserTable<PictureFrame>>(
+  getIt.registerLazySingleton<UserTable<Frame>>(
     () => const PictureFrameTable(),
   );
-  getIt.registerLazySingleton<UserRefreshTokenTable<PictureFrame>>(
+  getIt.registerLazySingleton<UserRefreshTokenTable<Frame>>(
     () => const FrameRefreshTokenTable(),
   );
   // External
