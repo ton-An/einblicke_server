@@ -4,6 +4,20 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_f
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+// ToDo: Add documentation to typedefs
+
+/// {@macro user_authentication_local_data_source}
+typedef CuratorAuthLocalDataSource = UserAuthenticationLocalDataSource<Curator>;
+
+/// {@macro user_authentication_local_data_source}
+typedef FrameAuthLocalDataSource = UserAuthenticationLocalDataSource<Frame>;
+
+/// {@macro user_authentication_local_data_source}
+typedef CuratorAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Curator>;
+
+/// {@macro user_authentication_local_data_source}
+typedef FrameAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Frame>;
+
 /// {@template user_authentication_local_data_source}
 /// Local data source for user authentication
 /// {@endtemplate}
@@ -348,12 +362,3 @@ class UserAuthLocalDataSourceImpl<U extends User>
     }
   }
 }
-
-typedef CuratorAuthLocalDataSource = UserAuthenticationLocalDataSource<Curator>;
-typedef FrameAuthLocalDataSource = UserAuthenticationLocalDataSource<Frame>;
-
-/// {@macro user_authentication_local_data_source}
-typedef CuratorAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Curator>;
-
-/// {@macro user_authentication_local_data_source}
-typedef FrameAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Frame>;

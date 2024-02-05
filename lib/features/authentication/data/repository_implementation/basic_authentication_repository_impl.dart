@@ -6,7 +6,9 @@ import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:jose/jose.dart';
 
 /// {@template basic_authentication_repository_impl}
-/// Repository implementation for basic authentication related operations
+/// ___Basic Authentication Repository Implemntation__ is the concrete
+/// implementation of the [BasicAuthenticationRepository] contract and
+/// handles the basic authentication related repository operations.
 /// {@endtemplate}
 class BasicAuthenticationRepositoryImpl extends BasicAuthenticationRepository {
   /// {@macro basic_authentication_repository_impl}

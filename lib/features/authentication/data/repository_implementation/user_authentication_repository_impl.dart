@@ -7,7 +7,22 @@ import 'package:dispatch_pi_dart/features/authentication/domain/repositories/use
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-/// {@macro user_auth_repository}
+/// __Curator Authentication Repository Implementation__ is the concrete
+/// implementation of the [UserAuthenticationRepository] contract and handles
+/// the [Curator] related authentication repository operations.
+typedef CuratorAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Curator>;
+
+/// __Frame Authentication Repository Implementation__ is the concrete
+/// implementation of the [UserAuthenticationRepository] contract and handles
+/// the [Frame] related authentication repository operations.
+typedef FrameAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Frame>;
+
+/// {@template user_auth_repository}
+/// __User Authentication Repository Implementation__ is the concrete
+/// implementation of the [UserAuthenticationRepository] contract and a
+/// wrapper for [U] user related authentication repository operations.
+/// handles the user authentication related repository operations.
+/// {@endtemplate}
 class UserAuthenticationRepositoryImpl<U extends User>
     extends UserAuthenticationRepository<U> {
   /// {@macro user_auth_repository}
@@ -163,9 +178,3 @@ class UserAuthenticationRepositoryImpl<U extends User>
     }
   }
 }
-
-/// {@macro user_auth_repository}
-typedef CuratorAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Curator>;
-
-/// {@macro user_auth_repository}
-typedef FrameAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Frame>;

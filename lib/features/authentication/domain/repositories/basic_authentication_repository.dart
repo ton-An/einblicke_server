@@ -3,7 +3,9 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/token_cla
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template basic_auth_repository}
-/// Repository for basic authentication related operations
+/// ___Basic Authentication Repository___ is a contract for the basic
+/// authentication related repository operations.
+///
 /// {@endtemplate}
 abstract class BasicAuthenticationRepository {
   /// {@macro basic_auth_repository}
