@@ -7,6 +7,11 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/get_user
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
+/*
+  To-Do:
+    - [ ] Add specific types for the wrapper (for curator, frame)
+*/
+
 /// {@template check_refresh_token_validity}
 /// A wrapper for checking if a refresh token is valid
 /// It checks if the signature is valid, if the token is expired and

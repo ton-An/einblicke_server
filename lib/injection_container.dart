@@ -21,20 +21,16 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/create_u
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/get_user_with_type.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_id_valid.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_secret_valid.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_curator.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_wrapper.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_access_token_validity/check_access_token_validity.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_access_token_validity/check_curator_access_token_validity.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_access_token_validity/check_frame_access_token_validity.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_refresh_token_validity/check_refresh_token_validity.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_encrypted_token/generate_access_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_encrypted_token/generate_refresh_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/get_new_tokens.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_all_refresh_tokens/invalidate_all_refresh_tokens.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_refresh_tokens/invalidate_refresh_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_access_token_validity.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_refresh_token_validity.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_access_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_refresh_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/get_new_token_bundle.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_all_refresh_tokens.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_refresh_token.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/data/repository_implementations/image_exchange_repository_impl.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
@@ -99,7 +95,7 @@ Future<void> initGetIt() async {
   );
   getIt.registerLazySingleton(() => IsClientSecretValid(secrets: getIt()));
   getIt.registerLazySingleton(
-    () => GetNewTokens<Curator, CuratorAuthenticationRepository>(
+    () => GetNewTokenTokenBundle<Curator, CuratorAuthenticationRepository>(
       checkRefreshTokenValidityWrapper: getIt(),
       generateAccessToken: getIt(),
       generateRefreshToken: getIt(),
@@ -111,7 +107,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => GetNewTokens<Frame, FrameAuthenticationRepository>(
+    () => GetNewTokenTokenBundle<Frame, FrameAuthenticationRepository>(
       checkRefreshTokenValidityWrapper: getIt(),
       generateAccessToken: getIt(),
       generateRefreshToken: getIt(),
@@ -215,7 +211,7 @@ Future<void> initGetIt() async {
       basicAuthRepository: getIt(),
       isTokenExpiredUseCase: getIt(),
       getUserWithType: getIt(),
-      frameAuthenticationRepository: getIt(),
+      userAuthenticationRepository: getIt(),
     ),
   );
 
@@ -224,7 +220,7 @@ Future<void> initGetIt() async {
       basicAuthRepository: getIt(),
       isTokenExpiredUseCase: getIt(),
       getUserWithType: getIt(),
-      curatorAuthenticationRepository: getIt(),
+      userAuthenticationRepository: getIt(),
     ),
   );
   getIt.registerLazySingleton(
@@ -264,12 +260,20 @@ Future<void> initGetIt() async {
   );
 
   getIt.registerLazySingleton(
-    () => SignInPictureFrame(signInPictureFrame: getIt()),
+    () => SignInPictureFrame(
+        userAuthRepository: getIt(),
+        basicAuthRepository: getIt(),
+        generateAccessToken: getIt(),
+        generateRefreshToken: getIt(),
+        saveRefreshTokenUsecase: getIt()),
   );
   getIt.registerLazySingleton(
     () => SignInCurator(
-      signInCurator: getIt(),
-    ),
+        userAuthRepository: getIt(),
+        basicAuthRepository: getIt(),
+        generateAccessToken: getIt(),
+        generateRefreshToken: getIt(),
+        saveRefreshTokenUsecase: getIt()),
   );
   getIt.registerFactory(
     () => GenerateAccessToken(

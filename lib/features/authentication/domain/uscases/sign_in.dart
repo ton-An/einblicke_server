@@ -1,17 +1,57 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_encrypted_token/generate_access_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_encrypted_token/generate_refresh_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_access_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_refresh_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
-/// {@template sign_in_wrapper}
-/// A wrapper for signing in a [U] user with a given username and password
+/// {@template sign_in_picture_frame}
+/// ___Sign In Frame__ signs in a picture frame user with a given
+/// username and password
+/// {@endtemplate}
 ///
+/// {@macro sign_in}
+class SignInPictureFrame extends SignInWrapper {
+  /// {@macro sign_in_picture_frame}
+  ///
+  /// {@macro sign_in}
+  const SignInPictureFrame({
+    required super.userAuthRepository,
+    required super.basicAuthRepository,
+    required super.generateAccessToken,
+    required super.generateRefreshToken,
+    required super.saveRefreshTokenUsecase,
+  });
+}
+
+/// {@template sign_in_curator}
+/// __Sign In Curator__ signs in a curator user with a given
+/// username and password
+/// {@endtemplate}
+///
+/// {@macro sign_in}
+class SignInCurator extends SignInWrapper {
+  /// {@macro sign_in_curator}
+  ///
+  /// {@macro sign_in}
+  const SignInCurator({
+    required super.userAuthRepository,
+    required super.basicAuthRepository,
+    required super.generateAccessToken,
+    required super.generateRefreshToken,
+    required super.saveRefreshTokenUsecase,
+  });
+}
+
+/// {@template sign_in_wrapper}
+/// __Sign In Wrapper__ wrapper for signing in a [U] user with a given username and password
+/// {@endtemplate}
+///
+/// {@template sign_in}
 /// Parameters:
 /// - [String] username
 /// - [String] password
@@ -25,7 +65,9 @@ import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 /// {@endtemplate}
 class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
   /// {@macro sign_in_wrapper}
-  SignInWrapper({
+  ///
+  /// {@macro sign_in}
+  const SignInWrapper({
     required this.userAuthRepository,
     required this.basicAuthRepository,
     required this.generateAccessToken,

@@ -3,13 +3,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_wrapper.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../../../../fixtures.dart';
-import '../../../../../../mocks.dart';
+import '../../../../../fixtures.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   late SignInWrapper<User, UserAuthenticationRepository<User>> signInWrapper;

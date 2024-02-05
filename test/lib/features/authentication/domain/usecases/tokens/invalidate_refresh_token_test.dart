@@ -1,43 +1,40 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token/save_refresh_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_refresh_token.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../../../../../fixtures.dart';
-import '../../../../../../../mocks.dart';
+import '../../../../../../fixtures.dart';
+import '../../../../../../mocks.dart';
 
 void main() {
-  late SaveRefreshToken saveRefreshToken;
+  late InvalidateRefreshToken removeRefreshToken;
   late MockUserAuthRepository mockUserAuthRepository;
 
   setUp(() {
     mockUserAuthRepository = MockUserAuthRepository();
-    saveRefreshToken = SaveRefreshToken(
+    removeRefreshToken = InvalidateRefreshToken(
       userAuthenticationRepository: mockUserAuthRepository,
     );
 
-    when(() => mockUserAuthRepository.saveRefreshTokenToDb(any(), any()))
+    when(() => mockUserAuthRepository.removeRefreshTokenFromDb(any(), any()))
         .thenAnswer((_) async => const Right(None()));
   });
 
-  // should save the token in the database and return None
-  // should relay [Failure]s
-
-  test("should save the refresh token in the database and return [None]",
+  test("should remove the refresh token from the database and return [None]",
       () async {
     // act
-    final result = await saveRefreshToken(
+    final result = await removeRefreshToken(
       userId: tUserId,
-      refreshToken: tEncryptedRefreshToken,
+      refreshTokenString: tRefreshToken,
     );
 
     // assert
     expect(result, const Right(None()));
     verify(
-      () => mockUserAuthRepository.saveRefreshTokenToDb(
+      () => mockUserAuthRepository.removeRefreshTokenFromDb(
         tUserId,
         tRefreshToken,
       ),
@@ -46,13 +43,13 @@ void main() {
 
   test("should relay [Failure]s", () async {
     // arrange
-    when(() => mockUserAuthRepository.saveRefreshTokenToDb(any(), any()))
+    when(() => mockUserAuthRepository.removeRefreshTokenFromDb(any(), any()))
         .thenAnswer((_) async => const Left(DatabaseWriteFailure()));
 
     // act
-    final result = await saveRefreshToken(
+    final result = await removeRefreshToken(
       userId: tUserId,
-      refreshToken: tEncryptedRefreshToken,
+      refreshTokenString: tRefreshToken,
     );
 
     // assert

@@ -4,8 +4,13 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
+/*
+  To-Do:
+    - [ ] Add specific types for the wrapper (for curator, frame)
+*/
+
 /// {@template save_refresh_token}
-/// Saves the given refresh token for the given user id
+/// __Save Refresh Token__ saves a refresh token to the database for a given user
 ///
 /// Parameters:
 /// - [String] userId

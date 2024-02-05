@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/token_claims.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
@@ -7,9 +9,50 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/get_user
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
-/// {@template check_access_token_validity_wrapper}
-/// Checks if an access token is valid
+/// {@template check_frame_access_token_validity}
+/// __Check Frame Access Token Valididty__ checks if an access token is valid
+/// and returns the corresponding [Frame] object if it is.
+/// {@endtemplate}
 ///
+/// {@macro check_access_token_validity}
+class CheckFrameAccessTokenValidity extends CheckAccessTokenValidityWrapper<
+    Frame, FrameAuthenticationRepository> {
+  /// {@macro check_frame_access_token_validity}
+  ///
+  /// {@macro check_access_token_validity}
+  const CheckFrameAccessTokenValidity({
+    required super.basicAuthRepository,
+    required super.isTokenExpiredUseCase,
+    required super.getUserWithType,
+    required super.userAuthenticationRepository,
+  });
+}
+
+/// {@template check_curator_access_token_validity}
+/// __Check Curator Access Token Valididty__ checks if an access token is valid
+/// and returns the corresponding [Curator] object if it is.
+/// {@endtemplate}
+///
+/// {@macro check_access_token_validity}
+class CheckCuratorAccessTokenValidity extends CheckAccessTokenValidityWrapper<
+    Curator, CuratorAuthenticationRepository> {
+  /// {@macro check_curator_access_token_validity}
+  ///
+  /// {@macro check_access_token_validity}
+  const CheckCuratorAccessTokenValidity({
+    required super.basicAuthRepository,
+    required super.isTokenExpiredUseCase,
+    required super.getUserWithType,
+    required super.userAuthenticationRepository,
+  });
+}
+
+/// {@template check_access_token_validity_wrapper}
+/// __Check Access Token Valididty Wrapper__ checks if an access token is valid
+/// and returns the corresponding [U] user object if it is.
+/// {@endtemplate}
+///
+/// {@template check_access_token_validity}
 /// Parameters:
 /// - [String] accessToken
 ///

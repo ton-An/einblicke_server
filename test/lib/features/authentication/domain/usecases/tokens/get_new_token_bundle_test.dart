@@ -1,7 +1,7 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/get_new_tokens.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/get_new_token_bundle.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -10,7 +10,7 @@ import '../../../../../../fixtures.dart';
 import '../../../../../../mocks.dart';
 
 void main() {
-  late GetNewTokens getNewTokens;
+  late GetNewTokenTokenBundle getNewTokens;
   late MockCheckRefreshTokenValidityWrapper
       mockCheckRefreshTokenValidityWrapper;
   late MockGenerateAccessToken mockGenerateAccessToken;
@@ -34,7 +34,7 @@ void main() {
     mockUserAuthRepository = MockUserAuthRepository();
     mockBasicAuthRepository = MockBasicAuthRepository();
 
-    getNewTokens = GetNewTokens(
+    getNewTokens = GetNewTokenTokenBundle(
       checkRefreshTokenValidityWrapper: mockCheckRefreshTokenValidityWrapper,
       generateAccessToken: mockGenerateAccessToken,
       generateRefreshToken: mockGenerateRefreshToken,

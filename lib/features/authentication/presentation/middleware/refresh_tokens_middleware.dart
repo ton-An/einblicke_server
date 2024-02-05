@@ -3,19 +3,19 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/get_new_tokens.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/get_new_token_bundle.dart';
 import 'package:dispatch_pi_dart/injection_container.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// A middleware that verifies a users refresh token
 Middleware refreshTokensMiddleware<U extends User,
     R extends UserAuthenticationRepository<U>>() {
   return (Handler handler) {
     return (RequestContext context) async {
-      final GetNewTokens<U, R> getNewTokens = getIt.get();
+      final GetNewTokenTokenBundle<U, R> getNewTokens = getIt.get();
 
       final String bodyString = await context.request.body();
       final Map<String, String> bodyMap =

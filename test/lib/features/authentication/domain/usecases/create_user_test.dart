@@ -6,8 +6,8 @@ import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../../../../../fixtures.dart';
-import '../../../../../../mocks.dart';
+import '../../../../../fixtures.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   late CreateUserWrapper<User, UserAuthenticationRepository<User>> createUser;

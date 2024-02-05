@@ -3,8 +3,15 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
+/*
+  To-Do:
+    - [ ] Add specific types for the wrapper (for curator, frame)
+*/
+
 /// {@template get_user_with_type}
-/// Gets a user from the database with the specified type
+/// __Get User With Type__ gets a user from the database if the user type
+/// corresponds to [U]
+///
 ///
 /// Parameters:
 /// - [String] userId
@@ -27,6 +34,7 @@ class GetUserWithType<U extends User,
   /// Used to get the user from the database
   final R userAuthenticationRepository;
 
+  /// {@macro get_user_with_type}
   Future<Either<Failure, U>> call({
     required String userId,
     required dynamic userType,
