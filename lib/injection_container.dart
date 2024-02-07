@@ -34,7 +34,7 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/s
 import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/data/repository_implementations/image_exchange_repository_impl.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_frames_image_from_id.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/frame_image_retriever_by_id.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/pair_curator_x_frame.dart';

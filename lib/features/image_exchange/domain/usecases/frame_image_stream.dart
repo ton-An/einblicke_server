@@ -9,6 +9,7 @@ import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 /*
   To-Do:
     - [ ] Add proper error handling
+    - [ ] Add failures to docs
 */
 
 /// {@template frame_image_stream}

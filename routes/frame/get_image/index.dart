@@ -4,7 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_frames_image_from_id.dart';
+import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/frame_image_retriever_by_id.dart';
 import 'package:dispatch_pi_dart/injection_container.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
