@@ -21,7 +21,6 @@ typedef FrameAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Frame>;
 /// __User Authentication Repository Implementation__ is the concrete
 /// implementation of the [UserAuthenticationRepository] contract and a
 /// wrapper for [U] user related authentication repository operations.
-/// handles the user authentication related repository operations.
 /// {@endtemplate}
 class UserAuthenticationRepositoryImpl<U extends User>
     extends UserAuthenticationRepository<U> {
