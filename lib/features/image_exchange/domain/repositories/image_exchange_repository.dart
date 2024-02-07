@@ -2,8 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
+/*
+  To-Do:
+    - [ ] Evaluate if bools start with 'are' should be changed to 'is'
+*/
+
 /// {@template image_exchange_repository}
-/// Repository for exchanging images between a curator and a frame
+/// __Image Exchange Repository__ is a contract for the image exchange related
+/// repository operations.
 /// {@endtemplate}
 abstract class ImageExchangeRepository {
   /// {@macro image_exchange_repository}

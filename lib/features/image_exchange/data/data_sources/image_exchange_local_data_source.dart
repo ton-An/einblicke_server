@@ -4,9 +4,14 @@ import 'dart:typed_data';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+/*
+  To-Do:
+    - [ ] Add missing tests
+*/
+
 /// {@template image_exchange_local_data_source}
-/// Local data source for handling the exchange of images between
-/// a curator and a frame
+/// __Image Exchange Local Data Source__ is a contract for the image exchange
+/// related local data source operations.
 /// {@endtemplate}
 abstract class ImageExchangeLocalDataSource {
   /// {@macro image_exchange_local_data_source}
@@ -109,9 +114,13 @@ abstract class ImageExchangeLocalDataSource {
   });
 }
 
-/// {@macro image_exchange_local_data_source}
+/// {@template image_exchange_local_data_source_impl}
+/// __Image Exchange Local Data Source Implementation__ is the concrete
+/// implementation of the [ImageExchangeLocalDataSource] contract and handles
+/// the image exchange related local data source operations.
+/// {@endtemplate}
 class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
-  /// {@macro image_exchange_local_data_source}
+  /// {@macro image_exchange_local_data_source_impl}
   const ImageExchangeLocalDataSourceImpl({
     required this.sqliteDatabase,
     required this.imageDirectoryPath,
@@ -120,6 +129,7 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
   /// The database connection
   final Database sqliteDatabase;
 
+  /// The directory path where the images are stored
   final String imageDirectoryPath;
 
   @override
@@ -192,7 +202,6 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
       "$imageDirectoryPath/$imageId.jpg",
     );
 
-    // ToDo: test
     await imageFile.create(recursive: true);
 
     await imageFile.writeAsBytes(imageBytes, flush: true);
@@ -212,7 +221,6 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
     );
   }
 
-  // ToDo: test
   @override
   Future<bool> isImageAssociatedWithFrame(
       {required String frameId, required String imageId}) async {
