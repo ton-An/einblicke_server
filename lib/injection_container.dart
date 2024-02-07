@@ -60,7 +60,7 @@ Future<void> initGetIt() async {
 
   // Presentation
   getIt.registerLazySingleton(
-    () => GetFramesImageFromId(
+    () => FrameImageRetrieverById(
       getImageFromId: getIt(),
       imageExchangeRepository: getIt(),
     ),

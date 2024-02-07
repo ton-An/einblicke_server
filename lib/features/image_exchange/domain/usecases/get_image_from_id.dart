@@ -4,7 +4,8 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/ima
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template get_image_by_id}
-/// Gets an image from storage
+/// __Get Image From Id__ gets an [Image] from storage using
+/// the given image id.
 ///
 /// Properties:
 /// - [String] imageId

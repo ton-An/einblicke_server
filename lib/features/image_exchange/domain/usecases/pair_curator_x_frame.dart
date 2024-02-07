@@ -6,7 +6,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/ima
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template pair_curator_x_frame}
-/// Pairs a [Curator] with a [Frame]
+/// __Pair Curator X Frame__ pairs a [Curator] with a [Frame].
 ///
 /// Parameters:
 /// - [String] curatorId
