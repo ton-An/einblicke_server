@@ -10,8 +10,14 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/g
 import 'package:dispatch_pi_dart/injection_container.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
-/// A middleware that verifies a users refresh token
-Middleware refreshTokensMiddleware<U extends User,
+/*
+  To-Do:
+    - [ ] Implement proper error responses
+*/
+
+/// __getNewTokenBundleMiddleware()__ is a middleware that gets a new
+/// [TokenBundle] from a refresh token.
+Middleware getNewTokenBundleMiddleware<U extends User,
     R extends UserAuthenticationRepository<U>>() {
   return (Handler handler) {
     return (RequestContext context) async {

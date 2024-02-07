@@ -5,7 +5,13 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_clien
 import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_secret_valid.dart';
 import 'package:dispatch_pi_dart/injection_container.dart';
 
-/// A middleware that verifies the client id and client secret
+/*
+  To-Do:
+    - [ ] Implement proper error responses
+*/
+
+/// __clientCheckMiddleware()__ is a middleware that checks if the given
+/// client id and client secret are valid.
 Middleware clientCheckMiddleware() {
   return (handler) => (context) async {
         final String? clientId = context.request.headers['client_id'];

@@ -5,6 +5,6 @@ import 'package:dispatch_pi_dart/features/authentication/presentation/middleware
 
 Handler middleware(Handler handler) {
   return handler.use(
-    refreshTokensMiddleware<Curator, CuratorAuthenticationRepository>(),
+    getNewTokenBundleMiddleware<Curator, CuratorAuthenticationRepository>(),
   );
 }

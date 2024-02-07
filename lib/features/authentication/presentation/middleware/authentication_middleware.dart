@@ -7,7 +7,13 @@ import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/c
 import 'package:dispatch_pi_dart/injection_container.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
-/// An authentiaction middleware that verifies a users access token
+/*
+  To-Do:
+    - [ ] Implement proper error responses
+*/
+
+/// __authenticationMiddleware()__ is a middleware that checks if a given
+/// access token is valid.
 Middleware authenticationMiddleware<U extends User,
     R extends UserAuthenticationRepository<U>>() {
   return bearerAuthentication<U>(
