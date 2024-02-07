@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/socket_connection.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
@@ -8,7 +9,8 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_lat
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template frame_socket_handler}
-/// Handles the websocket connections to the picture frames
+/// __Frame Socket Handler__ handles the websocket connections to the
+/// [Frame]s.
 ///
 /// Methods:
 /// - [addConnection] adds a new connection to the list of connections
@@ -25,7 +27,10 @@ class FrameSocketHandler {
     required this.getLatestImage,
   });
 
+  /// Gets an [Image] from a given image id
   final GetImageFromId getImageFromId;
+
+  /// Gets the latest [Image] for a given [Frame]
   final GetLatestImage getLatestImage;
 
   final List<SocketConnetion> _connections = [];
