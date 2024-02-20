@@ -63,32 +63,6 @@ void main() {
     });
   });
 
-  group("doesUserWithIdExist", () {
-    test("should return true if the user exists", () async {
-      // arrange
-      await dataSource.createUser(
-        userId: tUser.userId,
-        username: tUser.username,
-        passwordHash: tUser.passwordHash,
-      );
-
-      // act
-      final result = await dataSource.doesUserWithIdExist(tUser.userId);
-
-      // assert
-
-      expect(result, true);
-    });
-
-    test("should return false if the user does not exist", () async {
-      // act
-      final result = await dataSource.doesUserWithIdExist(tUser.userId);
-
-      // assert
-      expect(result, false);
-    });
-  });
-
   group("getUser", () {
     test("should return the user if it exists", () async {
       // arrange

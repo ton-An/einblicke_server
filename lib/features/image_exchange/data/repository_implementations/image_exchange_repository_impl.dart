@@ -7,8 +7,15 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/ima
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+/*
+  To-Do:
+    - [ ] Test isImageAssociatedWithFrame()
+*/
+
 /// {@template image_exchange_repository_impl}
-/// Repository for exchanging images between a curator and a frame
+/// __Image Exchange Repository Impl__ is a concrete implementation of the
+/// [ImageExchangeRepository] contract and handles the image exchange related
+/// repository operations.
 /// {@endtemplate}
 class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
   /// {@macro image_exchange_repository_impl}
@@ -101,8 +108,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       return const Right(None());
-    } on IOException catch (_) {
-      print(_);
+    } on IOException {
       return const Left(StorageWriteFailure());
     }
   }
@@ -128,18 +134,17 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
     }
   }
 
-  // ToDo: test
   @override
-  Future<Either<Failure, bool>> doesImageBelongToFrame(
+  Future<Either<Failure, bool>> isImageAssociatedWithFrame(
       {required String frameId, required String imageId}) async {
     try {
-      final bool doesImageBelongToFrame =
-          await localDataSource.doesImageBelongToFrame(
+      final bool isImageAssociatedWithFrame =
+          await localDataSource.isImageAssociatedWithFrame(
         frameId: frameId,
         imageId: imageId,
       );
 
-      return Right(doesImageBelongToFrame);
+      return Right(isImageAssociatedWithFrame);
     } on DatabaseException {
       return const Left(DatabaseReadFailure());
     }

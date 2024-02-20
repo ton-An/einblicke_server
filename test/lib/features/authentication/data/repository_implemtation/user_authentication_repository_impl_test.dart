@@ -78,48 +78,6 @@ void main() {
     });
   });
 
-  group("doesUserWithIdExist", () {
-    setUp(() {
-      when(
-        () => mockUserAuthLocalDataSource.doesUserWithIdExist(
-          any(),
-        ),
-      ).thenAnswer((_) async => true);
-    });
-
-    test(
-        "should check if the user exists using the local data source "
-        "and return a [bool] with the result ", () async {
-      // act
-      final result = await repository.doesUserWithIdExist(tUserId);
-
-      // assert
-      verify(
-        () => mockUserAuthLocalDataSource.doesUserWithIdExist(
-          tUserId,
-        ),
-      );
-      expect(result, const Right(true));
-    });
-
-    test(
-        "should return a [DatabaseReadFailure] when the local data source throws a [DatabaseException]",
-        () async {
-      // arrange
-      when(
-        () => mockUserAuthLocalDataSource.doesUserWithIdExist(
-          any(),
-        ),
-      ).thenThrow(MockDatabaseException());
-
-      // act
-      final result = await repository.doesUserWithIdExist(tUserId);
-
-      // assert
-      expect(result, const Left(DatabaseReadFailure()));
-    });
-  });
-
   group("getUser", () {
     setUp(() {
       when(

@@ -1,16 +1,23 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+
+/*
+  To-Do:
+    - [ ] Add proper error handling
+    - [ ] Add failures to docs
+*/
 
 /// {@template frame_image_stream}
-/// Used to stream images to a frame
+/// __Frame Image Stream__ creates a stream of [Image]s destined for a [Frame].
 ///
 /// When the stream is initialized, the latest image is added to the stream
 ///
-/// Atm, the stream the only time a failure is added to the stream is when the
+/// Atm, the stream the only time a [Failure] is added to the stream is when the
 /// stream is initialized. Maybe this should be changed. Plus, the docs for
 /// this class are not complete
 /// {@endtemplate}

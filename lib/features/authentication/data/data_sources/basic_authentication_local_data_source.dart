@@ -9,7 +9,8 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/token_cla
 import 'package:jose/jose.dart';
 
 /// {@template basic_auth_local_data_source}
-/// Local data source for basic authentication related operations
+/// __Basic Authentication Local Data Source__ is a contract for basic
+/// authentication related operations.
 /// {@endtemplate}
 abstract class BasicAuthLocalDataSource {
   /// {@macro basic_auth_local_data_source}
@@ -60,7 +61,9 @@ abstract class BasicAuthLocalDataSource {
   Future<String> getUserIdFromToken(String token);
 }
 
-/// {@macro basic_auth_local_data_source}
+/// __Basic Authentication Local Data Source Implementation__ is the concrete
+/// implementation of [BasicAuthLocalDataSource] and is used to perform basic
+/// authentication related operations.
 class BasicAuthLocalDataSourceImpl extends BasicAuthLocalDataSource {
   /// {@macro basic_auth_local_data_source}
   const BasicAuthLocalDataSourceImpl({

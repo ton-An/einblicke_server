@@ -1,7 +1,7 @@
 import 'package:clock/clock.dart';
 
 /// {@template is_token_expired}
-/// A wrapper for checking if a token is expired
+/// __Is Token Expired__ checks if a token is expired and returns a [bool]].
 ///
 /// Parameters:
 /// - [int] issuedAt in Unix time

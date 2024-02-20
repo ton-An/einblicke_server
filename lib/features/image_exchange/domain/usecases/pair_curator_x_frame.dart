@@ -6,7 +6,7 @@ import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/ima
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 /// {@template pair_curator_x_frame}
-/// Pairs a [Curator] with a [Frame]
+/// __Pair Curator X Frame__ pairs a [Curator] with a [Frame].
 ///
 /// Parameters:
 /// - [String] curatorId
@@ -50,11 +50,11 @@ class PairCuratorXFrame {
     required String curatorId,
     required String frameId,
   }) async {
-    final Either<Failure, bool> doesCuratorExistEither =
-        await curatorAuthenticationRepository.doesUserWithIdExist(curatorId);
+    final Either<Failure, bool> isCuratorIdTakenEither =
+        await curatorAuthenticationRepository.isUserIdTaken(curatorId);
 
-    return doesCuratorExistEither.fold(Left.new, (bool doesCuratorExist) {
-      if (!doesCuratorExist) {
+    return isCuratorIdTakenEither.fold(Left.new, (bool isCuratorIdTaken) {
+      if (!isCuratorIdTaken) {
         return const Left(CuratorNotFoundFailure());
       }
 
@@ -69,11 +69,11 @@ class PairCuratorXFrame {
     required String curatorId,
     required String frameId,
   }) async {
-    final Either<Failure, bool> doesFrameExistEither =
-        await frameAuthenticationRepository.doesUserWithIdExist(frameId);
+    final Either<Failure, bool> isFrameIdTakenEither =
+        await frameAuthenticationRepository.isUserIdTaken(frameId);
 
-    return doesFrameExistEither.fold(Left.new, (bool doesFrameExist) {
-      if (!doesFrameExist) {
+    return isFrameIdTakenEither.fold(Left.new, (bool isFrameIdTaken) {
+      if (!isFrameIdTaken) {
         return const Left(FrameNotFoundFailure());
       }
 

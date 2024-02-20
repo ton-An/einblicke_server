@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in/sign_in_curator.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/uscases/sign_in.dart';
 import 'package:dispatch_pi_dart/injection_container.dart';
+import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.post) {

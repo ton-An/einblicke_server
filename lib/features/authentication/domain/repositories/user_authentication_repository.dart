@@ -4,8 +4,17 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_f
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
+/// ___Curator Authentication Repository___ is a contract for [Curator] related
+/// authentication repository operations.
+typedef CuratorAuthenticationRepository = UserAuthenticationRepository<Curator>;
+
+/// ___Frame Authentication Repository___ is a contract for [Frame] related
+/// authentication repository operations.
+typedef FrameAuthenticationRepository = UserAuthenticationRepository<Frame>;
+
 /// {@template user_auth_repository}
-/// Repository for user authentication
+/// ___User Authentication Repository___ is a contract and wrapper for [U] user
+/// related authentication repository operations.
 /// {@endtemplate}
 abstract class UserAuthenticationRepository<U extends User> {
   /// {@macro user_auth_repository}
@@ -135,19 +144,4 @@ abstract class UserAuthenticationRepository<U extends User> {
   /// - [DatabaseReadFailure]
   /// - [UserNotFoundFailure]
   Future<Either<Failure, U>> getUserFromId(String userId);
-
-  /// Checks if the user with the given user id exists
-  ///
-  /// Parameters:
-  /// - [String] userId
-  ///
-  /// Returns:
-  /// - a [bool] indicating if the user exists
-  ///
-  /// Failures:
-  /// - [DatabaseReadFailure]
-  Future<Either<Failure, bool>> doesUserWithIdExist(String userId);
 }
-
-typedef CuratorAuthenticationRepository = UserAuthenticationRepository<Curator>;
-typedef FrameAuthenticationRepository = UserAuthenticationRepository<Frame>;

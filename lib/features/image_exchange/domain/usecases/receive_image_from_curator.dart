@@ -1,13 +1,18 @@
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/core/domain/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/crypto_repository.dart';
 import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 
+/*
+  To-Do:
+    - [ ] Add failures to docs
+*/
+
 /// {@template receive_image_from_curator}
-/// Receives an image from a [Curator] and sends it to a [Frame].
+/// __Receive Image From Curator__ receives an image from a [Curator] and
+/// saves it to the database and storage.
 ///
 /// Parameters:
 /// - [String] curatorId
@@ -32,6 +37,7 @@ class ReceiveImageFromCurator {
   /// Used to interact with the database and storage
   final ImageExchangeRepository imageExchangeRepository;
 
+  /// Used to generate a unique id for the image
   final CryptoRepository cryptoRepository;
 
   /// Used to get the current time

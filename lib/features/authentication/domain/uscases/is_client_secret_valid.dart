@@ -1,7 +1,8 @@
 import 'package:dispatch_pi_dart/core/secrets.dart';
 
 /// {@template is_client_secret_valid}
-/// Checks if the client secret is valid.
+/// __Is Client Secret Valid__ checks if a client secret is valid
+/// and returns a [bool].
 ///
 /// Parameters:
 /// - [clientSecret]: The client secret to be checked
@@ -15,6 +16,7 @@ class IsClientSecretValid {
     required this.secrets,
   });
 
+  /// The secrets for the application
   final Secrets secrets;
 
   /// {@macro is_client_secret_valid}

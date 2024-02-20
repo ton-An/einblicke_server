@@ -1,7 +1,7 @@
 import 'package:dispatch_pi_dart/core/secrets.dart';
 
 /// {@template is_client_id_valid}
-/// Checks if the client id is valid.
+/// __Is Client Id Valid__ checks if a client id is valid and returns a [bool].
 ///
 /// Parameters:
 /// - [clientid]: The client id to be checked
@@ -15,6 +15,7 @@ class IsClientIdValid {
     required this.secrets,
   });
 
+  /// The secrets for the application
   final Secrets secrets;
 
   /// {@macro is_client_id_valid}

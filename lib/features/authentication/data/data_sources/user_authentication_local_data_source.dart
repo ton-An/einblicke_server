@@ -4,8 +4,27 @@ import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_f
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+/// __Curator Authentication Local Data Source__ is a contract for [Curator]
+/// related local data source operations.
+typedef CuratorAuthLocalDataSource = UserAuthenticationLocalDataSource<Curator>;
+
+/// __Frame Authentication Local Data Source__ is a contract for [Frame] related
+/// local data source operations.
+typedef FrameAuthLocalDataSource = UserAuthenticationLocalDataSource<Frame>;
+
+/// __Curator Authentication Local Data Source Implementation__ is the concrete
+/// implementation of the [UserAuthenticationLocalDataSource] contract
+/// and handles the [Curator] related local data source operations.
+typedef CuratorAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Curator>;
+
+/// __Frame Authentication Local Data Source Implementation__ is the concrete
+/// implementation of the [UserAuthenticationLocalDataSource] contract
+/// and handles the [Frame] related local data source operations.
+typedef FrameAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Frame>;
+
 /// {@template user_authentication_local_data_source}
-/// Local data source for user authentication
+/// __User Authentication Local Data Source__ is a contract and wrapper for [U]
+/// user related local data source operations.
 /// {@endtemplate}
 abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// {@macro user_authentication_local_data_source}
@@ -136,26 +155,16 @@ abstract class UserAuthenticationLocalDataSource<U extends User> {
   /// Throws:
   /// - [DatabaseException]
   Future<U?> getUserFromId(String userId);
-
-  /// Checks if a user with the given user id exists in the database
-  ///
-  /// Parameters:
-  /// - [String] userId
-  ///
-  /// Returns:
-  /// - [bool] indicating if the user exists
-  ///
-  /// Throws:
-  /// - [DatabaseException]
-  Future<bool> doesUserWithIdExist(String userId);
 }
 
-/// {@template user_auth_local_data_source}
-/// Local data source for handling the authentication of users
+/// {@template user_auth_local_data_source_impl}
+/// __User Authentication Local Data Source Implementation__ is the concrete
+/// implementation of the [UserAuthenticationLocalDataSource] contract and a
+/// wrapper for [U] user related local data source operations.
 /// {@endtemplate}
 class UserAuthLocalDataSourceImpl<U extends User>
     extends UserAuthenticationLocalDataSource<U> {
-  /// {@macro user_auth_local_data_source}
+  /// {@macro user_auth_local_data_source_impl}
   const UserAuthLocalDataSourceImpl({
     required this.sqliteDatabase,
     required this.userTableNames,
@@ -196,20 +205,6 @@ class UserAuthLocalDataSourceImpl<U extends User>
     );
 
     return user;
-  }
-
-  @override
-  Future<bool> doesUserWithIdExist(String userId) async {
-    final List<Map<String, Object?>> queryResult =
-        await sqliteDatabase.rawQuery(
-      "SELECT EXISTS(SELECT 1 FROM ${userTableNames.tableName} "
-      "WHERE ${userTableNames.userId} = ?)",
-      [userId],
-    );
-
-    final bool doesUserWithIdExist = queryResult.first.containsValue(1);
-
-    return doesUserWithIdExist;
   }
 
   @override
@@ -374,12 +369,3 @@ class UserAuthLocalDataSourceImpl<U extends User>
     }
   }
 }
-
-typedef CuratorAuthLocalDataSource = UserAuthenticationLocalDataSource<Curator>;
-typedef FrameAuthLocalDataSource = UserAuthenticationLocalDataSource<Frame>;
-
-/// {@macro user_authentication_local_data_source}
-typedef CuratorAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Curator>;
-
-/// {@macro user_authentication_local_data_source}
-typedef FrameAuthLocalDataSourceImpl = UserAuthLocalDataSourceImpl<Frame>;
