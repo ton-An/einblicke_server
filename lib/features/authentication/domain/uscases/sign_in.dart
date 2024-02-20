@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
+import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
 import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
@@ -15,7 +17,8 @@ import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
 /// {@endtemplate}
 ///
 /// {@macro sign_in}
-class SignInPictureFrame extends SignInWrapper {
+class SignInPictureFrame
+    extends SignInWrapper<Frame, FrameAuthenticationRepository> {
   /// {@macro sign_in_picture_frame}
   ///
   /// {@macro sign_in}
@@ -34,7 +37,8 @@ class SignInPictureFrame extends SignInWrapper {
 /// {@endtemplate}
 ///
 /// {@macro sign_in}
-class SignInCurator extends SignInWrapper {
+class SignInCurator
+    extends SignInWrapper<Curator, CuratorAuthenticationRepository> {
   /// {@macro sign_in_curator}
   ///
   /// {@macro sign_in}

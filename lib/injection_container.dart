@@ -185,15 +185,7 @@ Future<void> initGetIt() async {
       cryptoRepository: getIt(),
     ),
   );
-  getIt.registerLazySingleton(
-    () => CreatePictureFrame(
-      isUsernameValid: getIt(),
-      isPasswordValid: getIt(),
-      userAuthRepository: getIt(),
-      basicAuthRepository: getIt(),
-      cryptoRepository: getIt(),
-    ),
-  );
+
   getIt.registerLazySingleton(() => const IsUsernameValid());
   getIt.registerLazySingleton(() => const IsPasswordValid());
 
