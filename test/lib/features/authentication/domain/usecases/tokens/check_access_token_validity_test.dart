@@ -1,8 +1,8 @@
 // ignore_for_file: inference_failure_on_instance_creation, inference_failure_on_function_invocation
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_access_token_validity.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/tokens/check_access_token_validity.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

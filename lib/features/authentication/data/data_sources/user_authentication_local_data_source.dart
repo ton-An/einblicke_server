@@ -1,7 +1,7 @@
-import 'package:dispatch_pi_dart/core/db_names.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
+import 'package:einblicke_server/core/db_names.dart';
+import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 /// __Curator Authentication Local Data Source__ is a contract for [Curator]

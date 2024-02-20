@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/authentication/domain/models/encrypted_token.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 
 /*
   To-Do:

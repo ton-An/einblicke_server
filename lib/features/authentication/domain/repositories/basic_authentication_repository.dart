@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/token_claims.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/authentication/domain/models/token_claims/token_claims.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 
 /// {@template basic_auth_repository}
 /// ___Basic Authentication Repository___ is a contract for the basic

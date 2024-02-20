@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
+import 'package:einblicke_server/features/image_exchange/domain/models/image.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 /*

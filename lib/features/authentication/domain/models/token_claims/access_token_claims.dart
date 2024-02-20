@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/token_claims.dart';
+import 'package:einblicke_server/features/authentication/domain/models/token_claims/token_claims.dart';
 
 /// {@template access_token_payload}
 /// __AccessTokenClaims__ is a container for the claims specific to an access

@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
+import 'package:einblicke_server/features/authentication/domain/models/encrypted_token.dart';
 import 'package:equatable/equatable.dart';
 
 /// {@template authentication_credentials}

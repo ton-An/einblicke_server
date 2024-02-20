@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 
 /// ___Curator Authentication Repository___ is a contract for [Curator] related
 /// authentication repository operations.

@@ -1,9 +1,9 @@
 import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/core/domain/crypto_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/core/domain/crypto_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/features/image_exchange/domain/repositories/image_exchange_repository.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 
 /*
   To-Do:

@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/core/secrets.dart';
+import 'package:einblicke_server/core/secrets.dart';
 
 /// {@template is_client_id_valid}
 /// __Is Client Id Valid__ checks if a client id is valid and returns a [bool].

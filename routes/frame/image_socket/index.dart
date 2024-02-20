@@ -1,7 +1,7 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_web_socket/dart_frog_web_socket.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
+import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
 
 /// Establishes a websocket connection to a picture frame
 Future<Response> onRequest(RequestContext context) async {

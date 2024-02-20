@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
+import 'package:einblicke_server/features/authentication/domain/models/token_bundle.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.post) {

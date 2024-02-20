@@ -1,6 +1,6 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
+import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 
 /// {@template user_table}
 /// Abstract class for the names of the user table

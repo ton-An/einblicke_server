@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/image_exchange/data/data_sources/image_exchange_local_data_source.dart';
+import 'package:einblicke_server/features/image_exchange/domain/models/image.dart';
+import 'package:einblicke_server/features/image_exchange/domain/repositories/image_exchange_repository.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 /*

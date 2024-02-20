@@ -1,8 +1,8 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

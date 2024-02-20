@@ -1,11 +1,11 @@
-import 'package:dispatch_pi_dart/core/db_names.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/access_token_claims.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/refresh_token_claims.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
+import 'package:einblicke_server/core/db_names.dart';
+import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/features/authentication/domain/models/encrypted_token.dart';
+import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/models/token_bundle.dart';
+import 'package:einblicke_server/features/authentication/domain/models/token_claims/access_token_claims.dart';
+import 'package:einblicke_server/features/authentication/domain/models/token_claims/refresh_token_claims.dart';
+import 'package:einblicke_server/features/image_exchange/domain/models/image.dart';
 import 'package:jose/jose.dart';
 
 import 'mocks.dart';

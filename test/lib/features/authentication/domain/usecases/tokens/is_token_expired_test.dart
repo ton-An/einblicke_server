@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/is_token_expired.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/tokens/is_token_expired.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

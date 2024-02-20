@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_id_valid.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/is_client_secret_valid.dart';
-import 'package:dispatch_pi_dart/injection_container.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/is_client_id_valid.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/is_client_secret_valid.dart';
+import 'package:einblicke_server/injection_container.dart';
 
 /*
   To-Do:

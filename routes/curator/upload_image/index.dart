@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/receive_image_from_curator.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
-import 'package:dispatch_pi_dart/injection_container.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/features/image_exchange/domain/usecases/receive_image_from_curator.dart';
+import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
+import 'package:einblicke_server/injection_container.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 
 final contentTypePng = ContentType('image', 'png');
 final contentTypeJpg = ContentType('image', 'jpg');

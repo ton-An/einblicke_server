@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
 import 'package:equatable/equatable.dart';
 
 /// {@template image}

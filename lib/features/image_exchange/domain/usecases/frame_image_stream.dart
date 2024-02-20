@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_latest_image.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/image_exchange/domain/models/image.dart';
+import 'package:einblicke_server/features/image_exchange/domain/usecases/get_latest_image.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 
 /*
   To-Do:

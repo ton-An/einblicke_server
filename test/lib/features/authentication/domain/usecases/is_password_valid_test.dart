@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:test/test.dart';
 
 import '../../../../../fixtures.dart';

@@ -1,5 +1,5 @@
-import 'package:dispatch_pi_dart/core/data/data_sources/crypto_local_data_source.dart';
-import 'package:dispatch_pi_dart/core/domain/crypto_repository.dart';
+import 'package:einblicke_server/core/data/data_sources/crypto_local_data_source.dart';
+import 'package:einblicke_server/core/domain/crypto_repository.dart';
 
 class CryptoRepositoryImpl implements CryptoRepository {
   final CryptoLocalDataSource localDataSource;

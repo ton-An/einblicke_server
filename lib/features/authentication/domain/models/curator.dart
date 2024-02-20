@@ -1,5 +1,5 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/models/picture_frame.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
+import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 
 /// {@template curator}
 /// __Curator__ is a container for a user who selects/curates images and sends them

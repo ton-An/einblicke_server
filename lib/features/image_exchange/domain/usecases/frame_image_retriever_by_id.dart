@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/models/image.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/repositories/image_exchange_repository.dart';
-import 'package:dispatch_pi_dart/features/image_exchange/domain/usecases/get_image_from_id.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/image_exchange/domain/models/image.dart';
+import 'package:einblicke_server/features/image_exchange/domain/repositories/image_exchange_repository.dart';
+import 'package:einblicke_server/features/image_exchange/domain/usecases/get_image_from_id.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 
 /*
   To-Do:

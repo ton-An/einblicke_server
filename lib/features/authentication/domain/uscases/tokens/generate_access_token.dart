@@ -1,9 +1,9 @@
 import 'package:clock/clock.dart';
-import 'package:dispatch_pi_dart/core/secrets.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/access_token_claims.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:einblicke_server/core/secrets.dart';
+import 'package:einblicke_server/features/authentication/domain/models/encrypted_token.dart';
+import 'package:einblicke_server/features/authentication/domain/models/token_claims/access_token_claims.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/basic_authentication_repository.dart';
 
 /// {@template generate_access_token}
 /// __Generate Access Token__ generates an access token for a given [User]

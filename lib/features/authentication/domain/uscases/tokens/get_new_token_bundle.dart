@@ -1,16 +1,16 @@
 import 'package:dartz/dartz.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/encrypted_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_bundle.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/basic_authentication_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/repositories/user_authentication_repository.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/check_refresh_token_validity.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_access_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/generate_refresh_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_all_refresh_tokens.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/invalidate_refresh_token.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/uscases/tokens/save_refresh_token.dart';
-import 'package:dispatch_pi_shared/dispatch_pi_shared.dart';
+import 'package:einblicke_server/features/authentication/domain/models/encrypted_token.dart';
+import 'package:einblicke_server/features/authentication/domain/models/token_bundle.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/tokens/check_refresh_token_validity.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/tokens/generate_access_token.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/tokens/generate_refresh_token.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/tokens/invalidate_all_refresh_tokens.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/tokens/invalidate_refresh_token.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/tokens/save_refresh_token.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 
 /*
   To-Do:

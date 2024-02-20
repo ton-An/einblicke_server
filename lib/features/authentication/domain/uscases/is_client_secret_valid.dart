@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/core/secrets.dart';
+import 'package:einblicke_server/core/secrets.dart';
 
 /// {@template is_client_secret_valid}
 /// __Is Client Secret Valid__ checks if a client secret is valid

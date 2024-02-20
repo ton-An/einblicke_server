@@ -1,4 +1,4 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/models/token_claims/token_claims.dart';
+import 'package:einblicke_server/features/authentication/domain/models/token_claims/token_claims.dart';
 
 /// {@template refresh_token_payload}
 /// __RefreshTokenClaims__ is a container for the claims specific to a refresh

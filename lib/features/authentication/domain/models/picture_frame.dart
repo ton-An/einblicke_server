@@ -1,5 +1,5 @@
-import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/user.dart';
+import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()

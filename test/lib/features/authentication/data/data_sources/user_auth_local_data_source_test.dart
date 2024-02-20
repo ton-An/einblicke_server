@@ -1,6 +1,6 @@
-import 'package:dispatch_pi_dart/core/db_names.dart';
-import 'package:dispatch_pi_dart/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
-import 'package:dispatch_pi_dart/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/core/db_names.dart';
+import 'package:einblicke_server/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
+import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
 

@@ -1,5 +1,5 @@
 //  secret
-import 'package:dispatch_pi_dart/core/secrets.dart';
+import 'package:einblicke_server/core/secrets.dart';
 
 class TSecrets extends Secrets {
   const TSecrets();
