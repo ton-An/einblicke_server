@@ -24,7 +24,6 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 /// - [DatabaseReadFailure]
 /// - [DatabaseWriteFailure]
 /// - [StorageWriteFailure]
-/// - ... TBD ...
 /// {@endtemplate}
 class ReceiveImageFromCurator {
   /// {@macro receive_image_from_curator}

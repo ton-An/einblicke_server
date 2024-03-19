@@ -27,14 +27,15 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 /// Returns:
 /// - [TokenBundle] object containing the new tokens
 ///
+///
 /// Failures:
 /// - [ExpiredTokenFailure]
 /// - [InvalidTokenFailure]
 /// - [RefreshTokenReuseFailure]
+/// - [InvalidUserTypeFailure]
 /// - [DatabaseReadFailure]
 /// - [DatabaseWriteFailure]
 /// - [UserNotFoundFailure]
-/// - ... TBD ...
 /// {@endtemplate}
 class GetNewTokenTokenBundle<U extends User,
     R extends UserAuthenticationRepository<U>> {
@@ -74,6 +75,7 @@ class GetNewTokenTokenBundle<U extends User,
   /// Used to get the user id from the old refresh token
   final BasicAuthenticationRepository basicAuthRepository;
 
+  /// {@macro get_new_tokens}
   Future<Either<Failure, TokenBundle>> call({
     required String oldRefreshToken,
   }) {

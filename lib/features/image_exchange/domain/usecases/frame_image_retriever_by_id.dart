@@ -22,7 +22,9 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 /// - [Image]
 ///
 /// Failures:
-/// - ... TBD ...
+/// - [DatabaseReadFailure]
+/// - [StorageReadFailure]
+/// - [ImageNotFoundFailure]
 /// {@endtemplate}
 class FrameImageRetrieverById {
   /// {@macro frame_image_retriever_by_id}
@@ -58,13 +60,18 @@ class FrameImageRetrieverById {
     return isImageAssociatedWithFrameEither.fold(
       Left.new,
       (bool isImageAssociatedWithFrame) {
-        return _getImage(imageId: imageId);
+        if (isImageAssociatedWithFrame) {
+          return _getImage(imageId: imageId);
+        }
+
+        return Left(const ImageNotFoundFailure());
       },
     );
   }
 
   Future<Either<Failure, Image>> _getImage({required String imageId}) async {
-    final imageEither = await getImageFromId(imageId: imageId);
+    final Either<Failure, Image> imageEither =
+        await getImageFromId(imageId: imageId);
 
     return imageEither;
   }

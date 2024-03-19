@@ -52,6 +52,6 @@ abstract class BasicAuthenticationRepository {
   /// - a [String] containing the user id
   ///
   /// Failures:
-  /// - ... TBD ...
+  /// - [InvalidTokenFailure]
   Future<Either<Failure, String>> getUserIdFromToken(String token);
 }
