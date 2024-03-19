@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
+import 'package:einblicke_server/core/presentation/handlers/failure_response_handler.dart';
 import 'package:einblicke_server/features/authentication/domain/models/token_bundle.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/sign_in.dart';
 import 'package:einblicke_server/injection_container.dart';
@@ -10,7 +10,9 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.post) {
-    Response(statusCode: HttpStatus.methodNotAllowed);
+    return FailureResponseHandler.getFailureResponse(
+      const MethodNotAllowedFailure(),
+    );
   }
 
   final String bodyString = await context.request.body();
@@ -26,10 +28,7 @@ Future<Response> onRequest(RequestContext context) async {
       await signInPictureFrame(username: username, password: password);
 
   return signInResult.fold(
-    (Failure failure) => Response(
-      statusCode: 403,
-      body: failure.code,
-    ),
+    FailureResponseHandler.getFailureResponse,
     (TokenBundle credentials) => Response(
       body: jsonEncode(credentials.toJson()),
     ),

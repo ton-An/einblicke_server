@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
+import 'package:einblicke_server/core/presentation/handlers/failure_response_handler.dart';
 import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/receive_image_from_curator.dart';
 import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
@@ -15,7 +16,9 @@ final contentTypeJpeg = ContentType('image', 'jpeg');
 /// Establishes a websocket connection to a picture frame
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.post) {
-    Response(statusCode: HttpStatus.methodNotAllowed);
+    return FailureResponseHandler.getFailureResponse(
+      const MethodNotAllowedFailure(),
+    );
   }
 
   final FormData formData = await context.request.formData();
@@ -27,14 +30,10 @@ Future<Response> onRequest(RequestContext context) async {
       !(photo.contentType.mimeType == contentTypePng.mimeType ||
           photo.contentType.mimeType == contentTypeJpg.mimeType ||
           photo.contentType.mimeType == contentTypeJpeg.mimeType)) {
-    return Response(statusCode: HttpStatus.badRequest);
+    return FailureResponseHandler.getFailureResponse(const BadRequestFailure());
   }
 
-  print(1);
-
   final List<int> photoBytes = await photo.readAsBytes();
-
-  print(2);
 
   final Curator curator = context.read<Curator>();
   final ReceiveImageFromCurator receiveImageFromCurator =
@@ -45,14 +44,9 @@ Future<Response> onRequest(RequestContext context) async {
     frameId: frameId,
     imageBytes: photoBytes,
   );
-  print(3);
-  print(imageIdEither);
 
   return imageIdEither.fold(
-    (Failure failure) => Response(
-      statusCode: 500,
-      body: failure.code,
-    ),
+    FailureResponseHandler.getFailureResponse,
     (String imageId) async {
       final FrameSocketHandler frameSocketHandler =
           context.read<FrameSocketHandler>();
