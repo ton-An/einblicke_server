@@ -167,7 +167,7 @@ void main() {
           imageId: any(named: "imageId"),
           imageBytes: any(named: "imageBytes"),
         ),
-      ).thenAnswer((_) async => const Left(ImageSaveFailure()));
+      ).thenAnswer((_) async => const Left(StorageWriteFailure()));
 
       // act
       final result = await receiveImageFromCurator(
@@ -177,7 +177,7 @@ void main() {
       );
 
       // assert
-      expect(result, const Left(ImageSaveFailure()));
+      expect(result, const Left(StorageWriteFailure()));
     });
   });
 
