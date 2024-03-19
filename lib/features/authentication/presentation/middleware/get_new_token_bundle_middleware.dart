@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
+import 'package:einblicke_server/core/presentation/handlers/failure_response_handler.dart';
 import 'package:einblicke_server/features/authentication/domain/models/token_bundle.dart';
 import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
@@ -32,14 +32,18 @@ Middleware getNewTokenBundleMiddleware<U extends User,
       final String? refreshToken = bodyMap['refresh_token'];
 
       if (refreshToken == null) {
-        return Response(statusCode: HttpStatus.unauthorized);
+        return FailureResponseHandler.getFailureResponse(
+          const UnauthorizedFailure(),
+        );
       }
 
       final Either<Failure, TokenBundle> getNewTokensEither =
           await getNewTokens(oldRefreshToken: refreshToken);
 
       return getNewTokensEither.fold(
-        (Failure failure) => Response(statusCode: HttpStatus.unauthorized),
+        (Failure failure) => FailureResponseHandler.getFailureResponse(
+          const UnauthorizedFailure(),
+        ),
         (TokenBundle credentials) {
           final newHandler = handler.use(
             provider<TokenBundle>((context) => credentials),
