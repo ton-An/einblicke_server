@@ -54,7 +54,7 @@ abstract class ImageExchangeRepository {
   ///
   /// Failures:
   /// - [DatabaseReadFailure]
-  Future<Either<Failure, List<String>>> getPairedFramesOfCurator({
+  Future<Either<Failure, List<String>>> getPairedFrameIdsOfCurator({
     required String curatorId,
   });
 

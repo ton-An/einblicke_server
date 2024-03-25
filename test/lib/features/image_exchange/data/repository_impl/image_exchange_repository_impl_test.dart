@@ -318,4 +318,50 @@ void main() {
       expect(result, const Left(DatabaseWriteFailure()));
     });
   });
+
+  group("getPairedFrameIdsOfCurator()", () {
+    setUp(() {
+      when(
+        () => mockImageExchangeLocalDataSource.getPairedFrameIdsOfCurator(
+          curatorId: any(named: "curatorId"),
+        ),
+      ).thenAnswer((_) async => tPairedFrameIds);
+    });
+
+    test("should get the frame ids and return them", () async {
+      // act
+      final result =
+          await imageExchangeRepositoryImpl.getPairedFrameIdsOfCurator(
+        curatorId: tCuratorId,
+      );
+
+      // assert
+      verify(
+        () => mockImageExchangeLocalDataSource.getPairedFrameIdsOfCurator(
+          curatorId: tCuratorId,
+        ),
+      );
+      expect(result, const Right(tPairedFrameIds));
+    });
+
+    test(
+        "should return a [DatabaseReadFailure] when the data source "
+        "throws a [DatabaseException]", () async {
+      // arrange
+      when(
+        () => mockImageExchangeLocalDataSource.getPairedFrameIdsOfCurator(
+          curatorId: any(named: "curatorId"),
+        ),
+      ).thenThrow(tMockSqliteExcpetion);
+
+      // act
+      final result =
+          await imageExchangeRepositoryImpl.getPairedFrameIdsOfCurator(
+        curatorId: tCuratorId,
+      );
+
+      // assert
+      expect(result, const Left(DatabaseReadFailure()));
+    });
+  });
 }

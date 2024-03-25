@@ -21,7 +21,7 @@ void main() {
     );
 
     when(
-      () => mockImageExchangeRepository.getPairedFramesOfCurator(
+      () => mockImageExchangeRepository.getPairedFrameIdsOfCurator(
         curatorId: any(named: "curatorId"),
       ),
     ).thenAnswer((invocation) => Future.value(const Right(tPairedFrameIds)));
@@ -40,7 +40,7 @@ void main() {
 
     // assert
     verify(
-      () => mockImageExchangeRepository.getPairedFramesOfCurator(
+      () => mockImageExchangeRepository.getPairedFrameIdsOfCurator(
         curatorId: tCuratorId,
       ),
     );
@@ -49,7 +49,7 @@ void main() {
   test('should relay [Failures]', () async {
     // arrange
     when(
-      () => mockImageExchangeRepository.getPairedFramesOfCurator(
+      () => mockImageExchangeRepository.getPairedFrameIdsOfCurator(
         curatorId: any(named: "curatorId"),
       ),
     ).thenAnswer(

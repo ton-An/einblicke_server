@@ -151,9 +151,17 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
   }
 
   @override
-  Future<Either<Failure, List<String>>> getPairedFramesOfCurator(
-      {required String curatorId}) {
-    // TODO: implement getPairedFramesOfCurator
-    throw UnimplementedError();
+  Future<Either<Failure, List<String>>> getPairedFrameIdsOfCurator(
+      {required String curatorId}) async {
+    try {
+      final List<String> pairedFrameIds =
+          await localDataSource.getPairedFrameIdsOfCurator(
+        curatorId: curatorId,
+      );
+
+      return Right(pairedFrameIds);
+    } on DatabaseException {
+      return const Left(DatabaseReadFailure());
+    }
   }
 }

@@ -30,7 +30,7 @@ class GetPairedFramesInfo {
   Future<Either<Failure, List<PairedFrameInfo>>> _getPairedFramesIds(
       String curatorId) async {
     final Either<Failure, List<String>> pairedFrameIdsEither =
-        await imageExchangeRepository.getPairedFramesOfCurator(
+        await imageExchangeRepository.getPairedFrameIdsOfCurator(
       curatorId: curatorId,
     );
 

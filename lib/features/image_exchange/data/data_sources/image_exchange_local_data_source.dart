@@ -112,6 +112,20 @@ abstract class ImageExchangeLocalDataSource {
     required String frameId,
     required String imageId,
   });
+
+  /// Gets the paired frames ids of a curator
+  ///
+  /// Parameters:
+  /// - [String] curatorId
+  ///
+  /// Returns:
+  /// - [List<String>] of frame ids
+  ///
+  /// Throws:
+  /// - [DatabaseException]
+  Future<List<String>> getPairedFrameIdsOfCurator({
+    required String curatorId,
+  });
 }
 
 /// {@template image_exchange_local_data_source_impl}
@@ -234,5 +248,11 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
     final bool isImageAssociatedWithFrame = queryResult.first.containsValue(1);
 
     return isImageAssociatedWithFrame;
+  }
+
+  @override
+  Future<List<String>> getPairedFrameIdsOfCurator({required String curatorId}) {
+    // TODO: implement getPairedFrameIdsOfCurator
+    throw UnimplementedError();
   }
 }
