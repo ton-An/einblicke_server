@@ -251,8 +251,19 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
   }
 
   @override
-  Future<List<String>> getPairedFrameIdsOfCurator({required String curatorId}) {
-    // TODO: implement getPairedFrameIdsOfCurator
-    throw UnimplementedError();
+  Future<List<String>> getPairedFrameIdsOfCurator(
+      {required String curatorId}) async {
+    final List<Map<String, dynamic>> queryResult =
+        await sqliteDatabase.rawQuery(
+      "SELECT frame_id FROM curator_x_frame "
+      "WHERE curator_id = ?",
+      [curatorId],
+    );
+
+    final List<String> frameIds = queryResult
+        .map((Map<String, dynamic> row) => row["frame_id"] as String)
+        .toList();
+
+    return frameIds;
   }
 }

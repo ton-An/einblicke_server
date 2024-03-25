@@ -176,4 +176,26 @@ void main() {
       );
     });
   });
+
+  group("getPairedFrameIdsOfCurator()", () {
+    test("should return a list of frame ids paired with the given curator id",
+        () async {
+      // arrange
+      await imageExchangeLocalDataSourceImpl.pairCuratorXFrame(
+        curatorId: tCuratorId,
+        frameId: tPictureFrameId,
+      );
+      await imageExchangeLocalDataSourceImpl.pairCuratorXFrame(
+        curatorId: tCuratorId,
+        frameId: tPictureFrameId2,
+      );
+
+      // act
+      final result = await imageExchangeLocalDataSourceImpl
+          .getPairedFrameIdsOfCurator(curatorId: tCuratorId);
+
+      // assert
+      expect(result, [tPictureFrameId, tPictureFrameId2]);
+    });
+  });
 }
