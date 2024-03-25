@@ -149,4 +149,11 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       return const Left(DatabaseReadFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, List<String>>> getPairedFramesOfCurator(
+      {required String curatorId}) {
+    // TODO: implement getPairedFramesOfCurator
+    throw UnimplementedError();
+  }
 }

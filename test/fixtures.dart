@@ -6,6 +6,7 @@ import 'package:einblicke_server/features/authentication/domain/models/token_bun
 import 'package:einblicke_server/features/authentication/domain/models/token_claims/access_token_claims.dart';
 import 'package:einblicke_server/features/authentication/domain/models/token_claims/refresh_token_claims.dart';
 import 'package:einblicke_server/features/image_exchange/domain/models/image.dart';
+import 'package:einblicke_server/features/image_exchange/domain/models/paired_frame_info.dart';
 import 'package:jose/jose.dart';
 
 import 'mocks.dart';
@@ -126,10 +127,17 @@ const Curator tCurator = Curator(
 
 // PictureFrame
 const String tPictureFrameId = "testPictureFrameId";
+const String tPictureFrameId2 = "testPictureFrameId2";
 
 const Frame tPictureFrame = Frame(
   userId: tPictureFrameId,
   username: tUsername,
+  passwordHash: tPasswordHash,
+);
+
+const Frame tPictureFrame2 = Frame(
+  userId: tPictureFrameId2,
+  username: tAnotherUsername,
   passwordHash: tPasswordHash,
 );
 
@@ -193,3 +201,16 @@ final List<Map<String, Object?>> tDbCuratorRow = [];
 // );
 
 final List<Map<String, Object?>> tEmptyDbRow = [];
+
+// Image Exchange
+const List<String> tPairedFrameIds = [tPictureFrameId, tPictureFrameId2];
+final List<PairedFrameInfo> tPairedFrameInfos = [
+  PairedFrameInfo(
+    id: tPictureFrameId,
+    name: tUsername,
+  ),
+  PairedFrameInfo(
+    id: tPictureFrameId2,
+    name: tAnotherUsername,
+  ),
+];

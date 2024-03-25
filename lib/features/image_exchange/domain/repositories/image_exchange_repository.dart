@@ -44,6 +44,20 @@ abstract class ImageExchangeRepository {
     required String frameId,
   });
 
+  /// Gets the paired frames of a curator
+  ///
+  /// Parameters:
+  /// - [String] curatorId
+  ///
+  /// Returns:
+  /// - [List<String>] frameIds
+  ///
+  /// Failures:
+  /// - [DatabaseReadFailure]
+  Future<Either<Failure, List<String>>> getPairedFramesOfCurator({
+    required String curatorId,
+  });
+
   /// Saves an image to storage
   ///
   /// Parameters:

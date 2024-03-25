@@ -4,6 +4,11 @@ import 'package:einblicke_server/features/authentication/domain/models/picture_f
 import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 
+/* 
+  To-Do:
+    - [ ] Put method parameters in curly braces / make them named parameters
+*/
+
 /// ___Curator Authentication Repository___ is a contract for [Curator] related
 /// authentication repository operations.
 typedef CuratorAuthenticationRepository = UserAuthenticationRepository<Curator>;
