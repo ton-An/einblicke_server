@@ -6,7 +6,7 @@ import 'package:einblicke_server/features/authentication/domain/models/token_bun
 import 'package:einblicke_server/features/authentication/domain/models/token_claims/access_token_claims.dart';
 import 'package:einblicke_server/features/authentication/domain/models/token_claims/refresh_token_claims.dart';
 import 'package:einblicke_server/features/image_exchange/domain/models/image.dart';
-import 'package:einblicke_server/features/image_exchange/domain/models/paired_frame_info.dart';
+import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:jose/jose.dart';
 
 import 'mocks.dart';
