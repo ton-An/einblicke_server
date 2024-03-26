@@ -204,7 +204,7 @@ final List<Map<String, Object?>> tEmptyDbRow = [];
 
 // Image Exchange
 const List<String> tPairedFrameIds = [tPictureFrameId, tPictureFrameId2];
-final List<PairedFrameInfo> tPairedFrameInfos = [
+const List<PairedFrameInfo> tPairedFrameInfos = [
   PairedFrameInfo(
     id: tPictureFrameId,
     name: tUsername,

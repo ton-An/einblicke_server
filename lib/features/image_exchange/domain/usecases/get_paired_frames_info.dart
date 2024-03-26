@@ -1,12 +1,26 @@
 import 'package:dartz/dartz.dart';
 import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
-import 'package:einblicke_server/features/image_exchange/domain/models/paired_frame_info.dart';
 import 'package:einblicke_server/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 
+/* To-Do:
+  - [ ] Make naming consistent and clear
+  - [ ] Find alternative for returning a [UserNotFoundFailure]
+*/
+
 /// {@template get_paired_frames_info}
 /// __GetPairedFramesInfo__ gets the information of frames paired with a curator.
+///
+/// Parameters:
+/// - [String] curatorId
+///
+/// Returns:
+/// - [List<PairedFrameInfo>]
+///
+/// Failures:
+/// - [DatabaseReadFailure]
+/// - [UserNotFoundFailure]
 /// {@endtemplate}
 class GetPairedFramesInfo {
   /// {@macro get_paired_frames_info}
@@ -22,8 +36,9 @@ class GetPairedFramesInfo {
   final FrameAuthenticationRepository frameAuthRepository;
 
   /// {@macro get_paired_frames_info}
-  Future<Either<Failure, List<PairedFrameInfo>>> call(
-      {required String curatorId}) async {
+  Future<Either<Failure, List<PairedFrameInfo>>> call({
+    required String curatorId,
+  }) async {
     return _getPairedFramesIds(curatorId);
   }
 

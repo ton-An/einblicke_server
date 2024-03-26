@@ -4,7 +4,6 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:einblicke_server/core/presentation/handlers/failure_response_handler.dart';
 import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
-import 'package:einblicke_server/features/image_exchange/domain/models/paired_frame_info.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/get_paired_frames_info.dart';
 import 'package:einblicke_server/injection_container.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
@@ -29,8 +28,12 @@ Future<Response> onRequest(RequestContext context) async {
       return pairedFrameInfo.toJson();
     }).toList();
 
+    final Map<String, dynamic> responseBody = {
+      "paired_frames": pairedFramesInfoJson
+    };
+
     return Response(
-      body: jsonEncode(pairedFramesInfoJson),
+      body: jsonEncode(responseBody),
     );
   });
 }
