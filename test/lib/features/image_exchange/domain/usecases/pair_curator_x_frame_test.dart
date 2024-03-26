@@ -92,7 +92,9 @@ void main() {
     test("should relay [Failure]s", () async {
       // arrange
       when(
-        () => mockCuratorAuthRepository.isRefreshTokenInUserDb(any(), any()),
+        () => mockCuratorAuthRepository.isUserIdTaken(
+          any(),
+        ),
       ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
 
       // act
