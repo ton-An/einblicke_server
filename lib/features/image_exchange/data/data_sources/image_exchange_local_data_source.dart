@@ -7,6 +7,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 /*
   To-Do:
     - [ ] Add missing tests
+    - [ ] Need to handle when nothing is found in the database e.g. getLatestImageIdFromDb
 */
 
 /// {@template image_exchange_local_data_source}

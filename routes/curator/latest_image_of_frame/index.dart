@@ -4,6 +4,7 @@ import 'package:einblicke_server/core/presentation/handlers/failure_response_han
 import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
 import 'package:einblicke_server/features/image_exchange/domain/models/image.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/get_latest_frame_image_for_curator.dart';
+import 'package:einblicke_server/injection_container.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -17,7 +18,7 @@ Future<Response> onRequest(RequestContext context) async {
   final String frameId = context.request.uri.queryParameters['frame_id']!;
 
   final GetLatestFrameImageForCurator getLatestFrameImageForCurator =
-      context.read<GetLatestFrameImageForCurator>();
+      getIt<GetLatestFrameImageForCurator>();
 
   final Either<Failure, Image> imageEither =
       await getLatestFrameImageForCurator(

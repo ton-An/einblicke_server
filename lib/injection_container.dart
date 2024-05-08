@@ -36,6 +36,7 @@ import 'package:einblicke_server/features/image_exchange/data/repository_impleme
 import 'package:einblicke_server/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/frame_image_retriever_by_id.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/get_image_from_id.dart';
+import 'package:einblicke_server/features/image_exchange/domain/usecases/get_latest_frame_image_for_curator.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/get_latest_image.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/get_paired_frames_info.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/pair_curator_x_frame.dart';
@@ -74,6 +75,12 @@ Future<void> initGetIt() async {
   );
 
   // Use cases
+  getIt.registerLazySingleton(
+    () => GetLatestFrameImageForCurator(
+      getLatestImage: getIt(),
+      imageExchangeRepository: getIt(),
+    ),
+  );
   getIt.registerLazySingleton(
     () => GetPairedFramesInfo(
       imageExchangeRepository: getIt(),
