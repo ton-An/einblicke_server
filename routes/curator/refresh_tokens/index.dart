@@ -12,7 +12,7 @@ Future<Response> onRequest(RequestContext context) async {
     );
   }
 
-  final TokenBundle credentials = context.read<TokenBundle>();
+  final ServerTokenBundle credentials = context.read<ServerTokenBundle>();
 
   final Map<String, dynamic> credentialsMap = credentials.toJson();
 

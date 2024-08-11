@@ -16,7 +16,7 @@ class IsClientIdValid {
   });
 
   /// The secrets for the application
-  final Secrets secrets;
+  final ServerSecrets secrets;
 
   /// {@macro is_client_id_valid}
   bool call(String clientId) {

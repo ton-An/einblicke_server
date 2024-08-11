@@ -56,7 +56,7 @@ Future<void> initGetIt() async {
   const String imageDirectoryPath = "images/";
   await _registerDatabase();
   // Other
-  getIt.registerLazySingleton<Secrets>(
+  getIt.registerLazySingleton<ServerSecrets>(
     () => const SecretsImpl(),
   );
 

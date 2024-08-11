@@ -83,7 +83,7 @@ class BasicAuthLocalDataSourceImpl extends BasicAuthLocalDataSource {
   final JWEBuilderWrapper jweBuilderWrapper;
 
   /// Used to get app's secrets
-  final Secrets secrets;
+  final ServerSecrets secrets;
 
   static const String _jweHashAlgorithm = "RSA1_5";
 

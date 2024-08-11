@@ -76,13 +76,13 @@ class GetNewTokenTokenBundle<U extends User,
   final BasicAuthenticationRepository basicAuthRepository;
 
   /// {@macro get_new_tokens}
-  Future<Either<Failure, TokenBundle>> call({
+  Future<Either<Failure, ServerTokenBundle>> call({
     required String oldRefreshToken,
   }) {
     return _checkRefreshTokenValidity(refreshToken: oldRefreshToken);
   }
 
-  Future<Either<Failure, TokenBundle>> _checkRefreshTokenValidity({
+  Future<Either<Failure, ServerTokenBundle>> _checkRefreshTokenValidity({
     required String refreshToken,
   }) async {
     final checkRefreshTokenValidityResult =
@@ -107,7 +107,7 @@ class GetNewTokenTokenBundle<U extends User,
     );
   }
 
-  Future<Either<Failure, TokenBundle>> _invalidateAllRefreshTokens({
+  Future<Either<Failure, ServerTokenBundle>> _invalidateAllRefreshTokens({
     required String refreshToken,
   }) async {
     final Either<Failure, String> getUserIdEither =
@@ -124,7 +124,7 @@ class GetNewTokenTokenBundle<U extends User,
     });
   }
 
-  Future<Either<Failure, TokenBundle>> _generateAccessToken({
+  Future<Either<Failure, ServerTokenBundle>> _generateAccessToken({
     required User user,
     required String oldRefreshToken,
   }) async {
@@ -140,7 +140,7 @@ class GetNewTokenTokenBundle<U extends User,
     );
   }
 
-  Future<Either<Failure, TokenBundle>> _generateRefreshToken({
+  Future<Either<Failure, ServerTokenBundle>> _generateRefreshToken({
     required User user,
     required String oldRefreshToken,
     required EncryptedToken accessToken,
@@ -155,7 +155,7 @@ class GetNewTokenTokenBundle<U extends User,
     );
   }
 
-  Future<Either<Failure, TokenBundle>> _invalidateOldRefreshToken({
+  Future<Either<Failure, ServerTokenBundle>> _invalidateOldRefreshToken({
     required User user,
     required String oldRefreshToken,
     required EncryptedToken accessToken,
@@ -179,7 +179,7 @@ class GetNewTokenTokenBundle<U extends User,
     );
   }
 
-  Future<Either<Failure, TokenBundle>> _saveNewRefreshToken({
+  Future<Either<Failure, ServerTokenBundle>> _saveNewRefreshToken({
     required User user,
     required EncryptedToken accessToken,
     required EncryptedToken refreshToken,
@@ -191,7 +191,7 @@ class GetNewTokenTokenBundle<U extends User,
 
     return saveTokenEither.fold(Left.new, (None none) {
       return Right(
-        TokenBundle(
+        ServerTokenBundle(
           accessToken: accessToken,
           refreshToken: refreshToken,
         ),

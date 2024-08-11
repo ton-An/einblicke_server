@@ -1,7 +1,7 @@
 //  secret
 import 'package:einblicke_server/core/secrets.dart';
 
-class TSecrets extends Secrets {
+class TSecrets extends ServerSecrets {
   const TSecrets();
 
   @override

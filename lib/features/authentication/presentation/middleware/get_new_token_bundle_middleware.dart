@@ -16,7 +16,7 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 */
 
 /// __getNewTokenBundleMiddleware()__ is a middleware that gets a new
-/// [TokenBundle] from a refresh token.
+/// [ServerTokenBundle] from a refresh token.
 Middleware getNewTokenBundleMiddleware<U extends User,
     R extends UserAuthenticationRepository<U>>() {
   return (Handler handler) {
@@ -37,16 +37,16 @@ Middleware getNewTokenBundleMiddleware<U extends User,
         );
       }
 
-      final Either<Failure, TokenBundle> getNewTokensEither =
+      final Either<Failure, ServerTokenBundle> getNewTokensEither =
           await getNewTokens(oldRefreshToken: refreshToken);
 
       return getNewTokensEither.fold(
         (Failure failure) => FailureResponseHandler.getFailureResponse(
           const UnauthorizedFailure(),
         ),
-        (TokenBundle credentials) {
+        (ServerTokenBundle credentials) {
           final newHandler = handler.use(
-            provider<TokenBundle>((context) => credentials),
+            provider<ServerTokenBundle>((context) => credentials),
           );
 
           return newHandler(context);

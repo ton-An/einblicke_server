@@ -12,9 +12,9 @@ part 'token_bundle.g.dart';
 /// It contains an [accessToken] and a [refreshToken], both of which are
 /// instances of [EncryptedToken]
 /// {@endtemplate}
-class TokenBundle extends Equatable {
+class ServerTokenBundle extends Equatable {
   /// {@macro authentication_credentials}
-  const TokenBundle({
+  const ServerTokenBundle({
     required this.accessToken,
     required this.refreshToken,
   });
@@ -25,11 +25,11 @@ class TokenBundle extends Equatable {
   /// The refresh token for a user used to generate a new access token
   final EncryptedToken refreshToken;
 
-  /// Converts a JSON [Map] into a [TokenBundle] object
-  factory TokenBundle.fromJson(Map<String, dynamic> json) =>
+  /// Converts a JSON [Map] into a [ServerTokenBundle] object
+  factory ServerTokenBundle.fromJson(Map<String, dynamic> json) =>
       _$TokenBundleFromJson(json);
 
-  /// Converts a [TokenBundle] object into a JSON [Map]
+  /// Converts a [ServerTokenBundle] object into a JSON [Map]
   Map<String, dynamic> toJson() => _$TokenBundleToJson(this);
 
   @override

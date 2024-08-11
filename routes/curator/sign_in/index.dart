@@ -24,12 +24,12 @@ Future<Response> onRequest(RequestContext context) async {
 
   final SignInCurator signInCurator = getIt<SignInCurator>();
 
-  final Either<Failure, TokenBundle> signInResult =
+  final Either<Failure, ServerTokenBundle> signInResult =
       await signInCurator(username: username, password: password);
 
   return signInResult.fold(
     FailureResponseHandler.getFailureResponse,
-    (TokenBundle credentials) => Response(
+    (ServerTokenBundle credentials) => Response(
       body: jsonEncode(credentials.toJson()),
     ),
   );

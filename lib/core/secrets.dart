@@ -4,9 +4,9 @@
 /// The secrets implementation file should not be committed to the repository.
 /// Preferably the file name should be secrets_impl.dart
 /// {@endtemplate}
-abstract class Secrets {
+abstract class ServerSecrets {
   /// {@macro secrets}
-  const Secrets();
+  const ServerSecrets();
 
   /// The secret used to authenticate the client
   String get clientSecret;

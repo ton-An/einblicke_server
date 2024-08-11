@@ -26,7 +26,7 @@ class GenerateAccessToken {
   final BasicAuthenticationRepository basicAuthRepository;
 
   /// Secrets for generating the token
-  final Secrets secrets;
+  final ServerSecrets secrets;
 
   /// Clock for generating the token
   final Clock clock;

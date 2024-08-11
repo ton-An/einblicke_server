@@ -61,7 +61,7 @@ class SignInCurator
 /// - [String] password
 ///
 /// Returns:
-/// - [TokenBundle] if the user was found
+/// - [ServerTokenBundle] if the user was found
 ///
 /// Failures:
 /// - [UserNotFoundFailure]
@@ -95,14 +95,14 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
   final SaveRefreshToken<U, R> saveRefreshTokenUsecase;
 
   /// {@macro sign_in_wrapper}
-  Future<Either<Failure, TokenBundle>> call({
+  Future<Either<Failure, ServerTokenBundle>> call({
     required String username,
     required String password,
   }) {
     return _getHashedPassword(username: username, password: password);
   }
 
-  Future<Either<Failure, TokenBundle>> _getHashedPassword({
+  Future<Either<Failure, ServerTokenBundle>> _getHashedPassword({
     required String username,
     required String password,
   }) {
@@ -115,7 +115,7 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, TokenBundle>> _getUser({
+  Future<Either<Failure, ServerTokenBundle>> _getUser({
     required String username,
     required String passwordHash,
   }) async {
@@ -130,7 +130,7 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, TokenBundle>> _generateTokens({
+  Future<Either<Failure, ServerTokenBundle>> _generateTokens({
     required U user,
   }) async {
     final EncryptedToken accessToken = generateAccessToken(user: user);
@@ -143,7 +143,7 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     );
   }
 
-  Future<Either<Failure, TokenBundle>> _saveRefreshToken({
+  Future<Either<Failure, ServerTokenBundle>> _saveRefreshToken({
     required U user,
     required EncryptedToken accessToken,
     required EncryptedToken refreshToken,
@@ -157,7 +157,7 @@ class SignInWrapper<U extends User, R extends UserAuthenticationRepository<U>> {
     return saveRefreshTokenEither.fold(
       Left.new,
       (None none) => Right(
-        TokenBundle(
+        ServerTokenBundle(
           accessToken: accessToken,
           refreshToken: refreshToken,
         ),

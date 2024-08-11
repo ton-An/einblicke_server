@@ -30,7 +30,7 @@ class GenerateRefreshToken {
   final CryptoRepository cryptoRepository;
 
   /// Secrets for generating the token
-  final Secrets secrets;
+  final ServerSecrets secrets;
 
   final Clock clock;
 

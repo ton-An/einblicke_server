@@ -17,7 +17,7 @@ class IsClientSecretValid {
   });
 
   /// The secrets for the application
-  final Secrets secrets;
+  final ServerSecrets secrets;
 
   /// {@macro is_client_secret_valid}
   bool call(String clientSecret) {
