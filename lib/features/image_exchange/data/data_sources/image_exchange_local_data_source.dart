@@ -190,7 +190,6 @@ class ImageExchangeLocalDataSourceImpl extends ImageExchangeLocalDataSource {
       "LIMIT 1",
       [frameId],
     );
-
     final String? imageId = queryResult.first["image_id"] as String?;
 
     return imageId;

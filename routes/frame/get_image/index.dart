@@ -10,7 +10,8 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.get) {
     return FailureResponseHandler.getFailureResponse(
-        const MethodNotAllowedFailure());
+      const MethodNotAllowedFailure(),
+    );
   }
 
   final String frameId = context.read<Frame>().userId;

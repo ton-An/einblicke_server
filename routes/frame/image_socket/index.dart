@@ -3,6 +3,11 @@ import 'package:dart_frog_web_socket/dart_frog_web_socket.dart';
 import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
 import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
 
+/*
+  To-Do:
+  - [ ] What happens if the access token gets invalidated during the stream?
+*/
+
 /// Establishes a websocket connection to a picture frame
 Future<Response> onRequest(RequestContext context) async {
   final handler2 = webSocketHandler(

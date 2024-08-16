@@ -39,7 +39,7 @@ abstract class TokenClaims extends Equatable {
     switch (type) {
       case 'Curator':
         return Curator;
-      case 'PictureFrame':
+      case 'Frame':
         return Frame;
       default:
         throw Exception('Unknown type: $type');

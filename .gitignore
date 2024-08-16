@@ -19,3 +19,5 @@ coverage/
 secrets_impl.dart
 
 *.g.dart
+
+images/

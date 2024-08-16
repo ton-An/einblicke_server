@@ -29,7 +29,6 @@ Middleware authenticationMiddleware<U extends User,
 
         final Either<Failure, U> tokenValidityEither =
             await checkAccessTokenValidity(accessToken: accessToken);
-
         return tokenValidityEither.fold(
           (_) => FailureResponseHandler.getFailureResponse(
             const UnauthorizedFailure(),

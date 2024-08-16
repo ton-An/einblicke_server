@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
@@ -33,7 +34,7 @@ class FrameSocketHandler {
   /// Gets the latest [Image] for a given [Frame]
   final GetLatestImage getLatestImage;
 
-  final List<SocketConnetion> _connections = [];
+  final List<SocketConnection> _connections = [];
 
   /// Adds a new connection to the list of connections
   ///
@@ -48,14 +49,14 @@ class FrameSocketHandler {
     final latestImageEither = await getLatestImage(frameId: frameId);
 
     latestImageEither.fold(
-      (failure) => streamSink.add(failure.code),
-      (image) => streamSink.add(image.imageId),
+      (failure) => streamSink.add(jsonEncode(failure.toJson())),
+      (image) => streamSink.add(jsonEncode({"image_id": image.imageId})),
     );
 
-    final SocketConnetion connetion =
-        SocketConnetion(frameId: frameId, sink: streamSink);
+    final SocketConnection connection =
+        SocketConnection(frameId: frameId, sink: streamSink);
 
-    _connections.add(connetion);
+    _connections.add(connection);
   }
 
   /// Removes a connection from the list of connections
@@ -109,7 +110,7 @@ class FrameSocketHandler {
   }) {
     for (final connection in _connections) {
       if (connection.frameId == frameId) {
-        connection.sink.add(image.imageId);
+        connection.sink.add(jsonEncode({"image_id": image.imageId}));
       }
     }
 

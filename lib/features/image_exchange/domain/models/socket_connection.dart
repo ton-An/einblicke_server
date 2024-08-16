@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 
 /// {@template socket_connection}
-/// __SocketConnetion__ is a container for a connection to a web socket.
+/// __Socket Connection__ is a container for a connection to a web socket.
 ///
 /// It contains the [frameId] of the connected frame and the [sink]
 /// of the connection which is used to send data to the frame.
 /// {@endtemplate}
-class SocketConnetion extends Equatable {
+class SocketConnection extends Equatable {
   /// {@macro socket_connection}
-  const SocketConnetion({
+  const SocketConnection({
     required this.frameId,
     required this.sink,
   });
