@@ -48,10 +48,11 @@ Future<Response> onRequest(RequestContext context) async {
   return imageIdEither.fold(
     FailureResponseHandler.getFailureResponse,
     (String imageId) async {
-      final FrameImageSocketHandler frameSocketHandler =
+      final FrameImageSocketHandler frameImageSocketHandler =
           context.read<FrameImageSocketHandler>();
 
-      await frameSocketHandler.sendImage(frameId: frameId, imageId: imageId);
+      await frameImageSocketHandler.sendImage(
+          frameId: frameId, imageId: imageId);
       return Response();
     },
   );

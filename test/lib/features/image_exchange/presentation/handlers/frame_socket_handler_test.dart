@@ -10,7 +10,7 @@ import '../../../../../fixtures.dart';
 import '../../../../../mocks.dart';
 
 void main() {
-  late FrameImageSocketHandler frameSocketHandler;
+  late FrameImageSocketHandler frameImageSocketHandler;
   late MockGetLatestImage mockGetLatestImage;
   late MockGetImageFromId mockGetImageFromId;
 
@@ -21,7 +21,7 @@ void main() {
     mockGetLatestImage = MockGetLatestImage();
     mockGetImageFromId = MockGetImageFromId();
 
-    frameSocketHandler = FrameImageSocketHandler(
+    frameImageSocketHandler = FrameImageSocketHandler(
       getLatestImage: mockGetLatestImage,
       getImageFromId: mockGetImageFromId,
     );
@@ -38,7 +38,7 @@ void main() {
   group("add connection", () {
     test("should get the latest [Image] for the given frame", () async {
       // act
-      await frameSocketHandler.addConnection(
+      await frameImageSocketHandler.addConnection(
         frameId: tPictureFrameId,
         streamSink: tMockStreamSink,
       );
@@ -49,7 +49,7 @@ void main() {
 
     test("should add the [Image] to the [StreamSink]", () async {
       // act
-      await frameSocketHandler.addConnection(
+      await frameImageSocketHandler.addConnection(
         frameId: tPictureFrameId,
         streamSink: tMockStreamSink,
       );
@@ -65,7 +65,7 @@ void main() {
       ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
 
       // act
-      await frameSocketHandler.addConnection(
+      await frameImageSocketHandler.addConnection(
         frameId: tPictureFrameId,
         streamSink: tMockStreamSink,
       );
@@ -78,13 +78,13 @@ void main() {
         "should get [None] in return when calling sendImage after establishing the connection",
         () async {
 // arrange
-      await frameSocketHandler.addConnection(
+      await frameImageSocketHandler.addConnection(
         frameId: tPictureFrameId,
         streamSink: tMockStreamSink,
       );
 
       // act
-      final result = await frameSocketHandler.sendImage(
+      final result = await frameImageSocketHandler.sendImage(
         imageId: tImageId,
         frameId: tPictureFrameId,
       );
@@ -97,7 +97,7 @@ void main() {
   group("remove connection", () {
     group("if connected to the frame", () {
       setUp(() async {
-        await frameSocketHandler.addConnection(
+        await frameImageSocketHandler.addConnection(
           frameId: tPictureFrameId,
           streamSink: tMockStreamSink,
         );
@@ -105,7 +105,7 @@ void main() {
 
       test("should return [None] on success", () {
         // act
-        final result = frameSocketHandler.removeConnection(
+        final result = frameImageSocketHandler.removeConnection(
           streamSink: tMockStreamSink,
         );
 
@@ -117,10 +117,10 @@ void main() {
           "should receive a [FrameNotConnectedFailure] for send image after removing the connection",
           () async {
         // act
-        frameSocketHandler.removeConnection(
+        frameImageSocketHandler.removeConnection(
           streamSink: tMockStreamSink,
         );
-        final result = await frameSocketHandler.sendImage(
+        final result = await frameImageSocketHandler.sendImage(
           frameId: tPictureFrameId,
           imageId: tImageId,
         );
@@ -134,7 +134,7 @@ void main() {
         "should return a [FrameNotConnectedFailure] if there is no connection with that [Streamsink]",
         () {
       // act
-      final result = frameSocketHandler.removeConnection(
+      final result = frameImageSocketHandler.removeConnection(
         streamSink: tMockStreamSink,
       );
 
@@ -146,13 +146,13 @@ void main() {
   group("send image", () {
     group("if connected to the frame", () {
       setUp(() async {
-        await frameSocketHandler.addConnection(
+        await frameImageSocketHandler.addConnection(
             frameId: tPictureFrameId, streamSink: tMockStreamSink);
       });
 
       test("should get the image", () async {
         // act
-        await frameSocketHandler.sendImage(
+        await frameImageSocketHandler.sendImage(
           frameId: tPictureFrameId,
           imageId: tImageId,
         );
@@ -163,13 +163,13 @@ void main() {
 
       test("should add the image to all the frame's sinks", () async {
         // arrange
-        await frameSocketHandler.addConnection(
+        await frameImageSocketHandler.addConnection(
           frameId: tPictureFrameId,
           streamSink: tSecondMockStreamSink,
         );
 
         // act
-        await frameSocketHandler.sendImage(
+        await frameImageSocketHandler.sendImage(
           frameId: tPictureFrameId,
           imageId: tImageId,
         );
@@ -181,7 +181,7 @@ void main() {
 
       test("should return [None] on success", () async {
         // act
-        final result = await frameSocketHandler.sendImage(
+        final result = await frameImageSocketHandler.sendImage(
           frameId: tPictureFrameId,
           imageId: tImageId,
         );
@@ -196,7 +196,7 @@ void main() {
             .thenAnswer((_) async => const Left(DatabaseReadFailure()));
 
         // act
-        final result = await frameSocketHandler.sendImage(
+        final result = await frameImageSocketHandler.sendImage(
             frameId: tPictureFrameId, imageId: tImageId);
 
         // assert
@@ -208,7 +208,7 @@ void main() {
         "should return a [FrameNotConnectedFailure] if there are no [StreamSinks] with the given frameId",
         () async {
       // act
-      final result = await frameSocketHandler.sendImage(
+      final result = await frameImageSocketHandler.sendImage(
           frameId: tPictureFrameId, imageId: tImageId);
 
       // assert

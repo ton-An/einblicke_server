@@ -13,16 +13,16 @@ Future<Response> onRequest(RequestContext context) async {
   final imageSocketHandler = webSocketHandler(
     (channel, protocol) {
       final String frameId = context.read<Frame>().userId;
-      final FrameImageSocketHandler frameSocketHandler =
+      final FrameImageSocketHandler frameImageSocketHandler =
           context.read<FrameImageSocketHandler>();
 
-      frameSocketHandler.addConnection(
+      frameImageSocketHandler.addConnection(
         frameId: frameId,
         streamSink: channel.sink,
       );
 
       channel.stream.listen((event) {}).onDone(() {
-        frameSocketHandler.removeConnection(streamSink: channel.sink);
+        frameImageSocketHandler.removeConnection(streamSink: channel.sink);
       });
     },
   );
