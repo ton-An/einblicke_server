@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:einblicke_server/core/db_names.dart';
 import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
 import 'package:einblicke_server/features/authentication/domain/models/encrypted_token.dart';
@@ -149,6 +151,13 @@ final DateTime tCreatedAt = DateTime(2013, 5, 25, 17, 15);
 const String tImageId = "testImageId";
 const String tSecondImageId = "testSecondImageId";
 const String tThirdImageId = "testThirdImageId";
+
+final tImageIdJsonString = jsonEncode({
+  "image_id": tImageId,
+});
+
+final tDatabaseReadFailureJsonString =
+    jsonEncode(const DatabaseReadFailure().toJson());
 
 const Image tImage = Image(
   imageId: tImageId,

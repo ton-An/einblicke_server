@@ -61,11 +61,10 @@ void main() {
       // act
       basicAuthLocalDataSource.generateJWEToken(tAccessTokenClaims);
 
-      // assert
       verify(
         () => mockJweBuilder.addRecipient(
           tJsonWebKey,
-          algorithm: "RSA-OAEP-256",
+          algorithm: "RSA1_5",
         ),
       );
     });
@@ -101,7 +100,7 @@ void main() {
       basicAuthLocalDataSource.generateJWEToken(tAccessTokenClaims);
 
       // assert
-      verify(() => mockJweBuilder.encryptionAlgorithm = "A256CBC-HS512");
+      verify(() => mockJweBuilder.encryptionAlgorithm = "A128CBC-HS256");
     });
 
     test(

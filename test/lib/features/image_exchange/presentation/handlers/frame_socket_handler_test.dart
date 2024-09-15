@@ -55,7 +55,7 @@ void main() {
       );
 
       // assert
-      verify(() => tMockStreamSink.add(tImageId));
+      verify(() => tMockStreamSink.add(tImageIdJsonString));
     });
 
     test("should add failures code to the [StreamSink]", () async {
@@ -71,7 +71,7 @@ void main() {
       );
 
       // assert
-      verify(() => tMockStreamSink.add(const DatabaseReadFailure().code));
+      verify(() => tMockStreamSink.add(tDatabaseReadFailureJsonString));
     });
 
     test(
@@ -175,8 +175,8 @@ void main() {
         );
 
         // assert
-        verify(() => tMockStreamSink.add(tImageId));
-        verify(() => tSecondMockStreamSink.add(tImageId));
+        verify(() => tMockStreamSink.add(tImageIdJsonString));
+        verify(() => tSecondMockStreamSink.add(tImageIdJsonString));
       });
 
       test("should return [None] on success", () async {
