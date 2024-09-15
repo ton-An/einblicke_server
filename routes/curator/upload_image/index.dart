@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:einblicke_server/core/presentation/handlers/failure_response_handler.dart';
 import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/receive_image_from_curator.dart';
-import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
+import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_image_socket_handler.dart';
 import 'package:einblicke_server/injection_container.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 
@@ -48,8 +48,8 @@ Future<Response> onRequest(RequestContext context) async {
   return imageIdEither.fold(
     FailureResponseHandler.getFailureResponse,
     (String imageId) async {
-      final FrameSocketHandler frameSocketHandler =
-          context.read<FrameSocketHandler>();
+      final FrameImageSocketHandler frameSocketHandler =
+          context.read<FrameImageSocketHandler>();
 
       await frameSocketHandler.sendImage(frameId: frameId, imageId: imageId);
       return Response();

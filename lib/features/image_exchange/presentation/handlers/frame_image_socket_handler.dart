@@ -9,7 +9,7 @@ import 'package:einblicke_server/features/image_exchange/domain/usecases/get_ima
 import 'package:einblicke_server/features/image_exchange/domain/usecases/get_latest_image.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 
-/// {@template frame_socket_handler}
+/// {@template frame_image_socket_handler}
 /// __Frame Socket Handler__ handles the websocket connections to the
 /// [Frame]s.
 ///
@@ -18,12 +18,12 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 /// - [removeConnection] removes a connection from the list of connections
 /// - [sendImage] sends an image to all connections of a specific frame
 ///
-/// [addConnection] is the only mehtod that adds it's [Failure]s to the stream
+/// [addConnection] is the only method that adds it's [Failure]s to the stream
 ///
 /// {@endtemplate}
-class FrameSocketHandler {
-  /// {@macro frame_socket_handler}
-  FrameSocketHandler({
+class FrameImageSocketHandler {
+  /// {@macro frame_image_socket_handler}
+  FrameImageSocketHandler({
     required this.getImageFromId,
     required this.getLatestImage,
   });

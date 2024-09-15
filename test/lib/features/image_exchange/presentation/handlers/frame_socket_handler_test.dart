@@ -1,7 +1,7 @@
 // ignore_for_file: inference_failure_on_instance_creation
 
 import 'package:dartz/dartz.dart';
-import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
+import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_image_socket_handler.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -10,7 +10,7 @@ import '../../../../../fixtures.dart';
 import '../../../../../mocks.dart';
 
 void main() {
-  late FrameSocketHandler frameSocketHandler;
+  late FrameImageSocketHandler frameSocketHandler;
   late MockGetLatestImage mockGetLatestImage;
   late MockGetImageFromId mockGetImageFromId;
 
@@ -21,7 +21,7 @@ void main() {
     mockGetLatestImage = MockGetLatestImage();
     mockGetImageFromId = MockGetImageFromId();
 
-    frameSocketHandler = FrameSocketHandler(
+    frameSocketHandler = FrameImageSocketHandler(
       getLatestImage: mockGetLatestImage,
       getImageFromId: mockGetImageFromId,
     );

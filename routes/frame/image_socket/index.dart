@@ -1,7 +1,7 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_web_socket/dart_frog_web_socket.dart';
 import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
-import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
+import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_image_socket_handler.dart';
 
 /*
   To-Do:
@@ -10,11 +10,11 @@ import 'package:einblicke_server/features/image_exchange/presentation/handlers/f
 
 /// Establishes a websocket connection to a picture frame
 Future<Response> onRequest(RequestContext context) async {
-  final handler2 = webSocketHandler(
+  final imageSocketHandler = webSocketHandler(
     (channel, protocol) {
       final String frameId = context.read<Frame>().userId;
-      final FrameSocketHandler frameSocketHandler =
-          context.read<FrameSocketHandler>();
+      final FrameImageSocketHandler frameSocketHandler =
+          context.read<FrameImageSocketHandler>();
 
       frameSocketHandler.addConnection(
         frameId: frameId,
@@ -27,5 +27,5 @@ Future<Response> onRequest(RequestContext context) async {
     },
   );
 
-  return handler2(context);
+  return imageSocketHandler(context);
 }

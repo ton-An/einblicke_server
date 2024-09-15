@@ -41,7 +41,7 @@ import 'package:einblicke_server/features/image_exchange/domain/usecases/get_lat
 import 'package:einblicke_server/features/image_exchange/domain/usecases/get_paired_frames_info.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/pair_curator_x_frame.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/receive_image_from_curator.dart';
-import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_socket_handler.dart';
+import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_image_socket_handler.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -68,7 +68,7 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton(
-    () => FrameSocketHandler(
+    () => FrameImageSocketHandler(
       getImageFromId: getIt(),
       getLatestImage: getIt(),
     ),
