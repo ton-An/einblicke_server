@@ -143,6 +143,9 @@ const Frame tPictureFrame2 = Frame(
   passwordHash: tPasswordHash,
 );
 
+const String tMessage =
+    "Whenever I'm sad, I stop being sad and be awesome instead.";
+
 // Image Exchange
 const List<int> tImageBytes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
