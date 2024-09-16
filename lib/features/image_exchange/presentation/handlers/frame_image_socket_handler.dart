@@ -10,8 +10,8 @@ import 'package:einblicke_server/features/image_exchange/domain/usecases/get_lat
 import 'package:einblicke_shared/einblicke_shared.dart';
 
 /// {@template frame_image_socket_handler}
-/// __Frame Socket Handler__ handles the websocket connections to the
-/// [Frame]s.
+/// __Frame Image Socket Handler__ handles the websocket connections sending
+/// image ids to the [Frame]s.
 ///
 /// Methods:
 /// - [addConnection] adds a new connection to the list of connections
