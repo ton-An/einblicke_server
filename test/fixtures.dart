@@ -34,7 +34,7 @@ const String tRefreshToken = "testRefreshToken";
 const String tAnotherRefreshToken = "testRefreshToken";
 const String tTokenId = "testTokenId";
 
-ServerTokenBundle tAuthenticationCredentials = ServerTokenBundle(
+ServerTokenBundle tServerTokenBundle = ServerTokenBundle(
   accessToken: tEncryptedAccessToken,
   refreshToken: tEncryptedRefreshToken,
 );

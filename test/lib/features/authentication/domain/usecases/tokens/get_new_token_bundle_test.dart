@@ -244,6 +244,6 @@ void main() {
     final result = await getNewTokens(oldRefreshToken: tRefreshToken);
 
     // assert
-    expect(result, Right(tAuthenticationCredentials));
+    expect(result, Right(tServerTokenBundle));
   });
 }

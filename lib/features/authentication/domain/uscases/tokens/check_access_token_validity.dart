@@ -4,6 +4,8 @@ import 'package:einblicke_server/features/authentication/domain/models/picture_f
 import 'package:einblicke_server/features/authentication/domain/models/token_claims/token_claims.dart';
 import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/curator_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/get_user_with_type.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/is_token_expired.dart';

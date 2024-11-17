@@ -12,16 +12,23 @@ import 'package:einblicke_server/core/secrets_impl.dart';
 import 'package:einblicke_server/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
 import 'package:einblicke_server/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
 import 'package:einblicke_server/features/authentication/data/repository_implementation/basic_authentication_repository_impl.dart';
-import 'package:einblicke_server/features/authentication/data/repository_implementation/user_authentication_repository_impl.dart';
+import 'package:einblicke_server/features/authentication/data/repository_implementation/curator_auth_repository_impl.dart';
+import 'package:einblicke_server/features/authentication/data/repository_implementation/frame_auth_repository_impl.dart';
 import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
 import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/curator_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
-import 'package:einblicke_server/features/authentication/domain/uscases/create_user.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/create_curator.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/create_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/generate_user_id.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/get_user_with_type.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/is_client_id_valid.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/is_client_secret_valid.dart';
-import 'package:einblicke_server/features/authentication/domain/uscases/sign_in.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_curator.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_handle_tokens.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/check_access_token_validity.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/check_refresh_token_validity.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/generate_access_token.dart';
@@ -170,13 +177,25 @@ Future<void> initGetIt() async {
       getUserWithType: getIt(),
     ),
   );
+
   getIt.registerLazySingleton(
-    () => CreatePictureFrame(
-      basicAuthRepository: getIt(),
-      cryptoRepository: getIt(),
+    () => GenerateUserId<Curator, CuratorAuthenticationRepository>(
       userAuthRepository: getIt(),
-      isUsernameValid: getIt(),
-      isPasswordValid: getIt(),
+      cryptoRepository: getIt(),
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => GenerateUserId<Frame, FrameAuthenticationRepository>(
+      userAuthRepository: getIt(),
+      cryptoRepository: getIt(),
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => CreateFrame(
+      frameAuthRepository: getIt(),
+      generateUserId: getIt(),
     ),
   );
   getIt.registerLazySingleton(
@@ -194,9 +213,9 @@ Future<void> initGetIt() async {
     () => CreateCurator(
       isUsernameValid: getIt(),
       isPasswordValid: getIt(),
-      userAuthRepository: getIt(),
+      curatorAuthRepository: getIt(),
       basicAuthRepository: getIt(),
-      cryptoRepository: getIt(),
+      generateUserId: getIt(),
     ),
   );
 
@@ -229,6 +248,7 @@ Future<void> initGetIt() async {
       userAuthenticationRepository: getIt(),
     ),
   );
+
   getIt.registerLazySingleton(
     () => ReceiveImageFromCurator(
       imageExchangeRepository: getIt(),
@@ -236,24 +256,27 @@ Future<void> initGetIt() async {
       clock: getIt(),
     ),
   );
+
   getIt.registerLazySingleton(
-    () => SignInWrapper<Frame, FrameAuthenticationRepository>(
-      userAuthRepository: getIt(),
-      basicAuthRepository: getIt(),
+    () => SignInHandleTokens<Curator, CuratorAuthenticationRepository>(
       generateAccessToken: getIt(),
       generateRefreshToken: getIt(),
-      saveRefreshTokenUsecase: getIt(),
+      saveRefreshToken: getIt(),
     ),
   );
+
   getIt.registerLazySingleton(
-    () => SignInWrapper<Curator, CuratorAuthenticationRepository>(
-      userAuthRepository: getIt(),
+    () => SignInCurator(
+      curatorAuthenticationRepository: getIt(),
       basicAuthRepository: getIt(),
-      generateAccessToken: getIt(),
-      generateRefreshToken: getIt(),
-      saveRefreshTokenUsecase: getIt(),
+      signInHandleTokens: getIt(),
     ),
   );
+
+  getIt.registerLazySingleton(
+    () => SignInFrame(),
+  );
+
   getIt.registerLazySingleton(
     () => SaveRefreshToken<Curator, UserAuthenticationRepository<Curator>>(
       userAuthenticationRepository: getIt(),
@@ -265,22 +288,6 @@ Future<void> initGetIt() async {
     ),
   );
 
-  getIt.registerLazySingleton(
-    () => SignInPictureFrame(
-        userAuthRepository: getIt(),
-        basicAuthRepository: getIt(),
-        generateAccessToken: getIt(),
-        generateRefreshToken: getIt(),
-        saveRefreshTokenUsecase: getIt()),
-  );
-  getIt.registerLazySingleton(
-    () => SignInCurator(
-        userAuthRepository: getIt(),
-        basicAuthRepository: getIt(),
-        generateAccessToken: getIt(),
-        generateRefreshToken: getIt(),
-        saveRefreshTokenUsecase: getIt()),
-  );
   getIt.registerFactory(
     () => GenerateAccessToken(
       basicAuthRepository: getIt(),
@@ -318,12 +325,12 @@ Future<void> initGetIt() async {
     ),
   );
   getIt.registerLazySingleton<CuratorAuthenticationRepository>(
-    () => UserAuthenticationRepositoryImpl<Curator>(
+    () => CuratorAuthenticationRepositoryImpl(
       userAuthLocalDataSource: getIt(),
     ),
   );
   getIt.registerLazySingleton<FrameAuthenticationRepository>(
-    () => UserAuthenticationRepositoryImpl<Frame>(
+    () => FrameAuthenticationRepositoryImpl(
       userAuthLocalDataSource: getIt(),
     ),
   );

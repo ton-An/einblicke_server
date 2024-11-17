@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
-import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:einblicke_server/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 

@@ -13,10 +13,12 @@ import 'package:einblicke_server/features/authentication/domain/models/encrypted
 import 'package:einblicke_server/features/authentication/domain/models/token_claims/token_claims.dart';
 import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/basic_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/curator_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
-import 'package:einblicke_server/features/authentication/domain/uscases/create_user.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/generate_user_id.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/get_user_with_type.dart';
-import 'package:einblicke_server/features/authentication/domain/uscases/sign_in.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_handle_tokens.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/check_refresh_token_validity.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/generate_access_token.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/generate_refresh_token.dart';
@@ -47,17 +49,13 @@ class MockUserAuthRepository extends Mock
 
 class MockUser extends Mock implements User {}
 
-class MockCreateUserWrapper<U extends User,
-        R extends UserAuthenticationRepository<U>> extends Mock
-    implements CreateUserWrapper<U, R> {}
-
 class MockGenerateAccessToken extends Mock implements GenerateAccessToken {}
 
 class MockGenerateRefreshToken extends Mock implements GenerateRefreshToken {}
 
-class MockSignInWrapper<U extends User,
+class MockSignInHandleTokens<U extends User,
         R extends UserAuthenticationRepository<U>> extends Mock
-    implements SignInWrapper<U, R> {}
+    implements SignInHandleTokens<U, R> {}
 
 class MockIsTokenExpired extends Mock implements IsTokenExpired {}
 
@@ -82,6 +80,8 @@ class MockInvalidateRefreshToken<U extends User,
 class MockInvalidateAllRefreshTokens<U extends User,
         R extends UserAuthenticationRepository<U>> extends Mock
     implements InvalidateAllRefreshTokens<U, R> {}
+
+class MockGenerateUserId extends Mock implements GenerateUserId {}
 
 class MockImageExchangeRepository extends Mock
     implements ImageExchangeRepository {}

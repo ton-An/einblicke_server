@@ -1,36 +1,24 @@
 import 'package:dartz/dartz.dart';
 import 'package:einblicke_server/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
-import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
-import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
 import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
-/// __Curator Authentication Repository Implementation__ is the concrete
-/// implementation of the [UserAuthenticationRepository] contract and handles
-/// the [Curator] related authentication repository operations.
-typedef CuratorAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Curator>;
-
-/// __Frame Authentication Repository Implementation__ is the concrete
-/// implementation of the [UserAuthenticationRepository] contract and handles
-/// the [Frame] related authentication repository operations.
-typedef FrameAuthRepositoryImpl = UserAuthenticationRepositoryImpl<Frame>;
 
 /// {@template user_auth_repository}
 /// __User Authentication Repository Implementation__ is the concrete
 /// implementation of the [UserAuthenticationRepository] contract and a
 /// wrapper for [U] user related authentication repository operations.
 /// {@endtemplate}
-class UserAuthenticationRepositoryImpl<U extends User>
-    extends UserAuthenticationRepository<U> {
-  /// {@macro user_auth_repository}
-  const UserAuthenticationRepositoryImpl({
-    required this.userAuthLocalDataSource,
-  });
+mixin UserAuthenticationRepositoryImpl<U extends User>
+    on UserAuthenticationRepository<U> {
+  // /// {@macro user_auth_repository}
+  // const UserAuthenticationRepositoryImpl({
+  //   required this.userAuthLocalDataSource,
+  // });
 
   /// Local data source for user authentication
-  final UserAuthenticationLocalDataSource<U> userAuthLocalDataSource;
+  abstract final UserAuthenticationLocalDataSource<U> userAuthLocalDataSource;
 
   @override
   Future<Either<Failure, U>> createUser(
@@ -52,7 +40,7 @@ class UserAuthenticationRepositoryImpl<U extends User>
   }
 
   @override
-  Future<Either<Failure, U>> getUser(
+  Future<Either<Failure, U>> getUserFromCredentials(
     String username,
     String passwordHash,
   ) async {

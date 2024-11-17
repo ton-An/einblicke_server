@@ -4,7 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:einblicke_server/core/presentation/handlers/failure_response_handler.dart';
 import 'package:einblicke_server/features/authentication/domain/models/token_bundle.dart';
-import 'package:einblicke_server/features/authentication/domain/uscases/sign_in.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_curator.dart';
 import 'package:einblicke_server/injection_container.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 
