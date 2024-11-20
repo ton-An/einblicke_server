@@ -15,18 +15,18 @@ void main() {
   late SignInCurator signInCurator;
   late MockCuratorAuthRepository mockCuratorAuthRepository;
   late MockBasicAuthRepository mockBasicAuthRepository;
-  late MockSignInHandleTokens<Curator, CuratorAuthenticationRepository>
-      mockSignInHandleTokens;
+  late MockGetSignInTokens<Curator, CuratorAuthenticationRepository>
+      mockGetSignInTokens;
 
   setUp(() {
     mockCuratorAuthRepository = MockCuratorAuthRepository();
     mockBasicAuthRepository = MockBasicAuthRepository();
-    mockSignInHandleTokens = MockSignInHandleTokens();
+    mockGetSignInTokens = MockGetSignInTokens();
 
     signInCurator = SignInCurator(
       curatorAuthenticationRepository: mockCuratorAuthRepository,
       basicAuthRepository: mockBasicAuthRepository,
-      signInHandleTokens: mockSignInHandleTokens,
+      getSignInTokens: mockGetSignInTokens,
     );
 
     registerFallbackValue(MockEncryptedToken());
@@ -40,7 +40,7 @@ void main() {
         any(),
       ),
     ).thenAnswer((_) async => const Right(tCurator));
-    when(() => mockSignInHandleTokens(tCurator))
+    when(() => mockGetSignInTokens(tCurator))
         .thenAnswer((_) async => Right(tServerTokenBundle));
   });
 
@@ -104,13 +104,13 @@ void main() {
 
       // assert
       verify(
-        () => mockSignInHandleTokens(tCurator),
+        () => mockGetSignInTokens(tCurator),
       );
     });
 
     test("should relay Failures if handling tokens fails", () async {
       // arrange
-      when(() => mockSignInHandleTokens(any()))
+      when(() => mockGetSignInTokens(any()))
           .thenAnswer((_) async => const Left(DatabaseWriteFailure()));
 
       // act

@@ -23,12 +23,12 @@ import 'package:einblicke_server/features/authentication/domain/repositories/use
 import 'package:einblicke_server/features/authentication/domain/uscases/create_curator.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/create_frame.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/generate_user_id.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/get_sign_in_tokens.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/get_user_with_type.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/is_client_id_valid.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/is_client_secret_valid.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_curator.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_frame.dart';
-import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_handle_tokens.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/check_access_token_validity.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/check_refresh_token_validity.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/generate_access_token.dart';
@@ -258,7 +258,7 @@ Future<void> initGetIt() async {
   );
 
   getIt.registerLazySingleton(
-    () => SignInHandleTokens<Curator, CuratorAuthenticationRepository>(
+    () => GetSignInTokens<Curator, CuratorAuthenticationRepository>(
       generateAccessToken: getIt(),
       generateRefreshToken: getIt(),
       saveRefreshToken: getIt(),
@@ -269,12 +269,22 @@ Future<void> initGetIt() async {
     () => SignInCurator(
       curatorAuthenticationRepository: getIt(),
       basicAuthRepository: getIt(),
-      signInHandleTokens: getIt(),
+      getSignInTokens: getIt(),
     ),
   );
 
   getIt.registerLazySingleton(
-    () => SignInFrame(),
+    () => GetSignInTokens<Frame, FrameAuthenticationRepository>(
+      generateAccessToken: getIt(),
+      generateRefreshToken: getIt(),
+      saveRefreshToken: getIt(),
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => SignInFrame(
+      getSignInTokens: getIt(),
+    ),
   );
 
   getIt.registerLazySingleton(

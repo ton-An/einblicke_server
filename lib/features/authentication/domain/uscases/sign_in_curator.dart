@@ -3,7 +3,7 @@ import 'package:einblicke_server/features/authentication/domain/models/curator.d
 import 'package:einblicke_server/features/authentication/domain/models/token_bundle.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/basic_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/curator_authentication_repository.dart';
-import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_handle_tokens.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/get_sign_in_tokens.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 
 /// {@template sign_in_curator}
@@ -27,7 +27,7 @@ class SignInCurator {
   const SignInCurator({
     required this.curatorAuthenticationRepository,
     required this.basicAuthRepository,
-    required this.signInHandleTokens,
+    required this.getSignInTokens,
   });
 
   /// Used to create the record of the [Curator] user
@@ -37,8 +37,8 @@ class SignInCurator {
   final BasicAuthenticationRepository basicAuthRepository;
 
   /// Used to handle the tokens after the user has been found
-  final SignInHandleTokens<Curator, CuratorAuthenticationRepository>
-      signInHandleTokens;
+  final GetSignInTokens<Curator, CuratorAuthenticationRepository>
+      getSignInTokens;
 
   /// {@macro sign_in_curator}
   Future<Either<Failure, ServerTokenBundle>> call({
@@ -79,6 +79,6 @@ class SignInCurator {
 
   Future<Either<Failure, ServerTokenBundle>> _handleSignInTokens(
       {required Curator curator}) {
-    return signInHandleTokens(curator);
+    return getSignInTokens(curator);
   }
 }

@@ -11,7 +11,7 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 ///
 /// Methods:
 /// - [addConnection] adds a new connection to the list of connections
-/// - [removeConnection] removes a connection from the list of connections
+/// - [removeConnectionWithSink] removes a connection from the list of connections
 /// - [sendMessage] sends a message to a specific frame
 /// {@endtemplate}
 abstract class FrameSocketHandler {
@@ -35,11 +35,11 @@ abstract class FrameSocketHandler {
     _connections.add(connection);
   }
 
-  /// Removes a connection from the list of connections
+  /// Removes a connection from the list of connections with the given sink
   ///
   /// Failures:
   /// - [FrameNotConnectedFailure] if the connection does not exist
-  Either<Failure, None> removeConnection({
+  Either<Failure, None> removeConnectionWithSink({
     required StreamSink streamSink,
   }) {
     final bool isConnectionPresent =
@@ -54,6 +54,22 @@ abstract class FrameSocketHandler {
     return const Right(None());
   }
 
+  /// Removes a connection from the list of connections with the given frame id
+  ///
+  /// Failures:
+  /// - [FrameNotConnectedFailure] if the frame is not connected
+  Either<Failure, None> removeConnectionWithFrameId({
+    required String frameId,
+  }) {
+    if (!isFrameConnected(frameId: frameId)) {
+      return const Left(FrameNotConnectedFailure());
+    }
+
+    _connections.removeWhere((connection) => connection.frameId == frameId);
+
+    return const Right(None());
+  }
+
   /// Sends message to a specific frame socket
   ///
   /// Failures:
@@ -62,9 +78,7 @@ abstract class FrameSocketHandler {
     required String frameId,
     required String message,
   }) async {
-    final bool isFrameConnected = _isFrameConnected(frameId: frameId);
-
-    if (!isFrameConnected) {
+    if (!isFrameConnected(frameId: frameId)) {
       return const Left(FrameNotConnectedFailure());
     }
 
@@ -77,7 +91,11 @@ abstract class FrameSocketHandler {
     return const Right(None());
   }
 
-  bool _isFrameConnected({required String frameId}) {
+  /// Checks if a frame with the given id is connected
+  ///
+  /// Returns:
+  /// - true if the frame is connected, false otherwise
+  bool isFrameConnected({required String frameId}) {
     return _connections.any(
       (connection) {
         return connection.frameId == frameId;

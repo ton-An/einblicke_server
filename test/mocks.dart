@@ -16,9 +16,11 @@ import 'package:einblicke_server/features/authentication/domain/repositories/bas
 import 'package:einblicke_server/features/authentication/domain/repositories/curator_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/user_authentication_repository.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/create_frame.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/generate_user_id.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/get_sign_in_tokens.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/get_user_with_type.dart';
-import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_handle_tokens.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_frame.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/check_refresh_token_validity.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/generate_access_token.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/tokens/generate_refresh_token.dart';
@@ -53,9 +55,9 @@ class MockGenerateAccessToken extends Mock implements GenerateAccessToken {}
 
 class MockGenerateRefreshToken extends Mock implements GenerateRefreshToken {}
 
-class MockSignInHandleTokens<U extends User,
+class MockGetSignInTokens<U extends User,
         R extends UserAuthenticationRepository<U>> extends Mock
-    implements SignInHandleTokens<U, R> {}
+    implements GetSignInTokens<U, R> {}
 
 class MockIsTokenExpired extends Mock implements IsTokenExpired {}
 
@@ -82,6 +84,10 @@ class MockInvalidateAllRefreshTokens<U extends User,
     implements InvalidateAllRefreshTokens<U, R> {}
 
 class MockGenerateUserId extends Mock implements GenerateUserId {}
+
+class MockCreateFrame extends Mock implements CreateFrame {}
+
+class MockSignInFrame extends Mock implements SignInFrame {}
 
 class MockImageExchangeRepository extends Mock
     implements ImageExchangeRepository {}

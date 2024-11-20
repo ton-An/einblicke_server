@@ -45,7 +45,7 @@ void main() {
     });
   });
 
-  group("removeConnection", () {
+  group("removeConnectionWithSink", () {
     group("if connected to the frame", () {
       setUp(() async {
         await frameSocketHandler.addConnection(
@@ -56,7 +56,7 @@ void main() {
 
       test("should return [None] on success", () {
         // act
-        final result = frameSocketHandler.removeConnection(
+        final result = frameSocketHandler.removeConnectionWithSink(
           streamSink: tMockStreamSink,
         );
 
@@ -68,7 +68,7 @@ void main() {
           "should receive a [FrameNotConnectedFailure] for sendMessage after removing the connection (meaning the frame isn't connected anymore)",
           () async {
         // act
-        frameSocketHandler.removeConnection(
+        frameSocketHandler.removeConnectionWithSink(
           streamSink: tMockStreamSink,
         );
         final result = await frameSocketHandler.sendMessage(
@@ -85,7 +85,7 @@ void main() {
         "should return a [FrameNotConnectedFailure] if there is no connection with that [Streamsink]",
         () {
       // act
-      final result = frameSocketHandler.removeConnection(
+      final result = frameSocketHandler.removeConnectionWithSink(
         streamSink: tMockStreamSink,
       );
 
@@ -94,6 +94,54 @@ void main() {
     });
   });
 
+  group("removeConnectionWithFrameId", () {
+    group("if connected to the frame", () {
+      setUp(() async {
+        await frameSocketHandler.addConnection(
+          frameId: tPictureFrameId,
+          streamSink: tMockStreamSink,
+        );
+      });
+
+      test("should return [None] on success", () {
+        // act
+        final result = frameSocketHandler.removeConnectionWithFrameId(
+          frameId: tPictureFrameId,
+        );
+
+        // assert
+        expect(result, const Right(None()));
+      });
+
+      test(
+          "should receive a [FrameNotConnectedFailure] for sendMessage after removing the connection (meaning the frame isn't connected anymore)",
+          () async {
+        // act
+        frameSocketHandler.removeConnectionWithFrameId(
+          frameId: tPictureFrameId,
+        );
+        final result = await frameSocketHandler.sendMessage(
+          frameId: tPictureFrameId,
+          message: tMessage,
+        );
+
+        // assert
+        expect(result, const Left(FrameNotConnectedFailure()));
+      });
+    });
+
+    test(
+        "should return a [FrameNotConnectedFailure] if there is no connection with that [frameId]",
+        () {
+      // act
+      final result = frameSocketHandler.removeConnectionWithFrameId(
+        frameId: tPictureFrameId,
+      );
+
+      // assert
+      expect(result, const Left(FrameNotConnectedFailure()));
+    });
+  });
   group("send message", () {
     group("if connected to the frame", () {
       setUp(() async {

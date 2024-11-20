@@ -12,12 +12,6 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 /// {@template frame_image_socket_handler}
 /// __Frame Image Socket Handler__ handles the websocket connections sending
 /// image ids to the [Frame]s.
-///
-/// Methods:
-/// - [addConnection] adds a new connection to the list of connections
-/// - [removeConnection] removes a connection from the list of connections
-/// - [sendImage] sends an image to all connections of a specific frame
-///
 /// {@endtemplate}
 class FrameImageSocketHandler extends FrameSocketHandler {
   /// {@macro frame_image_socket_handler}

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:einblicke_server/features/authentication/domain/uscases/sign_in_handle_tokens.dart';
+import 'package:einblicke_server/features/authentication/domain/uscases/get_sign_in_tokens.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -8,7 +8,7 @@ import '../../../../../fixtures.dart';
 import '../../../../../mocks.dart';
 
 void main() {
-  late SignInHandleTokens signInHandleTokens;
+  late GetSignInTokens getSignInTokens;
   late MockGenerateAccessToken mockGenerateAccessToken;
   late MockGenerateRefreshToken mockGenerateRefreshToken;
   late MockSaveRefreshToken<MockUser, MockUserAuthRepository>
@@ -23,7 +23,7 @@ void main() {
 
     tMockUser = MockUser();
 
-    signInHandleTokens = SignInHandleTokens(
+    getSignInTokens = GetSignInTokens(
       generateAccessToken: mockGenerateAccessToken,
       generateRefreshToken: mockGenerateRefreshToken,
       saveRefreshToken: mockSaveRefreshToken,
@@ -47,7 +47,7 @@ void main() {
   group("generate tokens", () {
     test("should generate an access token if the user is found", () async {
       // act
-      await signInHandleTokens(tMockUser);
+      await getSignInTokens(tMockUser);
 
       // assert
       verify(() => mockGenerateAccessToken(user: tMockUser));
@@ -55,7 +55,7 @@ void main() {
 
     test("should generate a refresh token if the user is found", () async {
       // act
-      await signInHandleTokens(tMockUser);
+      await getSignInTokens(tMockUser);
 
       // assert
       verify(() => mockGenerateRefreshToken(user: tMockUser));
@@ -65,7 +65,7 @@ void main() {
   group("save the refresh token", () {
     test("should save the refresh token", () async {
       // act
-      await signInHandleTokens(tMockUser);
+      await getSignInTokens(tMockUser);
 
       // assert
       verify(
@@ -86,7 +86,7 @@ void main() {
       ).thenAnswer((_) async => const Left(DatabaseWriteFailure()));
 
       // act
-      final result = await signInHandleTokens(tMockUser);
+      final result = await getSignInTokens(tMockUser);
 
       // assert
       expect(result, const Left(DatabaseWriteFailure()));
@@ -94,7 +94,7 @@ void main() {
 
     test("should return [ServerTokenBundle] if the user is found", () async {
       // act
-      final result = await signInHandleTokens(
+      final result = await getSignInTokens(
         tMockUser,
       );
 

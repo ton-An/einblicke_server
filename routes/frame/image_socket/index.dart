@@ -22,7 +22,9 @@ Future<Response> onRequest(RequestContext context) async {
       );
 
       channel.stream.listen((event) {}).onDone(() {
-        frameImageSocketHandler.removeConnection(streamSink: channel.sink);
+        frameImageSocketHandler.removeConnectionWithSink(
+          streamSink: channel.sink,
+        );
       });
     },
   );

@@ -21,10 +21,10 @@ import 'package:einblicke_shared/einblicke_shared.dart';
 /// Failures:
 /// - [DatabaseWriteFailure]
 /// {@endtemplate}
-class SignInHandleTokens<U extends User,
+class GetSignInTokens<U extends User,
     R extends UserAuthenticationRepository<U>> {
   /// {@macro sign_in_handle_tokens}
-  SignInHandleTokens({
+  GetSignInTokens({
     required this.generateAccessToken,
     required this.generateRefreshToken,
     required this.saveRefreshToken,

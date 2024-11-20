@@ -58,7 +58,7 @@ void main() {
       verify(() => tMockStreamSink.add(tImageIdJsonString));
     });
 
-    test("should add failures code to the [StreamSink]", () async {
+    test("should add failures to the [StreamSink]", () async {
       // arrange
       when(
         () => mockGetLatestImage(frameId: any(named: "frameId")),
