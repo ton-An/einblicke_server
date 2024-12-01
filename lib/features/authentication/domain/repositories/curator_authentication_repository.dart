@@ -22,7 +22,7 @@ abstract class CuratorAuthenticationRepository
   ///
   /// Failures:
   /// - [DatabaseReadFailure]
-  Future<Either<Failure, bool>> isUsernameTaken(String username);
+  Future<Either<Failure, bool>> isUsernameTaken({required String username});
 
   /// Creates a record of a curator with the given username and password hash
   ///
@@ -36,11 +36,11 @@ abstract class CuratorAuthenticationRepository
   ///
   /// Failures:
   /// - [DatabaseWriteFailure]
-  Future<Either<Failure, Curator>> createCurator(
-    String userId,
-    String username,
-    String passwordHash,
-  );
+  Future<Either<Failure, Curator>> createCurator({
+    required String userId,
+    required String username,
+    required String passwordHash,
+  });
 
   /// Gets the curator with the given username and password hash
   ///
@@ -54,8 +54,8 @@ abstract class CuratorAuthenticationRepository
   /// Failures:
   /// - [DatabaseReadFailure]
   /// - [UserNotFoundFailure]
-  Future<Either<Failure, Curator>> getCuratorFromCredentials(
-    String username,
-    String passwordHash,
-  );
+  Future<Either<Failure, Curator>> getCuratorFromCredentials({
+    required String username,
+    required String passwordHash,
+  });
 }

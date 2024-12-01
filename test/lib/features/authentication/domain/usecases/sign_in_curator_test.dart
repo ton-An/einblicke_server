@@ -36,8 +36,8 @@ void main() {
         .thenReturn(tPasswordHash);
     when(
       () => mockCuratorAuthRepository.getCuratorFromCredentials(
-        any(),
-        any(),
+        username: any(named: "username"),
+        passwordHash: any(named: "passwordHash"),
       ),
     ).thenAnswer((_) async => const Right(tCurator));
     when(() => mockGetSignInTokens(tCurator))
@@ -68,8 +68,8 @@ void main() {
       // assert
       verify(
         () => mockCuratorAuthRepository.getCuratorFromCredentials(
-          tUsername,
-          tPasswordHash,
+          username: tUsername,
+          passwordHash: tPasswordHash,
         ),
       );
     });
@@ -78,8 +78,8 @@ void main() {
       // arrange
       when(
         () => mockCuratorAuthRepository.getCuratorFromCredentials(
-          any(),
-          any(),
+          username: any(named: "username"),
+          passwordHash: any(named: "passwordHash"),
         ),
       ).thenAnswer((_) async => const Left(UserNotFoundFailure()));
 

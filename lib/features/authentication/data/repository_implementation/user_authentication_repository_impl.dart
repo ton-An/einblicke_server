@@ -12,74 +12,14 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 /// {@endtemplate}
 mixin UserAuthenticationRepositoryImpl<U extends User>
     on UserAuthenticationRepository<U> {
-  // /// {@macro user_auth_repository}
-  // const UserAuthenticationRepositoryImpl({
-  //   required this.userAuthLocalDataSource,
-  // });
-
   /// Local data source for user authentication
   abstract final UserAuthenticationLocalDataSource<U> userAuthLocalDataSource;
 
   @override
-  Future<Either<Failure, U>> createUser(
-    String userId,
-    String username,
-    String passwordHash,
-  ) async {
-    try {
-      final U user = await userAuthLocalDataSource.createUser(
-        userId: userId,
-        username: username,
-        passwordHash: passwordHash,
-      );
-
-      return Right(user);
-    } on DatabaseException {
-      return const Left(DatabaseWriteFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, U>> getUserFromCredentials(
-    String username,
-    String passwordHash,
-  ) async {
-    try {
-      final U? user = await userAuthLocalDataSource.getUser(
-        username: username,
-        passwordHash: passwordHash,
-      );
-
-      if (user == null) {
-        return const Left(UserNotFoundFailure());
-      }
-
-      return Right(user);
-    } on DatabaseException {
-      return const Left(DatabaseWriteFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, U>> getUserFromId(String userId) async {
-    try {
-      final U? user = await userAuthLocalDataSource.getUserFromId(userId);
-
-      if (user == null) {
-        return const Left(UserNotFoundFailure());
-      }
-
-      return Right(user);
-    } on DatabaseException {
-      return const Left(DatabaseWriteFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> isRefreshTokenInUserDb(
-    String userId,
-    String refreshToken,
-  ) async {
+  Future<Either<Failure, bool>> isRefreshTokenInUserDb({
+    required String userId,
+    required String refreshToken,
+  }) async {
     try {
       final bool isRefreshTokenInUserDb =
           await userAuthLocalDataSource.isRefreshTokenInUserDb(
@@ -94,10 +34,10 @@ mixin UserAuthenticationRepositoryImpl<U extends User>
   }
 
   @override
-  Future<Either<Failure, bool>> isUserIdTaken(String userId) async {
+  Future<Either<Failure, bool>> isUserIdTaken({required String userId}) async {
     try {
       final bool isUserIdTaken =
-          await userAuthLocalDataSource.isUserIdTaken(userId);
+          await userAuthLocalDataSource.isUserIdTaken(userId: userId);
 
       return Right(isUserIdTaken);
     } on DatabaseException {
@@ -106,23 +46,12 @@ mixin UserAuthenticationRepositoryImpl<U extends User>
   }
 
   @override
-  Future<Either<Failure, bool>> isUsernameTaken(String username) async {
-    try {
-      final bool isUsernameTaken =
-          await userAuthLocalDataSource.isUsernameTaken(username);
-
-      return Right(isUsernameTaken);
-    } on DatabaseException {
-      return const Left(DatabaseReadFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, None>> removeAllRefreshTokensFromDb(
-      String userId) async {
+  Future<Either<Failure, None>> removeAllRefreshTokensFromDb({
+    required String userId,
+  }) async {
     try {
       await userAuthLocalDataSource.removeAllRefreshTokensFromDb(
-        userId,
+        userId: userId,
       );
 
       return const Right(None());
@@ -132,10 +61,10 @@ mixin UserAuthenticationRepositoryImpl<U extends User>
   }
 
   @override
-  Future<Either<Failure, None>> removeRefreshTokenFromDb(
-    String userId,
-    String refreshToken,
-  ) async {
+  Future<Either<Failure, None>> removeRefreshTokenFromDb({
+    required String userId,
+    required String refreshToken,
+  }) async {
     try {
       await userAuthLocalDataSource.removeRefreshTokenFromDb(
         userId: userId,
@@ -149,10 +78,10 @@ mixin UserAuthenticationRepositoryImpl<U extends User>
   }
 
   @override
-  Future<Either<Failure, None>> saveRefreshTokenToDb(
-    String userId,
-    String refreshToken,
-  ) async {
+  Future<Either<Failure, None>> saveRefreshTokenToDb({
+    required String userId,
+    required String refreshToken,
+  }) async {
     try {
       await userAuthLocalDataSource.saveRefreshTokenToDb(
         userId: userId,

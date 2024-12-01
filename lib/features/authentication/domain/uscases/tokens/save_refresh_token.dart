@@ -35,8 +35,8 @@ class SaveRefreshToken<U extends User,
     final String refreshTokenString = refreshToken.token;
 
     return userAuthenticationRepository.saveRefreshTokenToDb(
-      userId,
-      refreshTokenString,
+      userId: userId,
+      refreshToken: refreshTokenString,
     );
   }
 }

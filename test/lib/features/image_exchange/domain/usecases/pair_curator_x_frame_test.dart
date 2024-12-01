@@ -32,15 +32,12 @@ void main() {
     );
 
     when(
-      () => mockCuratorAuthRepository.isUserIdTaken(
-        any(),
-      ),
+      () =>
+          mockCuratorAuthRepository.isUserIdTaken(userId: any(named: "userId")),
     ).thenAnswer((_) async => const Right(true));
 
     when(
-      () => mockFrameAuthRepository.isUserIdTaken(
-        any(),
-      ),
+      () => mockFrameAuthRepository.isUserIdTaken(userId: any(named: "userId")),
     ).thenAnswer((_) async => const Right(true));
 
     when(
@@ -67,7 +64,7 @@ void main() {
       );
 
       // assert
-      verify(() => mockCuratorAuthRepository.isUserIdTaken(tCuratorId));
+      verify(() => mockCuratorAuthRepository.isUserIdTaken(userId: tCuratorId));
     });
 
     test("should return [CuratorNotFoundFailure] if curator does not exist",
@@ -75,8 +72,7 @@ void main() {
       // arrange
       when(
         () => mockCuratorAuthRepository.isUserIdTaken(
-          any(),
-        ),
+            userId: any(named: "userId")),
       ).thenAnswer((_) async => const Right(false));
 
       // act
@@ -93,8 +89,7 @@ void main() {
       // arrange
       when(
         () => mockCuratorAuthRepository.isUserIdTaken(
-          any(),
-        ),
+            userId: any(named: "userId")),
       ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
 
       // act
@@ -116,16 +111,16 @@ void main() {
       );
 
       // assert
-      verify(() => mockFrameAuthRepository.isUserIdTaken(tPictureFrameId));
+      verify(
+          () => mockFrameAuthRepository.isUserIdTaken(userId: tPictureFrameId));
     });
 
     test("should return [FrameNotFoundFailure] if curator does not exist",
         () async {
       // arrange
       when(
-        () => mockFrameAuthRepository.isUserIdTaken(
-          any(),
-        ),
+        () =>
+            mockFrameAuthRepository.isUserIdTaken(userId: any(named: "userId")),
       ).thenAnswer((invocation) async => const Right(false));
 
       // act
@@ -141,9 +136,8 @@ void main() {
     test("should relay [Failure]s", () async {
       // arrange
       when(
-        () => mockFrameAuthRepository.isUserIdTaken(
-          any(),
-        ),
+        () =>
+            mockFrameAuthRepository.isUserIdTaken(userId: any(named: "userId")),
       ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
 
       // act

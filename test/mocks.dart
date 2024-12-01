@@ -8,6 +8,8 @@ import 'package:einblicke_server/core/data/data_sources/crypto_local_data_source
 import 'package:einblicke_server/core/domain/crypto_repository.dart';
 import 'package:einblicke_server/core/jwe_builder_wrapper.dart';
 import 'package:einblicke_server/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
+import 'package:einblicke_server/features/authentication/data/data_sources/curator_authentication_local_data_source.dart';
+import 'package:einblicke_server/features/authentication/data/data_sources/frame_authentication_local_data_source.dart';
 import 'package:einblicke_server/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
 import 'package:einblicke_server/features/authentication/domain/models/encrypted_token.dart';
 import 'package:einblicke_server/features/authentication/domain/models/token_claims/token_claims.dart';
@@ -128,6 +130,12 @@ class MockUuid extends Mock implements Uuid {}
 
 class MockUserAuthenticationLocalDataSource extends Mock
     implements UserAuthenticationLocalDataSource {}
+
+class MockCuratorAuthLocalDataSource extends Mock
+    implements CuratorAuthenticationLocalDataSource {}
+
+class MockFrameAuthLocalDataSource extends Mock
+    implements FrameAuthenticationLocalDataSource {}
 
 class MockCryptoWrapper extends Mock implements CryptoWrapper {}
 

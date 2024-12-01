@@ -13,14 +13,20 @@ class Frame extends User {
   /// {@macro frame}
   const Frame({
     required super.userId,
-    required super.username,
-    required super.passwordHash,
+    required this.ownerId,
+    required this.name,
   });
+
+  /// The id of the [Curator] that owns this frame.
+  final String ownerId;
+
+  /// The name of the frame given by the owner/[Curator].
+  final String name;
 
   @override
   List<Object?> get props => [
         userId,
-        username,
-        passwordHash,
+        ownerId,
+        name,
       ];
 }

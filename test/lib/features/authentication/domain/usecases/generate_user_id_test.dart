@@ -23,8 +23,11 @@ void main() {
     );
 
     when(() => mockCryptoRepository.generateUuid()).thenReturn(tUserId);
-    when(() => mockUserAuthRepository.isUserIdTaken(any()))
-        .thenAnswer((_) async => const Right(false));
+    when(
+      () => mockUserAuthRepository.isUserIdTaken(
+        userId: any(named: "userId"),
+      ),
+    ).thenAnswer((_) async => const Right(false));
   });
 
   group("user id generation", () {
@@ -43,15 +46,18 @@ void main() {
       await generateUserId();
 
       // assert
-      verify(() => mockUserAuthRepository.isUserIdTaken(tUserId));
+      verify(() => mockUserAuthRepository.isUserIdTaken(userId: tUserId));
     });
 
     test("should generate another user id if the first one is taken", () async {
       // arrange
       final List<bool> isUserIdTakenAnswers = [true, false];
 
-      when(() => mockUserAuthRepository.isUserIdTaken(any()))
-          .thenAnswer((_) async => Right(isUserIdTakenAnswers.removeAt(0)));
+      when(
+        () => mockUserAuthRepository.isUserIdTaken(
+          userId: any(named: "userId"),
+        ),
+      ).thenAnswer((_) async => Right(isUserIdTakenAnswers.removeAt(0)));
 
       // act
       await generateUserId();
@@ -64,8 +70,11 @@ void main() {
         "should return a [UserIdGenerationFailure] "
         "if the user id generation fails 5 times", () async {
       // arrange
-      when(() => mockUserAuthRepository.isUserIdTaken(any()))
-          .thenAnswer((_) async => const Right(true));
+      when(
+        () => mockUserAuthRepository.isUserIdTaken(
+          userId: any(named: "userId"),
+        ),
+      ).thenAnswer((_) async => const Right(true));
 
       // act
       final result = await generateUserId();

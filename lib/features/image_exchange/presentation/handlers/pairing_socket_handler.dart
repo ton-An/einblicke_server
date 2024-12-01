@@ -80,13 +80,14 @@ class PairingSocketHandler extends FrameSocketHandler {
   Future<Either<Failure, None>> pair({
     required String tempFrameId,
     required String curatorId,
+    required String name,
   }) async {
     if (!isFrameConnected(frameId: tempFrameId)) {
       return const Left(FrameNotConnectedFailure());
     }
 
     final Either<Failure, Frame> createFrameEither =
-        await createFrame(curatorId);
+        await createFrame(ownerId: curatorId, name: name);
 
     return createFrameEither.fold(Left.new, (Frame frame) async {
       final Either<Failure, ServerTokenBundle> signInFrameEither =

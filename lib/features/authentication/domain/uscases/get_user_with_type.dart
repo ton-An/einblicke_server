@@ -46,7 +46,7 @@ class GetUserWithType<U extends User,
     }
 
     return userAuthenticationRepository.getUserFromId(
-      userId,
+      userId: userId,
     );
   }
 }

@@ -43,7 +43,8 @@ class GetPairedFramesInfo {
   }
 
   Future<Either<Failure, List<PairedFrameInfo>>> _getPairedFramesIds(
-      String curatorId) async {
+    String curatorId,
+  ) async {
     final Either<Failure, List<String>> pairedFrameIdsEither =
         await imageExchangeRepository.getPairedFrameIdsOfCurator(
       curatorId: curatorId,
@@ -63,7 +64,7 @@ class GetPairedFramesInfo {
 
     final Either<Failure, Frame> frameInfoEither =
         await frameAuthRepository.getUserFromId(
-      pairedFrameIds[i],
+      userId: pairedFrameIds[i],
     );
 
     return frameInfoEither.fold(
@@ -71,7 +72,7 @@ class GetPairedFramesInfo {
       (Frame frame) {
         final PairedFrameInfo frameInfo = PairedFrameInfo(
           id: frame.userId,
-          name: frame.username,
+          name: frame.name,
         );
 
         final List<PairedFrameInfo> newFrameInfoList = List.from(frameInfoList)

@@ -67,8 +67,8 @@ class SignInCurator {
   }) async {
     final Either<Failure, Curator> userEither =
         await curatorAuthenticationRepository.getCuratorFromCredentials(
-      username,
-      passwordHash,
+      username: username,
+      passwordHash: passwordHash,
     );
 
     return userEither.fold(
@@ -77,8 +77,9 @@ class SignInCurator {
     );
   }
 
-  Future<Either<Failure, ServerTokenBundle>> _handleSignInTokens(
-      {required Curator curator}) {
+  Future<Either<Failure, ServerTokenBundle>> _handleSignInTokens({
+    required Curator curator,
+  }) {
     return getSignInTokens(curator);
   }
 }

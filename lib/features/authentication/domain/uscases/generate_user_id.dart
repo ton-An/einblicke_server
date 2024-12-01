@@ -47,7 +47,7 @@ class GenerateUserId<U extends User,
     int currentIteration,
   ) async {
     final Either<Failure, bool> isUserIdTakenEither =
-        await userAuthRepository.isUserIdTaken(userId);
+        await userAuthRepository.isUserIdTaken(userId: userId);
 
     return isUserIdTakenEither.fold(Left.new, (bool isUserIdTaken) {
       if (isUserIdTaken) {

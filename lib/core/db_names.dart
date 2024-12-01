@@ -10,8 +10,6 @@ abstract class UserTable<U extends User> {
   const UserTable({
     required this.tableName,
     required this.userId,
-    required this.username,
-    required this.passwordHash,
   });
 
   /// Name of the user table
@@ -19,12 +17,6 @@ abstract class UserTable<U extends User> {
 
   /// Name of the user id column
   final String userId;
-
-  /// Name of the username column
-  final String username;
-
-  /// Name of the password hash column
-  final String passwordHash;
 }
 
 /// {@template user_refresh_token_table}
@@ -57,9 +49,13 @@ class CuratorTable extends UserTable<Curator> {
       : super(
           tableName: "curators",
           userId: "curator_id",
-          username: "username",
-          passwordHash: "password_hash",
         );
+
+  /// Name of the username column
+  final String username = "username";
+
+  /// Name of the password hash column
+  final String passwordHash = "password_hash";
 }
 
 /// {@template user_refresh_token_table}
@@ -78,15 +74,19 @@ class CuratorRefreshTokenTable extends UserRefreshTokenTable<Curator> {
 /// {@template picture_frame_table}
 /// Wrapper for the names of the picture frame user table
 /// {@endtemplate}
-class PictureFrameTable extends UserTable<Frame> {
+class FrameTable extends UserTable<Frame> {
   /// {@macro picture_frame_table}
-  const PictureFrameTable()
+  const FrameTable()
       : super(
-          tableName: "picture_frames",
+          tableName: "frames",
           userId: "frame_id",
-          username: "username",
-          passwordHash: "password_hash",
         );
+
+  /// Name of the owner id column
+  final String ownerId = "owner_id";
+
+  /// Name of the name column
+  final String name = "name";
 }
 
 /// {@template frame_refresh_token_table}

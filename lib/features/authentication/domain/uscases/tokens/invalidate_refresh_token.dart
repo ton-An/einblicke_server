@@ -33,8 +33,8 @@ class InvalidateRefreshToken<U extends User,
     required String refreshTokenString,
   }) {
     return userAuthenticationRepository.removeRefreshTokenFromDb(
-      userId,
-      refreshTokenString,
+      userId: userId,
+      refreshToken: refreshTokenString,
     );
   }
 }

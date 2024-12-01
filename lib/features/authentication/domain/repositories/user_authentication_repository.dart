@@ -25,7 +25,7 @@ abstract class UserAuthenticationRepository<U extends User> {
   ///
   /// Failures:
   /// - [DatabaseReadFailure]
-  Future<Either<Failure, bool>> isUserIdTaken(String userId);
+  Future<Either<Failure, bool>> isUserIdTaken({required String userId});
 
   /// Saves the refresh token in the database for a given user id
   ///
@@ -35,10 +35,10 @@ abstract class UserAuthenticationRepository<U extends User> {
   ///
   /// Failures:
   /// - [DatabaseWriteFailure]
-  Future<Either<Failure, None>> saveRefreshTokenToDb(
-    String userId,
-    String refreshToken,
-  );
+  Future<Either<Failure, None>> saveRefreshTokenToDb({
+    required String userId,
+    required String refreshToken,
+  });
 
   /// Removes the refresh token from the database for a given user id
   ///
@@ -48,10 +48,10 @@ abstract class UserAuthenticationRepository<U extends User> {
   ///
   /// Failures:
   /// - [DatabaseWriteFailure]
-  Future<Either<Failure, None>> removeRefreshTokenFromDb(
-    String userId,
-    String refreshToken,
-  );
+  Future<Either<Failure, None>> removeRefreshTokenFromDb({
+    required String userId,
+    required String refreshToken,
+  });
 
   /// Removes all refresh tokens from the database for a given user id
   ///
@@ -60,9 +60,9 @@ abstract class UserAuthenticationRepository<U extends User> {
   ///
   /// Failures:
   /// - [DatabaseWriteFailure]
-  Future<Either<Failure, None>> removeAllRefreshTokensFromDb(
-    String userId,
-  );
+  Future<Either<Failure, None>> removeAllRefreshTokensFromDb({
+    required String userId,
+  });
 
   /// Checks if the given refresh token is in the database for the given user id
   ///
@@ -75,10 +75,10 @@ abstract class UserAuthenticationRepository<U extends User> {
   ///
   /// Failures:
   /// - [DatabaseReadFailure]
-  Future<Either<Failure, bool>> isRefreshTokenInUserDb(
-    String userId,
-    String refreshToken,
-  );
+  Future<Either<Failure, bool>> isRefreshTokenInUserDb({
+    required String userId,
+    required String refreshToken,
+  });
 
   /// Gets the user from the database for the given user id
   ///
@@ -91,5 +91,5 @@ abstract class UserAuthenticationRepository<U extends User> {
   /// Failures:
   /// - [DatabaseReadFailure]
   /// - [UserNotFoundFailure]
-  Future<Either<Failure, U>> getUserFromId(String userId);
+  Future<Either<Failure, U>> getUserFromId({required String userId});
 }

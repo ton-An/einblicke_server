@@ -10,7 +10,8 @@ import 'package:einblicke_server/core/jwe_builder_wrapper.dart';
 import 'package:einblicke_server/core/secrets.dart';
 import 'package:einblicke_server/core/secrets_impl.dart';
 import 'package:einblicke_server/features/authentication/data/data_sources/basic_authentication_local_data_source.dart';
-import 'package:einblicke_server/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
+import 'package:einblicke_server/features/authentication/data/data_sources/curator_authentication_local_data_source.dart';
+import 'package:einblicke_server/features/authentication/data/data_sources/frame_authentication_local_data_source.dart';
 import 'package:einblicke_server/features/authentication/data/repository_implementation/basic_authentication_repository_impl.dart';
 import 'package:einblicke_server/features/authentication/data/repository_implementation/curator_auth_repository_impl.dart';
 import 'package:einblicke_server/features/authentication/data/repository_implementation/frame_auth_repository_impl.dart';
@@ -363,15 +364,15 @@ Future<void> initGetIt() async {
       imageDirectoryPath: imageDirectoryPath,
     ),
   );
-  getIt.registerLazySingleton<CuratorAuthLocalDataSource>(
-    () => UserAuthLocalDataSourceImpl<Curator>(
+  getIt.registerLazySingleton<CuratorAuthenticationLocalDataSource>(
+    () => CuratorAuthLocalDataSourceImpl(
       sqliteDatabase: getIt(),
       userTableNames: getIt(),
       refreshTokenTableNames: getIt(),
     ),
   );
-  getIt.registerLazySingleton<FrameAuthLocalDataSource>(
-    () => UserAuthLocalDataSourceImpl<Frame>(
+  getIt.registerLazySingleton<FrameAuthenticationLocalDataSource>(
+    () => FrameAuthenticationLocalDataSourceImpl(
       sqliteDatabase: getIt(),
       userTableNames: getIt(),
       refreshTokenTableNames: getIt(),
@@ -386,7 +387,7 @@ Future<void> initGetIt() async {
     () => const CuratorRefreshTokenTable(),
   );
   getIt.registerLazySingleton<UserTable<Frame>>(
-    () => const PictureFrameTable(),
+    () => const FrameTable(),
   );
   getIt.registerLazySingleton<UserRefreshTokenTable<Frame>>(
     () => const FrameRefreshTokenTable(),

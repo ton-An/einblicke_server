@@ -50,8 +50,8 @@ void main() {
 
     when(
       () => mockUserAuthenticationRepository.isRefreshTokenInUserDb(
-        any(),
-        any(),
+        userId: any(named: "userId"),
+        refreshToken: any(named: "refreshToken"),
       ),
     ).thenAnswer(
       (_) async => const Right(true),
@@ -136,8 +136,8 @@ void main() {
       // assert
       verify(
         () => mockUserAuthenticationRepository.isRefreshTokenInUserDb(
-          tUserId,
-          tRefreshToken,
+          userId: tUserId,
+          refreshToken: tRefreshToken,
         ),
       );
     });
@@ -148,8 +148,8 @@ void main() {
       // arrange
       when(
         () => mockUserAuthenticationRepository.isRefreshTokenInUserDb(
-          any(),
-          any(),
+          userId: any(named: "userId"),
+          refreshToken: any(named: "refreshToken"),
         ),
       ).thenAnswer(
         (_) async => const Right(false),
@@ -167,8 +167,8 @@ void main() {
       // arrange
       when(
         () => mockUserAuthenticationRepository.isRefreshTokenInUserDb(
-          any(),
-          any(),
+          userId: any(named: "userId"),
+          refreshToken: any(named: "refreshToken"),
         ),
       ).thenAnswer(
         (_) async => const Left(

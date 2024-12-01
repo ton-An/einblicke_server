@@ -23,8 +23,9 @@ abstract class FrameAuthenticationRepository
   ///
   /// Failures:
   /// - [DatabaseWriteFailure]
-  Future<Either<Failure, Frame>> createFrame(
-    String userId,
-    String curatorId,
-  );
+  Future<Either<Failure, Frame>> createFrame({
+    required String userId,
+    required String ownerId,
+    required String name,
+  });
 }

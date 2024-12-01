@@ -27,6 +27,8 @@ void main() {
       signInFrame: mockSignInFrame,
     );
 
+    registerFallbackValue(tPictureFrame);
+
     tMockStreamSink = MockStreamSink();
   });
 
@@ -85,6 +87,7 @@ void main() {
       final result = await pairingSocketHandler.pair(
         tempFrameId: tPictureFrameId,
         curatorId: tCuratorId,
+        name: tFrameName,
       );
 
       // assert
@@ -93,8 +96,12 @@ void main() {
 
     group("if frame with give id exists", () {
       setUp(() {
-        when(() => mockCreateFrame(any()))
-            .thenAnswer((_) async => const Right(tPictureFrame));
+        when(
+          () => mockCreateFrame(
+            name: any(named: "name"),
+            ownerId: any(named: "ownerId"),
+          ),
+        ).thenAnswer((_) async => const Right(tPictureFrame));
         when(() => mockSignInFrame(frame: any(named: "frame")))
             .thenAnswer((_) async => Right(tServerTokenBundle));
 
@@ -110,10 +117,11 @@ void main() {
         await pairingSocketHandler.pair(
           tempFrameId: tPictureFrameId,
           curatorId: tCuratorId,
+          name: tFrameName,
         );
 
         // assert
-        verify(() => mockCreateFrame(tCuratorId));
+        verify(() => mockCreateFrame(ownerId: tCuratorId, name: tFrameName));
       });
 
       test("should sign in the new frame", () async {
@@ -121,6 +129,7 @@ void main() {
         await pairingSocketHandler.pair(
           tempFrameId: tPictureFrameId,
           curatorId: tCuratorId,
+          name: tFrameName,
         );
 
         // assert
@@ -132,8 +141,8 @@ void main() {
         await pairingSocketHandler.pair(
           tempFrameId: tPictureFrameId,
           curatorId: tCuratorId,
+          name: tFrameName,
         );
-
         // assert
         verify(
           () => tMockStreamSink.add(
@@ -148,6 +157,7 @@ void main() {
         await pairingSocketHandler.pair(
           tempFrameId: tPictureFrameId,
           curatorId: tCuratorId,
+          name: tFrameName,
         );
 
         // assert
@@ -162,6 +172,7 @@ void main() {
         final result = await pairingSocketHandler.pair(
           tempFrameId: tPictureFrameId,
           curatorId: tCuratorId,
+          name: tFrameName,
         );
 
         // assert

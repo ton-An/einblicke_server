@@ -19,8 +19,12 @@ void main() {
       userAuthenticationRepository: mockUserAuthRepository,
     );
 
-    when(() => mockUserAuthRepository.saveRefreshTokenToDb(any(), any()))
-        .thenAnswer((_) async => const Right(None()));
+    when(
+      () => mockUserAuthRepository.saveRefreshTokenToDb(
+        userId: any(named: "userId"),
+        refreshToken: any(named: "refreshToken"),
+      ),
+    ).thenAnswer((_) async => const Right(None()));
   });
 
   // should save the token in the database and return None
@@ -38,16 +42,20 @@ void main() {
     expect(result, const Right(None()));
     verify(
       () => mockUserAuthRepository.saveRefreshTokenToDb(
-        tUserId,
-        tRefreshToken,
+        userId: tUserId,
+        refreshToken: tRefreshToken,
       ),
     );
   });
 
   test("should relay [Failure]s", () async {
     // arrange
-    when(() => mockUserAuthRepository.saveRefreshTokenToDb(any(), any()))
-        .thenAnswer((_) async => const Left(DatabaseWriteFailure()));
+    when(
+      () => mockUserAuthRepository.saveRefreshTokenToDb(
+        userId: any(named: "userId"),
+        refreshToken: any(named: "refreshToken"),
+      ),
+    ).thenAnswer((_) async => const Left(DatabaseWriteFailure()));
 
     // act
     final result = await saveRefreshToken(

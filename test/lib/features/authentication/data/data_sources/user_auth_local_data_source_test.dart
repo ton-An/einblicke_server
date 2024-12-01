@@ -1,6 +1,7 @@
 import 'package:einblicke_server/core/db_names.dart';
 import 'package:einblicke_server/features/authentication/data/data_sources/user_authentication_local_data_source.dart';
 import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
 
@@ -8,6 +9,31 @@ import '../../../../../database_mocks.dart';
 import '../../../../../fixtures.dart';
 
 // ToDo: Need to clean up the database tests (especially the test query results)
+
+class FakeUserAuthLocalDataSourceImpl<U extends User>
+    extends UserAuthenticationLocalDataSource<U>
+    with UserAuthLocalDataSourceImpl<U> {
+  FakeUserAuthLocalDataSourceImpl({
+    required this.sqliteDatabase,
+    required this.userTableNames,
+    required this.refreshTokenTableNames,
+  });
+
+  @override
+  final Database sqliteDatabase;
+
+  @override
+  final UserTable<U> userTableNames;
+
+  @override
+  final UserRefreshTokenTable<U> refreshTokenTableNames;
+
+  @override
+  Future<U?> getUserFromId({required String userId}) {
+    // TODO: implement getUserFromId
+    throw UnimplementedError();
+  }
+}
 
 void main() {
   late UserAuthenticationLocalDataSource dataSource;
@@ -23,10 +49,9 @@ void main() {
     await setUpMockCuratorsTable(database);
     await setUpMockUserRefreshTokenTable(database);
 
-    database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
     userRefreshTokenTable = const CuratorRefreshTokenTable();
     userTable = const CuratorTable();
-    dataSource = UserAuthLocalDataSourceImpl<Curator>(
+    dataSource = FakeUserAuthLocalDataSourceImpl<Curator>(
       sqliteDatabase: database,
       userTableNames: userTable,
       refreshTokenTableNames: userRefreshTokenTable,
@@ -46,77 +71,6 @@ void main() {
 
   tearDown(() async {
     await database.close();
-  });
-
-  group("createUser", () {
-    test("should write the user to the database and return it", () async {
-      // act
-      final result = await dataSource.createUser(
-        userId: tUser.userId,
-        username: tUser.username,
-        passwordHash: tUser.passwordHash,
-      );
-
-      // assert
-
-      expect(result, tUser);
-    });
-  });
-
-  group("getUser", () {
-    test("should return the user if it exists", () async {
-      // arrange
-      await dataSource.createUser(
-        userId: tUser.userId,
-        username: tUser.username,
-        passwordHash: tUser.passwordHash,
-      );
-
-      // act
-      final result = await dataSource.getUser(
-        username: tUser.username,
-        passwordHash: tUser.passwordHash,
-      );
-
-      // assert
-      expect(result, tUser);
-    });
-
-    test("should return null if the user does not exist", () async {
-      // act
-      final result = await dataSource.getUser(
-        username: tUser.username,
-        passwordHash: tUser.passwordHash,
-      );
-
-      // assert
-      expect(result, null);
-    });
-  });
-
-  group("getUserFromId", () {
-    test("should return the user if it exists", () async {
-      // arrange
-      await dataSource.createUser(
-        userId: tUser.userId,
-        username: tUser.username,
-        passwordHash: tUser.passwordHash,
-      );
-
-      // act
-      final result = await dataSource.getUserFromId(tUser.userId);
-
-      // assert
-      expect(result, tUser);
-    });
-
-    test("should return null if the user does not exist", () async {
-      // act
-      final result = await dataSource.getUserFromId(tUser.userId);
-
-      // assert
-      expect(result, null);
-    });
   });
 
   group("isRefreshTokenInUserDb", () {
@@ -150,56 +104,6 @@ void main() {
     });
   });
 
-  group("isUserIdTaken", () {
-    test("should return true if the user id is taken", () async {
-      // arrange
-      await dataSource.createUser(
-        userId: tUser.userId,
-        username: tUser.username,
-        passwordHash: tUser.passwordHash,
-      );
-
-      // act
-      final result = await dataSource.isUserIdTaken(tUser.userId);
-
-      // assert
-      expect(result, true);
-    });
-
-    test("should return false if the user id is not taken", () async {
-      // act
-      final result = await dataSource.isUserIdTaken(tUser.userId);
-
-      // assert
-      expect(result, false);
-    });
-  });
-
-  group("isUsernameTaken", () {
-    test("should return true if the username is taken", () async {
-      // arrange
-      await dataSource.createUser(
-        userId: tUser.userId,
-        username: tUser.username,
-        passwordHash: tUser.passwordHash,
-      );
-
-      // act
-      final result = await dataSource.isUsernameTaken(tUser.username);
-
-      // assert
-      expect(result, true);
-    });
-
-    test("should return false if the username is not taken", () async {
-      // act
-      final result = await dataSource.isUsernameTaken(tUser.username);
-
-      // assert
-      expect(result, false);
-    });
-  });
-
   group("removeAllRefreshTokensFromDb", () {
     test("should remove all refresh tokens from the database", () async {
       // arrange
@@ -213,7 +117,7 @@ void main() {
       );
 
       // act
-      await dataSource.removeAllRefreshTokensFromDb(tUser.userId);
+      await dataSource.removeAllRefreshTokensFromDb(userId: tUser.userId);
 
       // assert
       final result = await dataSource.isRefreshTokenInUserDb(

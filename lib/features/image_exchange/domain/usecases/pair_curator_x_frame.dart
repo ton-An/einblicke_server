@@ -52,7 +52,7 @@ class PairCuratorXFrame {
     required String frameId,
   }) async {
     final Either<Failure, bool> isCuratorIdTakenEither =
-        await curatorAuthenticationRepository.isUserIdTaken(curatorId);
+        await curatorAuthenticationRepository.isUserIdTaken(userId: curatorId);
 
     return isCuratorIdTakenEither.fold(Left.new, (bool isCuratorIdTaken) {
       if (!isCuratorIdTaken) {
@@ -71,7 +71,7 @@ class PairCuratorXFrame {
     required String frameId,
   }) async {
     final Either<Failure, bool> isFrameIdTakenEither =
-        await frameAuthenticationRepository.isUserIdTaken(frameId);
+        await frameAuthenticationRepository.isUserIdTaken(userId: frameId);
 
     return isFrameIdTakenEither.fold(Left.new, (bool isFrameIdTaken) {
       if (!isFrameIdTaken) {

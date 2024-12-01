@@ -32,7 +32,7 @@ class InvalidateAllRefreshTokens<U extends User,
     required String userId,
   }) {
     return userAuthenticationRepository.removeAllRefreshTokensFromDb(
-      userId,
+      userId: userId,
     );
   }
 }

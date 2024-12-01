@@ -92,7 +92,7 @@ class CreateCurator {
     String password,
   ) async {
     final Either<Failure, bool> isUsernameTakenEither =
-        await curatorAuthRepository.isUsernameTaken(username);
+        await curatorAuthRepository.isUsernameTaken(username: username);
 
     return isUsernameTakenEither.fold(Left.new, (isUsernameTaken) {
       if (isUsernameTaken) {
@@ -132,9 +132,9 @@ class CreateCurator {
   ) async {
     final Either<Failure, Curator> createCuratorEither =
         await curatorAuthRepository.createCurator(
-      userId,
-      username,
-      passwordHash,
+      userId: userId,
+      username: username,
+      passwordHash: passwordHash,
     );
 
     return createCuratorEither;

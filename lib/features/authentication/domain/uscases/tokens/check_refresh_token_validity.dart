@@ -100,8 +100,8 @@ class CheckRefreshTokenValidityWrapper<U extends User,
   }) async {
     final Either<Failure, bool> isRefreshTokenInDbEither =
         await userAuthRepository.isRefreshTokenInUserDb(
-      payload.userId,
-      refreshToken,
+      userId: payload.userId,
+      refreshToken: refreshToken,
     );
 
     return isRefreshTokenInDbEither.fold(

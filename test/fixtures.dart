@@ -120,27 +120,30 @@ EncryptedToken tEncryptedRefreshToken = EncryptedToken(
 // Curator
 const String tCuratorId = "testCuratorId";
 const String tAnotherCuratorId = "testAnotherCuratorId";
+const String tCuratorUsername = "testCuratorUsername";
 
 const Curator tCurator = Curator(
   userId: tCuratorId,
-  username: tUsername,
+  username: tCuratorUsername,
   passwordHash: tPasswordHash,
 );
 
 // PictureFrame
 const String tPictureFrameId = "testPictureFrameId";
 const String tPictureFrameId2 = "testPictureFrameId2";
+const String tFrameName = "testFrameName";
+const String tAntoherFrameName = "testAnotherFrameName";
 
 const Frame tPictureFrame = Frame(
   userId: tPictureFrameId,
-  username: tUsername,
-  passwordHash: tPasswordHash,
+  ownerId: tCuratorId,
+  name: tFrameName,
 );
 
 const Frame tPictureFrame2 = Frame(
   userId: tPictureFrameId2,
-  username: tAnotherUsername,
-  passwordHash: tPasswordHash,
+  ownerId: tCuratorId,
+  name: tAntoherFrameName,
 );
 
 const String tMessage =
@@ -219,10 +222,10 @@ const List<String> tPairedFrameIds = [tPictureFrameId, tPictureFrameId2];
 const List<PairedFrameInfo> tPairedFrameInfos = [
   PairedFrameInfo(
     id: tPictureFrameId,
-    name: tUsername,
+    name: tFrameName,
   ),
   PairedFrameInfo(
     id: tPictureFrameId2,
-    name: tAnotherUsername,
+    name: tAntoherFrameName,
   ),
 ];

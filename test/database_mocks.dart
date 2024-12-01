@@ -43,3 +43,14 @@ Future<void> setUpMockUserRefreshTokenTable(Database database) async {
       """,
   );
 }
+
+Future<void> setUpMockFramesTable(Database database) async {
+  await database.execute(
+    """
+      CREATE TABLE frames (
+      frame_id VARCHAR(255) PRIMARY KEY,
+      owner_id VARCHAR(255) NOT NULL,
+      name VARCHAR(255) NOT NULL)
+      """,
+  );
+}

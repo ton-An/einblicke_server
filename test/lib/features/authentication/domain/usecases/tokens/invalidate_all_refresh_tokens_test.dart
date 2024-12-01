@@ -22,8 +22,11 @@ void main() {
       userAuthenticationRepository: mockUserAuthRepository,
     );
 
-    when(() => mockUserAuthRepository.removeAllRefreshTokensFromDb(any()))
-        .thenAnswer((_) async => const Right(None()));
+    when(
+      () => mockUserAuthRepository.removeAllRefreshTokensFromDb(
+        userId: any(named: "userId"),
+      ),
+    ).thenAnswer((_) async => const Right(None()));
   });
 
   test("should delete all refresh tokens from the database and return [None]",
@@ -37,15 +40,18 @@ void main() {
     expect(result, const Right(None()));
     verify(
       () => mockUserAuthRepository.removeAllRefreshTokensFromDb(
-        tUserId,
+        userId: tUserId,
       ),
     );
   });
 
   test("should relay [Failure]s", () async {
     // arrange
-    when(() => mockUserAuthRepository.removeAllRefreshTokensFromDb(any()))
-        .thenAnswer((_) async => const Left(DatabaseWriteFailure()));
+    when(
+      () => mockUserAuthRepository.removeAllRefreshTokensFromDb(
+        userId: any(named: "userId"),
+      ),
+    ).thenAnswer((_) async => const Left(DatabaseWriteFailure()));
 
     // act
     final result = await invalidateAllRefreshTokens(

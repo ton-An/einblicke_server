@@ -25,7 +25,7 @@ void main() {
 
     when(
       () => mockUserAuthRepository.getUserFromId(
-        any(),
+        userId: any(named: "userId"),
       ),
     ).thenAnswer(
       (_) async => Right(tMockUser),
@@ -43,7 +43,7 @@ void main() {
     expect(result, Right(tMockUser));
     verify(
       () => mockUserAuthRepository.getUserFromId(
-        tAccessTokenClaims.userId,
+        userId: tAccessTokenClaims.userId,
       ),
     );
   });
@@ -64,7 +64,7 @@ void main() {
     // arrange
     when(
       () => mockUserAuthRepository.getUserFromId(
-        any(),
+        userId: any(named: "userId"),
       ),
     ).thenAnswer((_) async => const Left(UserNotFoundFailure()));
 

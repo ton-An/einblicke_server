@@ -27,10 +27,11 @@ void main() {
     ).thenAnswer((invocation) => Future.value(const Right(tPairedFrameIds)));
 
     when(
-      () => mockFrameAuthRepository.getUserFromId(tPictureFrameId),
+      () => mockFrameAuthRepository.getUserFromId(userId: tPictureFrameId),
     ).thenAnswer((invocation) => Future.value(const Right(tPictureFrame)));
+
     when(
-      () => mockFrameAuthRepository.getUserFromId(tPictureFrameId2),
+      () => mockFrameAuthRepository.getUserFromId(userId: tPictureFrameId2),
     ).thenAnswer((invocation) => Future.value(const Right(tPictureFrame2)));
   });
 
@@ -70,12 +71,12 @@ void main() {
     // assert
     verify(
       () => mockFrameAuthRepository.getUserFromId(
-        tPairedFrameIds[0],
+        userId: tPairedFrameIds[0],
       ),
     );
     verify(
       () => mockFrameAuthRepository.getUserFromId(
-        tPairedFrameIds[1],
+        userId: tPairedFrameIds[1],
       ),
     );
   });
@@ -83,15 +84,14 @@ void main() {
   test('should relay [Failures]', () async {
     // arrange
     when(
-      () => mockFrameAuthRepository.getUserFromId(any()),
+      () => mockFrameAuthRepository.getUserFromId(userId: any(named: "userId")),
     ).thenAnswer(
       (invocation) => Future.value(const Left(DatabaseReadFailure())),
     );
 
     // act
     final result = await getPairedFramesInfo(curatorId: tCuratorId);
-    print(result.hashCode);
-    print(Left(DatabaseReadFailure().hashCode));
+
     // assert
     expect(result, const Left(DatabaseReadFailure()));
   });
@@ -105,9 +105,4 @@ void main() {
       (r) => expect(r, tPairedFrameInfos),
     );
   });
-
-  // should get a [List] of the paired [Frame]s
-  // should relay [Failures]
-  // should get the names of the paired [Frame]s
-  // should relay [Failures]
 }

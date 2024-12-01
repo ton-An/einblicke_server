@@ -11,9 +11,15 @@ class Curator extends User {
   /// {@macro curator}
   const Curator({
     required super.userId,
-    required super.username,
-    required super.passwordHash,
+    required this.username,
+    required this.passwordHash,
   });
+
+  /// [username] is the name that the user will be known by
+  final String username;
+
+  /// [passwordHash] is the hash of the user's password
+  final String passwordHash;
 
   @override
   List<Object?> get props => [

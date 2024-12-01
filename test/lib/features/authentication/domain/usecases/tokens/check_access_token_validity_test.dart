@@ -49,7 +49,7 @@ void main() {
 
     when(
       () => mockUserAuthRepository.getUserFromId(
-        any(),
+        userId: any(named: "userId"),
       ),
     ).thenAnswer(
       (_) async => Right(tMockUser),

@@ -33,16 +33,27 @@ void main() {
 
     when(() => mockIsUsernameValid(any())).thenReturn(true);
     when(() => mockIsPasswordValid(any())).thenReturn(true);
-    when(() => mockCuratorAuthRepository.isUsernameTaken(any()))
-        .thenAnswer((_) async => const Right(false));
+    when(
+      () => mockCuratorAuthRepository.isUsernameTaken(
+        username: any(named: "username"),
+      ),
+    ).thenAnswer((_) async => const Right(false));
     when(() => mockGenerateUserId())
         .thenAnswer((_) async => const Right(tUserId));
-    when(() => mockCuratorAuthRepository.isUserIdTaken(any()))
-        .thenAnswer((_) async => const Right(false));
+    when(
+      () => mockCuratorAuthRepository.isUserIdTaken(
+        userId: any(named: "userId"),
+      ),
+    ).thenAnswer((_) async => const Right(false));
     when(() => mockBasicAuthRepository.generatePasswordHash(any()))
         .thenReturn(tPasswordHash);
-    when(() => mockCuratorAuthRepository.createCurator(any(), any(), any()))
-        .thenAnswer((_) async => const Right(tCurator));
+    when(
+      () => mockCuratorAuthRepository.createCurator(
+        userId: any(named: "userId"),
+        username: any(named: "username"),
+        passwordHash: any(named: "passwordHash"),
+      ),
+    ).thenAnswer((_) async => const Right(tCurator));
   });
 
   group("username validity", () {
@@ -97,15 +108,19 @@ void main() {
       await createCurator(tUsername, tPassword);
 
       // assert
-      verify(() => mockCuratorAuthRepository.isUsernameTaken(tUsername));
+      verify(
+          () => mockCuratorAuthRepository.isUsernameTaken(username: tUsername));
     });
 
     test(
         "should return a [UsernameTakenFailure] "
         "if the given username is taken", () async {
       // arrange
-      when(() => mockCuratorAuthRepository.isUsernameTaken(any()))
-          .thenAnswer((_) async => const Right(true));
+      when(
+        () => mockCuratorAuthRepository.isUsernameTaken(
+          username: any(named: "username"),
+        ),
+      ).thenAnswer((_) async => const Right(true));
 
       // act
       final result = await createCurator(tUsername, tPassword);
@@ -116,8 +131,11 @@ void main() {
 
     test("should relay a [Failure] if the repository returns one", () async {
       // arrange
-      when(() => mockCuratorAuthRepository.isUsernameTaken(any()))
-          .thenAnswer((_) async => const Left(DatabaseReadFailure()));
+      when(
+        () => mockCuratorAuthRepository.isUsernameTaken(
+          username: any(named: "username"),
+        ),
+      ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
 
       // act
       final result = await createCurator(tUsername, tPassword);
@@ -168,9 +186,9 @@ void main() {
       // assert
       verify(
         () => mockCuratorAuthRepository.createCurator(
-          tUserId,
-          tUsername,
-          tPasswordHash,
+          userId: tUserId,
+          username: tUsername,
+          passwordHash: tPasswordHash,
         ),
       );
     });
@@ -185,8 +203,13 @@ void main() {
 
     test("should relay a [Failure] if the repository returns one", () async {
       // arrange
-      when(() => mockCuratorAuthRepository.createCurator(any(), any(), any()))
-          .thenAnswer((_) async => const Left(DatabaseReadFailure()));
+      when(
+        () => mockCuratorAuthRepository.createCurator(
+          userId: any(named: "userId"),
+          username: any(named: "username"),
+          passwordHash: any(named: "passwordHash"),
+        ),
+      ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
 
       // act
       final result = await createCurator(tUsername, tPassword);
