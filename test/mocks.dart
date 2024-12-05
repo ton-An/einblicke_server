@@ -35,6 +35,7 @@ import 'package:einblicke_server/features/image_exchange/domain/models/image.dar
 import 'package:einblicke_server/features/image_exchange/domain/repositories/image_exchange_repository.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/get_image_from_id.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/get_latest_image.dart';
+import 'package:einblicke_server/features/image_exchange/domain/usecases/pair_curator_x_frame.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:jose/jose.dart';
 import 'package:mocktail/mocktail.dart';
@@ -85,7 +86,9 @@ class MockInvalidateAllRefreshTokens<U extends User,
         R extends UserAuthenticationRepository<U>> extends Mock
     implements InvalidateAllRefreshTokens<U, R> {}
 
-class MockGenerateUserId extends Mock implements GenerateUserId {}
+class MockGenerateUserId<U extends User,
+        R extends UserAuthenticationRepository<U>> extends Mock
+    implements GenerateUserId<U, R> {}
 
 class MockCreateFrame extends Mock implements CreateFrame {}
 
@@ -147,3 +150,5 @@ class MockJWEBBuilderWrapper extends Mock implements JWEBuilderWrapper {}
 class MockJsonWebEncryption extends Mock implements JsonWebEncryption {}
 
 class MockDatabaseException extends Mock implements DatabaseException {}
+
+class MockPairCuratorXFrame extends Mock implements PairCuratorXFrame {}

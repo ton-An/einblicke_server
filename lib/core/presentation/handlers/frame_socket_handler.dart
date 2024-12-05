@@ -78,12 +78,20 @@ abstract class FrameSocketHandler {
     required String frameId,
     required String message,
   }) async {
+    print(1);
     if (!isFrameConnected(frameId: frameId)) {
+      print(2);
+
       return const Left(FrameNotConnectedFailure());
     }
+    print(3);
 
     for (final connection in _connections) {
+      print(4);
+
       if (connection.frameId == frameId) {
+        print(5);
+
         connection.sink.add(message);
       }
     }

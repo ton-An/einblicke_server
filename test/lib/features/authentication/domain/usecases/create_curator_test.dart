@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/curator_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/create_curator.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:mocktail/mocktail.dart';
@@ -14,7 +15,8 @@ void main() {
   late MockIsPasswordValid mockIsPasswordValid;
   late MockBasicAuthRepository mockBasicAuthRepository;
   late MockCuratorAuthRepository mockCuratorAuthRepository;
-  late MockGenerateUserId mockGenerateUserId;
+  late MockGenerateUserId<Curator, CuratorAuthenticationRepository>
+      mockGenerateUserId;
 
   setUp(() {
     mockIsUsernameValid = MockIsUsernameValid();

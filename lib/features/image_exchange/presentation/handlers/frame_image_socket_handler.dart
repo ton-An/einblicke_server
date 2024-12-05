@@ -35,6 +35,8 @@ class FrameImageSocketHandler extends FrameSocketHandler {
 
     final latestImageEither = await getLatestImage(frameId: frameId);
 
+    print(latestImageEither);
+
     await latestImageEither.fold(
       (failure) => sendMessage(
         frameId: frameId,

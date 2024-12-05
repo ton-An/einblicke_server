@@ -16,7 +16,7 @@ dependencies:
   dart_frog_web_socket: ^1.0.0
   dartz: ^0.10.1
   equatable: ^2.0.5
-  get_it: ^7.6.4
+  get_it: ^8.0.2
   jose: ^0.3.4
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
@@ -29,4 +29,4 @@ dependencies:
 dev_dependencies:
   mocktail: ^1.0.0
   test: ^1.19.2
-  very_good_analysis: ^5.1.0
+  very_good_analysis: ^6.0.0

@@ -22,6 +22,7 @@ Future<Response> onRequest(RequestContext context) async {
       );
 
       channel.stream.listen((event) {}).onDone(() {
+        print("asdsda");
         frameImageSocketHandler.removeConnectionWithSink(
           streamSink: channel.sink,
         );

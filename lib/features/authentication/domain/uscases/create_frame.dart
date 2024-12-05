@@ -3,6 +3,7 @@ import 'package:einblicke_server/features/authentication/domain/models/curator.d
 import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/generate_user_id.dart';
+import 'package:einblicke_server/features/image_exchange/domain/usecases/pair_curator_x_frame.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 
 /// {@template create_frame}
@@ -25,13 +26,16 @@ class CreateFrame {
   const CreateFrame({
     required this.frameAuthRepository,
     required this.generateUserId,
+    required this.pairCuratorXFrame,
   });
 
   /// Used to create the record of the frame
   final FrameAuthenticationRepository frameAuthRepository;
 
   /// Used to generate the user id
-  final GenerateUserId generateUserId;
+  final GenerateUserId<Frame, FrameAuthenticationRepository> generateUserId;
+
+  final PairCuratorXFrame pairCuratorXFrame;
 
   /// {@macro create_frame}
   Future<Either<Failure, Frame>> call({
@@ -61,7 +65,22 @@ class CreateFrame {
         .createFrame(userId: userId, ownerId: ownerId, name: name);
 
     return frameEither.fold(Left.new, (Frame frame) {
-      return Right(frame);
+      return _pairFrameToOwner(frame: frame);
     });
+  }
+
+  Future<Either<Failure, Frame>> _pairFrameToOwner({
+    required Frame frame,
+  }) async {
+    final Either<Failure, None> pairFrameToOwnerEither =
+        await pairCuratorXFrame(
+      curatorId: frame.ownerId,
+      frameId: frame.userId,
+    );
+
+    return pairFrameToOwnerEither.fold(
+      Left.new,
+      (None none) => Right(frame),
+    );
   }
 }

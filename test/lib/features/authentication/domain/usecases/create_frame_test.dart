@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/repositories/frame_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/uscases/create_frame.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:mocktail/mocktail.dart';
@@ -10,14 +12,17 @@ import '../../../../../mocks.dart';
 void main() {
   late CreateFrame createFrame;
   late MockFrameAuthRepository frameAuthRepository;
-  late MockGenerateUserId generateUserId;
+  late MockGenerateUserId<Frame, FrameAuthenticationRepository> generateUserId;
+  late MockPairCuratorXFrame pairCuratorXFrame;
 
   setUp(() {
     frameAuthRepository = MockFrameAuthRepository();
     generateUserId = MockGenerateUserId();
+    pairCuratorXFrame = MockPairCuratorXFrame();
     createFrame = CreateFrame(
       frameAuthRepository: frameAuthRepository,
       generateUserId: generateUserId,
+      pairCuratorXFrame: pairCuratorXFrame,
     );
 
     when(() => generateUserId()).thenAnswer((_) async => const Right(tUserId));
@@ -50,8 +55,51 @@ void main() {
     expect(result, const Left(DatabaseReadFailure()));
   });
 
-  test("should return a [Frame] if the frame was created successfully",
-      () async {
+  test("should relay the [Failure] if the frame creation fails", () async {
+    // arrange
+    when(
+      () => frameAuthRepository.createFrame(
+        userId: any(named: "userId"),
+        name: any(named: "name"),
+        ownerId: any(named: "ownerId"),
+      ),
+    ).thenAnswer((_) async => const Left(DatabaseReadFailure()));
+
+    // act
+    final result = await createFrame(ownerId: tCuratorId, name: tFrameName);
+
+    // assert
+    expect(result, const Left(DatabaseReadFailure()));
+  });
+
+  test("should pair the frame to the owner", () async {
+    // act
+    await createFrame(ownerId: tCuratorId, name: tFrameName);
+
+    // assert
+    verify(
+      () => pairCuratorXFrame(
+        curatorId: tCuratorId,
+        frameId: tPictureFrameId,
+      ),
+    );
+  });
+
+  test("should relay the [Failure] if the pairing fails", () async {
+    // arrange
+    when(() => pairCuratorXFrame(
+          curatorId: any(named: "curatorId"),
+          frameId: any(named: "frameId"),
+        )).thenAnswer((_) async => const Left(DatabaseReadFailure()));
+
+    // act
+    final result = await createFrame(ownerId: tCuratorId, name: tFrameName);
+
+    // assert
+    expect(result, const Left(DatabaseReadFailure()));
+  });
+
+  test("should return a [Frame] if the frame creation is successful", () async {
     // act
     final result = await createFrame(ownerId: tCuratorId, name: tFrameName);
 

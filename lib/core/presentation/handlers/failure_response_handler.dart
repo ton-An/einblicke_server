@@ -22,7 +22,7 @@ class FailureResponseHandler {
 
     switch (failure.runtimeType) {
       case NoImagesFoundFailure:
-        statusCode = 204;
+        statusCode = 404;
         body = jsonEncode(failure.toJson());
       case BadRequestFailure ||
             InvalidPasswordFailure ||

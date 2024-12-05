@@ -17,6 +17,7 @@ import 'package:einblicke_server/features/authentication/data/repository_impleme
 import 'package:einblicke_server/features/authentication/data/repository_implementation/frame_auth_repository_impl.dart';
 import 'package:einblicke_server/features/authentication/domain/models/curator.dart';
 import 'package:einblicke_server/features/authentication/domain/models/picture_frame.dart';
+import 'package:einblicke_server/features/authentication/domain/models/user.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/basic_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/curator_authentication_repository.dart';
 import 'package:einblicke_server/features/authentication/domain/repositories/frame_authentication_repository.dart';
@@ -50,6 +51,7 @@ import 'package:einblicke_server/features/image_exchange/domain/usecases/get_pai
 import 'package:einblicke_server/features/image_exchange/domain/usecases/pair_curator_x_frame.dart';
 import 'package:einblicke_server/features/image_exchange/domain/usecases/receive_image_from_curator.dart';
 import 'package:einblicke_server/features/image_exchange/presentation/handlers/frame_image_socket_handler.dart';
+import 'package:einblicke_server/features/image_exchange/presentation/handlers/pairing_socket_handler.dart';
 import 'package:einblicke_shared/einblicke_shared.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -79,6 +81,13 @@ Future<void> initGetIt() async {
     () => FrameImageSocketHandler(
       getImageFromId: getIt(),
       getLatestImage: getIt(),
+    ),
+  );
+  getIt.registerLazySingleton(
+    () => PairingSocketHandler(
+      generateUserId: getIt(),
+      createFrame: getIt(),
+      signInFrame: getIt(),
     ),
   );
 
@@ -192,11 +201,18 @@ Future<void> initGetIt() async {
       cryptoRepository: getIt(),
     ),
   );
+  getIt.registerLazySingleton(
+    () => GenerateUserId<User, UserAuthenticationRepository>(
+      userAuthRepository: getIt(),
+      cryptoRepository: getIt(),
+    ),
+  );
 
   getIt.registerLazySingleton(
     () => CreateFrame(
       frameAuthRepository: getIt(),
       generateUserId: getIt(),
+      pairCuratorXFrame: getIt(),
     ),
   );
   getIt.registerLazySingleton(
@@ -289,7 +305,7 @@ Future<void> initGetIt() async {
   );
 
   getIt.registerLazySingleton(
-    () => SaveRefreshToken<Curator, UserAuthenticationRepository<Curator>>(
+    () => SaveRefreshToken<Curator, CuratorAuthenticationRepository>(
       userAuthenticationRepository: getIt(),
     ),
   );
@@ -345,7 +361,21 @@ Future<void> initGetIt() async {
       userAuthLocalDataSource: getIt(),
     ),
   );
-
+  getIt.registerLazySingleton<UserAuthenticationRepository<Frame>>(
+    () => FrameAuthenticationRepositoryImpl(
+      userAuthLocalDataSource: getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<UserAuthenticationRepository<Curator>>(
+    () => CuratorAuthenticationRepositoryImpl(
+      userAuthLocalDataSource: getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<UserAuthenticationRepository<User>>(
+    () => FrameAuthenticationRepositoryImpl(
+      userAuthLocalDataSource: getIt(),
+    ),
+  );
   // Data sources
   getIt.registerLazySingleton<BasicAuthLocalDataSource>(
     () => BasicAuthLocalDataSourceImpl(
@@ -392,6 +422,18 @@ Future<void> initGetIt() async {
   getIt.registerLazySingleton<UserRefreshTokenTable<Frame>>(
     () => const FrameRefreshTokenTable(),
   );
+  getIt.registerLazySingleton<CuratorTable>(
+    () => const CuratorTable(),
+  );
+  getIt.registerLazySingleton<CuratorRefreshTokenTable>(
+    () => const CuratorRefreshTokenTable(),
+  );
+  getIt.registerLazySingleton<FrameTable>(
+    () => const FrameTable(),
+  );
+  getIt.registerLazySingleton<FrameRefreshTokenTable>(
+    () => const FrameRefreshTokenTable(),
+  );
   // External
   // await _registerDatabase();
   getIt.registerLazySingleton<Clock>(Clock.new);
@@ -418,10 +460,11 @@ Future<void> _registerDatabase() async {
 
   await database.execute(
     """
-      CREATE TABLE IF NOT EXISTS picture_frames (
+      CREATE TABLE IF NOT EXISTS frames (
       frame_id VARCHAR(255) PRIMARY KEY,
-      username VARCHAR(255) NOT NULL,
-      password_hash VARCHAR(255) NOT NULL)
+      owner_id VARCHAR(255) NOT NULL,
+      name VARCHAR(255) NOT NULL,
+      FOREIGN KEY (owner_id) REFERENCES curators (curator_id))
       """,
   );
 

@@ -57,7 +57,7 @@ class PairingSocketHandler extends FrameSocketHandler {
 
         await sendMessage(
           frameId: tempFrameId,
-          message: jsonEncode({"temp_frame_id": tempFrameId}),
+          message: jsonEncode({"temp_frame_id": "einblicke-$tempFrameId"}),
         );
       },
     );

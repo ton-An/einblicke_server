@@ -51,7 +51,7 @@ class CreateCurator {
   final CuratorAuthenticationRepository curatorAuthRepository;
 
   /// Used to generate the user id
-  final GenerateUserId generateUserId;
+  final GenerateUserId<Curator, CuratorAuthenticationRepository> generateUserId;
 
   /// {@macro create_curator}
   Future<Either<Failure, Curator>> call(

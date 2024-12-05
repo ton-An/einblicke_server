@@ -70,7 +70,7 @@ class ImageExchangeRepositoryImpl extends ImageExchangeRepository {
       );
 
       if (latestImageId == null) {
-        return const Left(DatabaseReadFailure());
+        return const Left(NoImagesFoundFailure());
       }
 
       return Right(latestImageId);
